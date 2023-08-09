@@ -1,0 +1,324 @@
+
+<!-- DEFAULT PAGE -->
+<div class="signin-header">
+    <!-- <div class="product-logo-container">
+        <img src="assets/images/login/fuse-earth-white.png">
+    </div> -->
+</div>
+<div class="signin-body">
+    <div class="main-page" *ngIf="mainPage === mainPages.SIGN_IN_UP" [hidden]="!showsignuppage">
+        <div class="sign-in-up-tabs-container">
+            <button [ngClass]="{'option-btn': true, 'active-btn': selectedSubPage === 'Login'}"
+                (click)="setSubPage('Login')">Login</button>
+            <button [ngClass]="{'option-btn': true, 'active-btn': selectedSubPage === 'SignUp'}"
+                (click)="setSubPage('SignUp')">Sign Up</button>
+        </div>
+
+        <!-- LOGIN SUB PAGE -->
+        <div class="sub-page" *ngIf="selectedSubPage === 'Login'">
+            <p class="reg-success-msg"  *ngIf="sentActivationLink!=''">
+                <span>{{sentActivationLink}}</span>
+            </p>
+            <p class="sign-in-verify-email" *ngIf="emailVerified=='false'">
+                Your email is not verified yet. Please verify and continue login.
+            </p>
+            <p class="sign-in-verify-email" *ngIf="emailVerified=='false'">
+                Not received..? <span> <a (click)="sendEmailVerifiction()">Resend link</a> </span>
+            </p>
+            <p class="sign-in-verify-email" style="color: green; font-weight: bold;"
+                *ngIf="passwordLinkSent!=''" [innerHTML]="passwordLinkSent">
+            </p>
+
+            <form [formGroup]="loginForm" (ngSubmit)="validateLogin()">
+                <div class="fields-row-container col-md-12 login-input">
+                    <div class="fields-container">
+                        <input type="text" formControlName="email" placeholder="Email ID">
+                        <span *ngIf="!loginForm.get('email').valid && loginForm.get('email').touched" class="error">
+                            {{getErrorMsg(loginForm.get('email'), 'Email')}}
+                        </span>
+                    </div>
+                </div>
+                <div class="fields-row-container col-md-12 login-input">
+                    <div class="fields-container">
+                        <input type="password" formControlName="password" placeholder="Password">
+                        <span *ngIf="!loginForm.get('password').valid && loginForm.get('password').touched" class="error">
+                            {{getErrorMsg(loginForm.get('password'), 'Password')}}
+                        </span>
+                    </div>
+                </div>
+                <div class="fields-row-container col-md-12" *ngIf="errMsg!=='' && errMsg!=='Error'">
+                    <p class="err-msg">{{errMsg}}</p>
+                </div>
+                <div class="fields-row-container col-md-12 login-input">
+                    <div class="fields-container col-md-8" style="text-align: left;">
+                        <span class="forgot-pwd" (click)="setForgotPwdPage()">Forgot Password?</span>
+                    </div>
+                    <div class="fields-container col-md-4" style="text-align: right;">
+                        <button type="submit" class="op-button">Login</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- SIGNUP SUB PAGE -->
+        <div class="sub-page" style="margin-top: 10px;" *ngIf="selectedSubPage === 'SignUp'">
+            <div class="fields-row-container col-md-12" style="margin-top: 10px;">
+                <div class="fields-container">
+                    <input type="radio" class="pointer" [formControl]="signUpUserType" id="individualUser" value="individualUser"> 
+                    <label for="individualUser" class="pointer">&nbsp; Individual User</label>
+                </div>
+                <div class="fields-container">
+                    <input type="radio" class="pointer" [formControl]="signUpUserType" id="organizationUser" value="organizationUser"> 
+                    <label for="organizationUser" class="pointer">&nbsp; Organization User</label>
+                </div>
+            </div>
+
+            <div *ngIf="signUpUserType.value === 'individualUser'">
+                <form [formGroup]="indvSignUpForm">
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="firstName" placeholder="First Name">
+                            <span *ngIf="!indvSignUpForm.get('firstName').valid && indvSignUpForm.get('firstName').touched" class="error">
+                                {{getErrorMsg(indvSignUpForm.get('firstName'), 'First Name')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="lastName" placeholder="Last Name">
+                            <span *ngIf="!indvSignUpForm.get('lastName').valid && indvSignUpForm.get('lastName').touched" class="error">
+                                {{getErrorMsg(indvSignUpForm.get('lastName'), 'Last Name')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="email" placeholder="Email ID">
+                            <span *ngIf="!indvSignUpForm.get('email').valid && indvSignUpForm.get('email').touched" class="error">
+                                {{getErrorMsg(indvSignUpForm.get('email'), 'Email')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="password" formControlName="password" placeholder="Password">
+                            <span *ngIf="!indvSignUpForm.get('password').valid && indvSignUpForm.get('password').touched" class="error">
+                                {{getErrorMsg(indvSignUpForm.get('password'), 'Password')}}
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="signUpUserType.value === 'organizationUser'">
+                <form [formGroup]="orgSignUpForm">
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="firstName" placeholder="First Name">
+                            <span *ngIf="!orgSignUpForm.get('firstName').valid && orgSignUpForm.get('firstName').touched" class="error">
+                                {{getErrorMsg(orgSignUpForm.get('firstName'), 'First Name')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="lastName" placeholder="Last Name">
+                            <span *ngIf="!orgSignUpForm.get('lastName').valid && orgSignUpForm.get('lastName').touched" class="error">
+                                {{getErrorMsg(orgSignUpForm.get('lastName'), 'Last Name')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="email" placeholder="Email ID">
+                            <span *ngIf="!orgSignUpForm.get('email').valid && orgSignUpForm.get('email').touched" class="error">
+                                {{getErrorMsg(orgSignUpForm.get('email'), 'Email')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="password" formControlName="password" placeholder="Password">
+                            <span *ngIf="!orgSignUpForm.get('password').valid && orgSignUpForm.get('password').touched" class="error">
+                                {{getErrorMsg(orgSignUpForm.get('password'), 'Password')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container" (focusout)="onFocusOut($event)">
+                            <input class="full-width" type="text" formControlName="organizationName" placeholder="Organization Name"
+                                (keyup)="onSiteSearchChanged($event);"
+                                (focus)="onFocusOrgName($event)">
+                            <span *ngIf="!orgSignUpForm.get('organizationName').valid && orgSignUpForm.get('organizationName').touched" class="error">
+                                {{getErrorMsg(orgSignUpForm.get('organizationName'), 'Organization Name')}}
+                            </span>
+                            <div class="org-search-list-container" *ngIf="displayTeamsList || showTeamList"
+                                (mouseenter)="mouseInFunc($event)" (mouseleave)="mouseOutFunc($event)">
+                                <p *ngIf="orgFetchStatus === fetchStatus.UNKNOWN">
+                                    Type something to find organization(s).
+                                </p>
+                                <p *ngIf="orgFetchStatus === fetchStatus.INPROGRESS">
+                                    Getting organization list...
+                                </p>
+                                <div [ngStyle]="{'display': orgFetchStatus === fetchStatus.COMPLETED ? 'inherit' : 'none'}"
+                                    class="org-name-container" (click)="selectOrg(org)" *ngFor="let org of orgsList">
+                                    <p class="org-name">{{org.name}}</p>
+                                </div>
+                                <p *ngIf="orgFetchStatus === fetchStatus.COMPLETED && orgsList.length === 0">
+                                    No organization(s) found with the search string.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="fields-row-container col-md-12">
+                <p class="desclamair">By clicking Sign Up, you agree to our
+                    <span class="links" (click)="openPage('terms')">Terms & Conditions</span> and that you have read all our
+                    <span class="links" (click)="openPage('policy')">Policies,</span> including our <span>Cookie Use.</span></p>
+            </div>
+            <div class="fields-row-container col-md-12" *ngIf="errMsg!==''">
+                <p class="err-msg">{{errMsg}}</p>
+            </div>
+            <div class="fields-row-container col-md-12">
+                <div class="fields-container col-md-8">
+                    <div class="social-login-container" *ngIf="signUpUserType.value === 'individualUser'">
+                        <p class="text">Individual users can Sign up with </p>
+                        <div class="social-login-btn" (click)="loginWithGoogle('signUp')">
+                            <img src="assets/svgs/logo-google.svg">
+                        </div>
+                        <!-- <div class="social-login-btn">
+                            <img src="assets/svgs/logo-facebook.svg">
+                        </div> -->
+                    </div>
+                </div>
+               
+                <div class="fields-container col-md-4" style="text-align: right;">
+                    <button class="op-button" (click)="showpackagepagefun()"> Next
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+    <!--###################################PACKAGE SELECTION########################################-->
+    <div [hidden]="!showpackagepage">
+        <div style="display: flex;margin-top: 12%;">
+            <div class="packagecard">
+                <div style="background-color:#32373D;color:white;margin-bottom: 10px;margin-top: 20px;  font-size: 22px;">Starter</div>
+                <div style="color: black; font-size: 16px;"><b> FREE</b></div>
+                <div style="color: black;">10 User</div>
+                
+                <select class="month" name="attribute" id="attribute" placeholder="none"   >
+                        
+                    <option  *ngFor="let item of months; let i=index">{{item}}</option>
+                     
+                  </select>
+            </div>
+            <div class="packagecard">
+                <div style="background-color:#32373D;color:white;margin-bottom: 10px;margin-top: 20px;  font-size: 22px;">Explore</div>
+                <div style="color: black; font-size: 16px;"><b>{{selectedexpplanprice}}</b></div>
+                <div style="color: black;">10 User</div>
+                
+                <select class="month" name="attribute" id="attribute" placeholder="none"  (change)="Selectexploremonth($event.target.value)" >
+                        
+                    <option value="attribute" [value]="item" *ngFor="let item of months; let i=index" id="{{i}}"  >{{item}}</option>
+                     
+                  </select>
+            </div>
+            <div class="packagecard">
+                <div style="background-color:#32373D;color:white;margin-bottom: 10px;margin-top: 20px;  font-size: 22px;">Engage</div>
+                <div style="color: black; font-size: 16px;"><b>{{selectedengageprice}}</b></div>
+                <div style="color: black;">50 User</div>
+                
+                <select class="month" name="attribute" id="attribute" placeholder="none"   (change)="Selectengagemonth($event.target.value)"  >
+                        
+                    <option value="attribute" [value]="item" *ngFor="let item of months; let i=index" id="{{i}}"  >{{item}}</option>
+                     
+                  </select>
+            </div>
+        </div>
+        <!-- <div class="fields-container col-md-4" style="text-align: right;">
+            <button class="op-button" (click)="signUpUserType.value === 'individualUser' ? validateIndvSignupForm():
+                validateOrgSignupForm()"> SignUp
+            </button>
+        </div> -->
+        <div class="fields-container col-md-4" style="text-align: right;">
+            <button class="op-button" (click)="showpackagepagefun()"> Next
+            </button>
+        </div>
+    </div>
+
+
+    <!-- FORGOT PWD PAGE -->
+    <div class="main-page" *ngIf="mainPage === mainPages.FORGOT_PWD">
+        <button class="arrow-back-btn" mat-icon-button (click)="showLoginPage()">
+            <i class="material-icons"> arrow_back </i>
+        </button>
+        <div class="fields-row-container col-md-12">
+            <div class="fields-container">
+                <p class="page-title">Forgot Password</p>
+            </div>
+        </div>
+        <form [formGroup]="forgotPwdForm" (ngSubmit)="sendPwdResetEmail()">
+            <div class="fields-row-container col-md-12 login-input">
+                <div class="fields-container">
+                    <input type="text" #forgotPwdEmail formControlName="email" placeholder="Email ID">
+                    <span *ngIf="!forgotPwdForm.get('email').valid && forgotPwdForm.get('email').touched" class="error">
+                        {{getErrorMsg(forgotPwdForm.get('email'), 'Email')}}
+                    </span>
+                </div>
+            </div>
+            
+            <div class="fields-row-container col-md-12">
+                <p *ngIf="errMsg!==''" class="err-msg">{{errMsg}}</p>
+            </div>
+            <div class="fields-row-container col-md-12 login-input">
+                <div class="fields-container col-md-8">
+                    
+                </div>
+                <div class="fields-container col-md-4" style="text-align: right;">
+                    <button type="submit" class="op-button">Send</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- SIGNUP THANX PAGE-->
+    <div class="main-page" *ngIf="mainPage === mainPages.THNX_SIGN_IN_UP"
+        style="padding-top: 45px;">
+        <p style="font-size: 20px; font-weight: 500;">Thank you for signing up</p>
+        
+        <p *ngIf="signUpUserType.value === 'organizationUser'">
+            Your email is under review by org. An email will be sent to you once the account is activated.
+            Untill then you can walk around the application as a Explorer user.
+        </p>
+        <p *ngIf="signUpUserType.value === 'individualUser'">An activation link sent to your email. Please verify your email to login.</p>
+        <!-- <p>Your email under review by the Organization.</p>
+        <p>An email will be sent to you once the account is activated.</p>
+        <p>Until then, you can walk arouond the application as a <b>Play User</b></p> -->
+        <button class="op-button" (click)="showLoginPage()"> Login </button>
+    </div>
+</div>
+<div class="signin-footer">
+    <p class="footer-msg" *ngIf="mainPage === mainPages.FORGOT_PWD">
+        Already have an account..? <span style="cursor: pointer;" (click)="showLoginPage()">Click Here</span>
+    </p>
+    <div class="create-org" *ngIf="(mainPage === mainPages.SIGN_IN_UP && selectedSubPage === 'Login')">
+        <div class="social-login-container">
+            <p class="text">Individual users can Sign-In with </p>
+            <div class="social-login-btn" (click)="loginWithGoogle('signIn')">
+                <img src="assets/svgs/logo-google.svg">
+            </div>
+            <!-- <div class="social-login-btn">
+                <img src="assets/svgs/logo-facebook.svg">
+            </div> -->
+        </div>
+    </div>
+    <div class="create-org" *ngIf="(mainPage === mainPages.SIGN_IN_UP && selectedSubPage === 'SignUp') ||
+        mainPage === mainPages.THNX_SIGN_IN_UP">
+        <!-- <div class="msg">
+            <p>Register a new organization with Fuse.Earth </p>
+        </div>
+        <div class="op-btn-container">
+            <button>Create Organization</button>
+        </div> -->
+        <p [hidden]="true" class="footer-msg">
+            <span>Register a new organization with Fuse.Earth </span>
+            <button (click)="createOrganization()">Create Organization</button>
+        </p>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:white;stroke-width:1.38858}
+    .str0 {stroke:white;stroke-width:0.694489}
+    .str2 {stroke:#2B2E34;stroke-width:0.3}
+    .str3 {stroke:white;stroke-width:0.3}
+    .fil0 {fill:none}
+    .fil5 {fill:#2B2E34}
+    .fil3 {fill:#9A9B9F}
+    .fil4 {fill:white}
+    .fil2 {fill:white}
+    .fil1 {fill:url(#id2)}
+   ]]>
+  </style>
+    <clipPath id="id0">
+     <path d="M256 20c130,0 236,106 236,236 0,130 -106,236 -236,236 -130,0 -236,-106 -236,-236 0,-130 106,-236 236,-236z"/>
+    </clipPath>
+    <clipPath id="id1">
+     <path d="M256 20c130,0 236,106 236,236 0,130 -106,236 -236,236 -130,0 -236,-106 -236,-236 0,-130 106,-236 236,-236z"/>
+    </clipPath>
+  <linearGradient id="id2" gradientUnits="userSpaceOnUse" x1="375.523" y1="458.396" x2="136.486" y2="53.6095">
+   <stop offset="0" style="stop-opacity:1; stop-color:#D4D2D2"/>
+   <stop offset="0.231373" style="stop-opacity:1; stop-color:#DAD8D8"/>
+   <stop offset="0.639216" style="stop-opacity:1; stop-color:#EFEEEE"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:white"/>
+  </linearGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_1835962640480">
+   <path class="fil1" d="M256 21c130,0 235,105 235,235 0,130 -105,235 -235,235 -130,0 -235,-105 -235,-235 0,-130 105,-235 235,-235z"/>
+   <g style="clip-path:url(#id0)">
+    <polygon class="fil2" points="20,20 492,20 492,492 20,492 "/>
+   </g>
+   <g style="clip-path:url(#id1)">
+    <g>
+     <path id="1" class="fil3" d="M34 178c16,-2 22,29 22,40 0,54 -16,27 36,48 29,12 -16,43 70,40 8,-1 9,10 34,12 22,2 9,26 1,35 -1,3 -10,40 1,40 24,0 61,11 61,39 0,4 9,49 9,49 27,21 11,9 45,-14 18,-12 20,-40 41,-53 22,-13 -13,-22 7,-39 0,0 17,-32 -24,-16 -29,11 -37,-45 -59,-28 -24,18 -31,-12 -46,-12 -6,1 -68,-29 -66,-43 2,-29 -34,45 -40,-22 -4,-53 31,-5 42,-5 46,0 -5,-40 37,-64 46,-25 -1,-55 53,-51 23,2 34,-26 2,-25 -5,1 -21,-35 -43,-7 -11,14 -33,-12 -34,-10 -7,14 -1,73 -34,28 -18,-24 -40,-17 8,-35 13,-5 -2,-26 14,-16 9,6 11,42 50,3 24,-23 -46,-17 -47,-22 0,-20 9,-19 -24,-6 -35,13 10,18 -1,37 0,0 -22,9 -21,-10 1,-12 -27,-8 -12,13 10,13 -14,25 -18,7 -23,-8 -64,70 -64,87z"/>
+     <path class="fil3" d="M206 31c11,0 22,16 36,9 1,-1 -1,11 8,22 17,18 12,-1 28,19 1,0 16,10 16,-8 0,-7 -13,-26 4,-25 3,0 2,8 21,-13 6,-6 -3,-8 -25,-12 -21,-4 -69,-6 -87,5 -1,0 -2,2 -1,3z"/>
+     <path class="fil3" d="M321 44c20,-9 3,1 27,0 4,0 8,17 -10,11 -5,-2 -20,4 -18,-10l1 -1z"/>
+     <path class="fil3" d="M374 84c12,-3 8,13 4,15 -11,5 -13,-19 -4,-15z"/>
+     <path class="fil3" d="M379 77c6,3 13,11 13,18 0,6 6,7 10,4 2,-1 14,7 8,-9 -4,-10 -13,-8 -23,-13 0,0 -7,-1 -8,0z"/>
+     <path class="fil3" d="M397 64c-4,17 6,6 17,17 7,7 6,11 0,18 -6,9 -6,4 -14,6 0,2 17,16 -1,16 -6,1 -3,11 -1,14 2,6 -5,15 7,7 10,-5 18,14 16,-15 0,-4 12,-13 16,-4 3,8 -5,11 12,17 7,2 10,9 17,3 1,-2 1,-6 -2,-9 -3,-2 -11,-16 -16,-21 -1,-2 -10,-18 -14,-22 -7,-10 -13,-13 -19,-20 -2,-3 -10,-2 -16,-6 0,-1 -2,-1 -2,-1z"/>
+     <path class="fil3" d="M402 162c0,-17 15,1 36,-11 15,-8 5,2 22,19 7,7 6,-23 15,-2 2,4 5,18 9,27 7,13 11,88 5,103 -2,5 -4,33 -10,27 -4,-3 -5,-28 0,-31 7,-6 -8,-15 -8,-25 0,-14 -10,-5 -14,-18 -6,-2 -26,22 -50,-2 -9,-9 -22,-8 -8,-23 8,-8 -6,-23 -6,-24 0,-7 9,-11 11,-24 2,-7 -2,-11 -2,-16z"/>
+     <path class="fil3" d="M204 270c3,-3 32,-5 32,-5 0,12 -14,11 -26,11 -3,0 -8,-4 -6,-6z"/>
+    </g>
+   </g>
+   <path class="fil0" d="M256 20c130,0 236,106 236,236 0,130 -106,236 -236,236 -130,0 -236,-106 -236,-236 0,-130 106,-236 236,-236z"/>
+   <g>
+    <ellipse class="fil4 str0" cx="293" cy="158" rx="8" ry="4"/>
+    <line class="fil0 str1" x1="311" y1="137" x2="294" y2= "156" />
+    <path class="fil4 str2" d="M350 192l0 0c0,1 0,1 0,1l-3 72c-9,35 -104,40 -117,-1l-3 -70c0,-1 0,-1 0,-2l0 0c0,-18 27,-32 61,-32 34,0 62,14 62,32 0,0 0,0 0,0l0 0z"/>
+    <path class="fil5" d="M288 336l33 -47c-25,7 -40,7 -65,0l32 47z"/>
+    <path class="fil0" d="M218 160c52,48 102,48 149,0"/>
+    <ellipse class="fil4 str2" cx="288" cy="191" rx="62" ry="31"/>
+    <ellipse class="fil5 str2" cx="288" cy="190" rx="41" ry="20"/>
+    <ellipse class="fil4 str0" cx="288" cy="190" rx="7" ry="4"/>
+    <line class="fil0 str3" x1="303" y1="175" x2="289" y2= "190" />
+   </g>
+  </g>
+ </g>
+</svg>

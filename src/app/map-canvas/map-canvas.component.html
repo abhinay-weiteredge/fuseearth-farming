@@ -1,0 +1,392 @@
+<div [ngClass]="{'login-and-app-info-container': true, 'move-left': globalObject.pageType === pageTypes.COVID19}">
+    <div class="login-container">
+        <app-user-login
+        [pageType]="globalObject.pageType"
+        [userProfile]="loggedInUserProfile"
+        [userInfo]="userInfo"
+        [pageClickEvent]="showOrHideUserLoginMenu"
+        (openPage)="openPageFun($event)"></app-user-login>
+    </div>
+    <!-- <div class="app-info-container">
+        <button mat-raised-button (click)="openAppInfo($event, appInfoContent)">App Info</button>
+    </div> -->
+</div>
+<app-basemap (click)="pageClickEventOnMap($event)"
+    [pageType]="globalObject.pageType === pageTypes.COVID19 ? 'COVID19' : 'DEFAULT'"
+    [basemapType]="globalObject.pageType === pageTypes.COVID19 ? 'googlestreet' : 'bingstreet'"></app-basemap>
+<app-geotray *ngIf="globalObject.pageType !== pageTypes.COVID19" (click)="pageClickEventfun($event)"
+    [closeNotepad]="closeNotepad"
+    [isGuest]="isGuest"
+    (showGeopadWindow)="showGeopadWindowFun($event);"
+    [closeGeoSession]="closeGeoSession"
+    (showGeoSessionWindow)="showGeoSessionWindowFun($event);"
+    ></app-geotray>
+<app-annotation-tool 
+    [triggerAnnotation]="triggerAnnotation" (saveAnnotation)="saveAnnotationFun($event)"></app-annotation-tool>
+<app-geobar (click)="pageClickEventfun($event)"
+    [globalObject] = "globalObject"
+    [userInfo]="userInfo"
+    [userClickOnMap]="clickedOnMap"
+    [currentSession]="currentSession">
+
+</app-geobar>
+<app-geotower *ngIf="globalObject.pageType !== pageTypes.COVID19" (click)="pageClickEventfun($event)"
+    [sessionId]="sessionId"
+    [globalObject] = "globalObject"
+    [currentSession]="currentSession"
+    [isGuest]="isGuest"
+    [userClickOnMap]="clickedOnMap">
+</app-geotower>
+<app-geosol (click)="pageClickEventfun($event)"
+    [globalObject] = "globalObject"
+    [isGuest]="isGuest"
+    (triggerToShowFeSpalsh) = "showAsModalFun($event)"
+    (toggleAwareness)="toggleAwareness($event)" [awarenessCurrentMode]="viewMode">
+</app-geosol>
+<app-capture *ngIf="show" 
+    [userInfo]="userInfo"
+    [currentSession]="currentSession"
+    [isGuest]="isGuest"
+    [showCapture]="showCapture"
+    [showExpandedView]="showCaptureExpandedView"
+    [sessionId]="sessionId" [globalObject] = "globalObject"
+    [markLocation]="markGeopadLocation" (closeCapture)="closeCaptureWindow()"
+    [viewMode]="viewMode"
+    [userProfileData]="loggedInUserProfile"
+    (loadSession)="loadSessionFun($event)"></app-capture>
+<!-- <app-geo-notepad *ngIf="show" [showNotePad]="showNotePad" (close)="showNotePad=false" ></app-geo-notepad> -->
+<app-geo-session *ngIf="globalObject.pageType !== pageTypes.COVID19"
+    [userInfo]="userInfo"
+    [sessionId]="sessionId"
+    [currentSession]="currentSession"
+    [sessionUuid]="uuid"
+    [globalObject] = "globalObject"
+    [showExpandedView]="showSessionExpandedView"
+    [showGeoSession]="showGeoSession" (closeGeoSession)="closeGeoSessionWindow()">
+</app-geo-session>
+<app-notification-bar (click)="pageClickEventfun($event)"></app-notification-bar>
+
+<div class="zoomin" *ngIf="globalObject.pageType === pageTypes.COVID19" (click)="zoomIn()" matTooltip="Zoom In" matTooltipClass="mat-custom-tooltip">
+    <img src="assets/svgs/geosol/plus_white.svg">
+</div>
+<div class="zoomout" *ngIf="globalObject.pageType === pageTypes.COVID19" (click)="zoomOut()" matTooltip="Zoom Out" matTooltipClass="mat-custom-tooltip">
+    <img src="assets/svgs/geosol/minus_white.svg">
+</div>
+<div class="scale-container-for-covid" *ngIf="globalObject.pageType === pageTypes.COVID19" [ngStyle]="{'width': scaleLineWidth+'px'}">
+    <!-- <div class="scale-container"> -->
+    <span>{{mapProjectionUnits}}</span>
+</div>
+<!-- <button class="covid-app-info-btn" *ngIf="globalObject.pageType === pageTypes.COVID19"
+    (click)="showCovidInfo = true">
+    <span class="material-icons"> info </span>
+</button> -->
+
+<!-- <div class="covid-info-container">
+    <button class="covid-info-close">x</button>
+    <img class="covid-info" src="assets/covid/covid-info.png">
+</div> -->
+<div class="login-prompt-container" *ngIf="globalObject.pageType === pageTypes.COVID19 && showCovidInfo">
+    <div class="login-prompt-area">
+        <div class="screens-btns-container">
+            <button class="close-btn" (click)="showCovidInfo=false">
+            &#10006;
+            </button>
+            <div class="screens-image-container">
+            <img src="assets/covid/covid_info.jpg">
+            </div>
+        </div>
+    </div>
+</div>
+
+<button class="covid-info-legend-trigger-btn" cdkDrag *ngIf="globalObject.pageType === pageTypes.COVID19 && !showCovidInfoLegend"
+    (click)="showCovidInfoLegend = true">
+    <!-- <span class="material-icons"> info </span> -->
+    L
+</button>
+
+<div class="covid-info-legend-container" cdkDrag *ngIf="globalObject.pageType === pageTypes.COVID19 && showCovidInfoLegend">
+    <button class="close-btn" (click)="showCovidInfoLegend=false">
+        <!-- &#10006; -->
+        &#8722;
+    </button>
+    <div class="covid-info-legend">
+        <div class="info-type-container">
+            <div class="info-symbol" style="border-radius: 10px;"></div>
+            <div class="info-name">Need</div>
+        </div>
+        <div class="info-type-container">
+            <div class="info-symbol"></div>
+            <div class="info-name">Availability</div>
+        </div>
+        <hr>
+        <div class="info-type-container" *ngFor="let topic of infoNameAndColors">
+            <div class="info-symbol" [ngStyle]="{'background': topic.color}"></div>
+            <div class="info-name">{{topic.name}}</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="login-prompt-container" *ngIf="globalObject.pageType === pageTypes.COVID19 && playCovidInfoVideo">
+    <div class="login-prompt-area">
+        <div class="screens-btns-container">
+            <!-- <button class="close-btn" (click)="playCovidInfoVideo=false"> &#10006; </button>
+            <div class="screens-image-container" style="width: 100%; height: auto">
+                <iframe style="width: 100%; height: 100%;" width="100%" height="auto"
+                    [src]="getYoutubeEmbedUrl('https://www.youtube.com/watch?v=won79zIVe5Q', true) | safe" 
+                    allow='autoplay; encrypted-media' frameborder="0" allowfullscreen>
+                </iframe>
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<!-- MANAGEMENT PAGES -->
+<div class="mgmt-modal-container" *ngIf="currentPage !== ''">
+    <div class="mgmt-modal-area">
+  
+      <!-- LOGIN PAGE -->
+        <div class="mgmt-page-container">
+            <div class="mgmt-header-container">
+                <div class="title">
+                    <img src="{{pageIcon}}">
+                    <p>{{pageTitle}}</p>
+                </div>
+                <button class="close-btn" (click)="closePage()">
+                    &#10006;
+                </button>
+            </div>
+            <div class="mgmt-body-container">
+                <app-user-profile style="width: 100%;" *ngIf="currentPage === 'profile'"
+                    [userProfile]="loggedInUserProfile">
+
+                </app-user-profile>
+                <app-user-mgmt style="width: 100%;" *ngIf="currentPage === 'user-mgmt'"
+                    [userProfile]="loggedInUserProfile">
+
+                </app-user-mgmt>
+                <app-project-mgmt style="width: 100%;" *ngIf="currentPage === 'proj-mgmt'"
+                    [userProfile]="loggedInUserProfile">
+                </app-project-mgmt>
+                <app-team-mgmt style="width: 100%;" *ngIf="currentPage === 'team-mgmt'"
+                    [userProfile]="loggedInUserProfile">
+                </app-team-mgmt>
+            </div>
+            <!-- <div class="mgmt-footer-container">
+
+            </div> -->
+        </div>
+    </div>
+</div>
+
+
+
+<!-- FE SPLASH SCREEN -->
+<div [ngClass]="{'fe-splash-modal-container': true, 'fe-splash-popup-modal': showAsModal}" *ngIf="showFeSplashScreen">
+    <div class="fe-splash-modal-area">
+        <div class="fe-splash-page-container">
+            <!-- <div class="fe-splash-header-container">
+                <div class="title"></div>
+            </div> -->
+            <button class="close-btn" *ngIf="showAsModal" (click)="showFeSplashScreen=false; showAsModal=false;">
+                &#10006;
+            </button>
+            <div class="fe-splash-body-container">
+                <div class="screens-btns-container">
+                    
+                    <div class="screens-image-container">
+                        <div class="fe-app-text-container">
+                            <p class="fe-app-text-header">
+                                GIS isn't an expensive specialty anymore.
+                            </p>
+                            <p class="fe-app-text-content">
+                                Add, create, edit, analyze, share your geospatial data, work, and narratives 
+                                <br>using our simple user interface without expert help, heavy installs,
+                                <br>cumbersome tools, or pricey licenses.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="logo-and-login-btn-container">
+                        <div class="text-and-links-container">
+                            <h3 style="text-align: center; margin-bottom: -10px;">Welcome to</h3>
+                            <div class="product-logo-container">
+                                <img src="assets/svgs/splash-screen/fe_logo.png ">
+                            </div>
+                            <div class="explore-container">
+                                <div matRipple class="explore-link-container" (click)="showFeSplashScreen=false" matTooltip="Start Exploring" matTooltipClass="mat-custom-tooltip">
+                                    <img src="assets/svgs/splash-screen/explore_light.svg">
+                                    <p>Start Exploring</p>
+                                </div>
+                            </div>
+
+                            <!-- VISIBLE ONLY IN FULL SCREEN MODE-->
+                            <div class="fe-tour-link-container" *ngIf="!showAsModal">
+                                <div class="fe-tour-link-flex">
+                                    <div matRipple class="fe-tour-link" (click)="openTourLink('tour')">
+                                        <img src="assets/svgs/splash-screen/tour_light.svg">
+                                        <p>Tour</p>
+                                    </div>
+                                    <div matRipple class="fe-tour-link" (click)="openTourLink('learn')">
+                                        <img src="assets/svgs/splash-screen/learn_light.svg">
+                                        <p>Learn</p>
+                                    </div>
+                                    <div matRipple class="fe-tour-link" (click)="openTourLink('watch')">
+                                        <img src="assets/svgs/splash-screen/watch_light.svg">
+                                        <p>Watch</p>
+                                    </div>
+                                    <div matRipple class="fe-tour-link" (click)="openTourLink('read')">
+                                        <img src="assets/svgs/splash-screen/read_light.svg">
+                                        <p>Read</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            
+                </div>
+                <div class="fe-spalsh-seperator">
+                    <p> a tool built on a game-changing architecture </p>
+                </div>  
+                <div class="fe-app-features-contianer">
+                    <div class="fe-app-features-flex">
+                        <div class="fe-app-feature">
+                            <div class="fe-app-feature-header" style="background: #8C6B56;">
+                                <p>Earth</p>
+                            </div>
+                            <div class="fe-app-feature-body" style="background-image: url('/assets/svgs/splash-screen/earth.svg');">
+                                <p>Serving as the framework to make and share our observations</p>
+                            </div>
+                        </div>
+                        <div class="fe-app-feature">
+                            <div class="fe-app-feature-header" style="background: #CC9900;">
+                                <p>Math</p>
+                            </div>
+                            <div class="fe-app-feature-body" style="background-image: url('/assets/svgs/splash-screen/math.svg');">
+                                <p>Providing sound multidimensional representation models</p>
+                            </div>
+                        </div>
+                        <div class="fe-app-feature">
+                            <div class="fe-app-feature-header" style="background: #00B0F0;">
+                                <p>Data</p>
+                            </div>
+                            <div class="fe-app-feature-body" style="background-image: url('/assets/svgs/splash-screen/data.svg');">
+                                <p>Enabling collecting, organizing and storing the observations</p>
+                            </div>
+                        </div>
+                        <div class="fe-app-feature">
+                            <div class="fe-app-feature-header" style="background: #BF2F66;">
+                                <p>Analysis</p>
+                            </div>
+                            <div class="fe-app-feature-body" style="background-image: url('/assets/svgs/splash-screen/analysis.svg');">
+                                <p>Implementing methods to integrate data and problem-solve</p>
+                            </div>
+                        </div>
+                        <div class="fe-app-feature">
+                            <div class="fe-app-feature-header" style="background: #7030A0 ;">
+                                <p>Answers</p>
+                            </div>
+                            <div class="fe-app-feature-body" style="background-image: url('/assets/svgs/splash-screen/answers.svg');">
+                                <p>Enhancing awareness to improve our relationship with the earth</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VISIBLE ONLY IN POPUP MODAL SCREEN -->
+                    <div class="fe-tour-link-container" *ngIf="showAsModal">
+                        <div class="fe-tour-link-flex">
+                            <div matRipple class="fe-tour-link" (click)="openTourLink('tour')">
+                                <img src="assets/svgs/splash-screen/tour_light.svg">
+                                <p>Tour</p>
+                            </div>
+                            <div matRipple class="fe-tour-link" (click)="openTourLink('learn')">
+                                <img src="assets/svgs/splash-screen/learn_light.svg">
+                                <p>Learn</p>
+                            </div>
+                            <div matRipple class="fe-tour-link" (click)="openTourLink('watch')">
+                                <img src="assets/svgs/splash-screen/watch_light.svg">
+                                <p>Watch</p>
+                            </div>
+                            <div matRipple class="fe-tour-link" (click)="openTourLink('read')">
+                                <img src="assets/svgs/splash-screen/read_light.svg">
+                                <p>Read</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- VISIBLE ONLY IN FULL SCREEN MODE-->
+                <div class="social-links-container" *ngIf="!showAsModal"> 
+                    <div matRipple class="social-link" matTooltip="Facebook" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('fb')">
+                        <img src="assets/svgs/splash-screen/fb_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Linkedin" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('linkedin')">
+                        <img src="assets/svgs/splash-screen/linkedin_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Twitter" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('twitter')">
+                        <img src="assets/svgs/splash-screen/twitter_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Slack" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('slack')">
+                        <img src="assets/svgs/splash-screen/slack_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Instagram" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('instagram')">
+                        <img src="assets/svgs/splash-screen/instagram.svg">
+                    </div>
+                </div>
+            </div>
+            <div class="fe-splash-footer-container">
+                <a href="https://www.mapsolgeo.com" target="_blank"><img class="footer-img" src="assets/svgs/splash-screen/mapsol2.svg"></a>
+                
+                <!-- VISIBLE ONLY IN POPUP MODAL SCREEN -->
+                <div class="social-links-container" *ngIf="showAsModal"> 
+                    <div matRipple class="social-link" matTooltip="Facebook" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('fb')">
+                        <img src="assets/svgs/splash-screen/fb_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Linkedin" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('linkedin')">
+                        <img src="assets/svgs/splash-screen/linkedin_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Twitter" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('twitter')">
+                        <img src="assets/svgs/splash-screen/twitter_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Slack" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('slack')">
+                        <img src="assets/svgs/splash-screen/slack_light.svg">
+                    </div>
+                    <div matRipple class="social-link" matTooltip="Instagram" matTooltipClass="mat-custom-tooltip"
+                        (click)="openTourLink('instagram')">
+                        <img src="assets/svgs/splash-screen/instagram.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Here for popup code-->
+<div class="confirm-delete-container" *ngIf="showUserLoginAlert">
+    <div class="confirm-delete" *ngIf="showUserLoginAlert">
+        <div class="header">
+          <!-- <i class="fa fa-times" (click)="showUserLoginAlert=false"></i> -->
+        </div>
+        <div class="confirm-body">
+          <p class="confirm-text">{{inputText}}</p>
+          <div class="btns-container">
+            <div class="yes-btn-container">
+                <button (click)="defaultFEURL()">Okay</button>
+            </div>
+            <!-- <div class="no-btn-container">
+              <button (click)="showUserLoginAlert=false">Cancel</button>
+            </div> -->
+          </div>
+        </div>
+    </div>
+  </div>

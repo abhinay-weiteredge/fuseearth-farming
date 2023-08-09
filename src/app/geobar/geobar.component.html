@@ -1,0 +1,955 @@
+<!-- <div class="topnav" id="imaginary_container"> -->
+<div class="search-container">
+  <!-- <div class="input-btn-container" ngbDropdown #dropDown="ngbDropdown"> -->
+  <div class="input-btn-container">
+    <!-- INPUT SEARCH BAR -->
+    <input
+      ngx-google-places-autocomplete
+      [options]="options"
+      #placesRef="ngx-places"
+      (onAddressChange)="handleAddressChange($event)"
+      autocomplete="off"
+      id="geo-address-bar"
+      #inputValue
+      [(ngModel)]="searchValue"
+      type="text"
+      placeholder="Search locations, addresses or add data..."
+      matTooltip="Geobar™! Add or import datasets"
+      matTooltipClass="mat-custom-tooltip"
+      [ngStyle]="{
+        width: activeSearchOptionASB
+          ? 'calc( 100% - 60px )'
+          : 'calc( 100% - 30px )'
+      }"
+      (keyup)="textEntered($event)"
+      (keyup.enter)="onSearch($event, inputValue.value)"
+      name="search"
+      ngbDropdownAnchor
+      (click)="inputValue.select(); isGuest ? textEntered($event) : ''"
+    />
+
+    <!-- EXCEL TABLE -->
+    <div class="ExcelData-modal-container" [hidden]="!showExcelData">
+      <div class="ExcelData-modal-area">
+        <div class="ExcelData-page-container">
+          <div class="ExcelData-header-container">
+            <div class="title">Vector File Manager</div>
+            <button class="close-btn" (click)="showExcelData = false">
+              &#10006;
+            </button>
+          </div>
+
+          <div class="ExcelData-body-container">
+            <div
+              class="col-2 pdf-pages justify-content-center align-items-center"
+            >
+              <div *ngFor="let data of ExcelSheets; let i = index">
+                <div class="excel-sheets">
+                  <img
+                    (click)="showSheet($event)"
+                    id="{{ i }}"
+                    class="excel-img"
+                    src="../../assets/svgs/geobar/excel.svg"
+                  />
+
+                  <img
+                    (click)="removeSheet($event)"
+                    id="{{ i }}"
+                    class="cancel-btn"
+                    src="../../assets/svgs/geobar/cancel.svg"
+                  />
+                </div>
+                <div>
+                  <p class="page-num">{{ data }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-10 table">
+              <table class="table table-striped p-5">
+                <thead>
+                  <tr>
+                    <th *ngFor="let data of ExcelHeading2">
+                      {{ data }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let data of ExcelFinal2">
+                    <td>{{ data[0] }}</td>
+                    <td>{{ data[1] }}</td>
+                    <td>{{ data[2] }}</td>
+                    <td>{{ data[3] }}</td>
+                    <td>{{ data[4] }}</td>
+                    <td>{{ data[5] }}</td>
+                    <td>{{ data[6] }}</td>
+                    <td>{{ data[7] }}</td>
+                    <td>{{ data[8] }}</td>
+                    <td>{{ data[9] }}</td>
+                    <td>{{ data[10] }}</td>
+                    <td>{{ data[11] }}</td>
+                    <td>{{ data[12] }}</td>
+                    <td>{{ data[13] }}</td>
+                    <td>{{ data[14] }}</td>
+                    <td>{{ data[15] }}</td>
+                    <td>{{ data[16] }}</td>
+                    <td>{{ data[17] }}</td>
+                    <td>{{ data[18] }}</td>
+                    <td>{{ data[19] }}</td>
+                    <td>{{ data[20] }}</td>
+                    <td>{{ data[21] }}</td>
+                    <td>{{ data[22] }}</td>
+                    <td>{{ data[23] }}</td>
+                    <td>{{ data[24] }}</td>
+                    <td>{{ data[25] }}</td>
+                    <td>{{ data[26] }}</td>
+                    <td>{{ data[27] }}</td>
+                    <td>{{ data[28] }}</td>
+                    <td>{{ data[29] }}</td>
+                    <td>{{ data[30] }}</td>
+                    <td>{{ data[31] }}</td>
+                    <td>{{ data[32] }}</td>
+                    <td>{{ data[33] }}</td>
+                    <td>{{ data[34] }}</td>
+                    <td>{{ data[35] }}</td>
+                    <td>{{ data[36] }}</td>
+                    <td>{{ data[37] }}</td>
+                    <td>{{ data[38] }}</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div
+                class="ExcelData-footer-container d-flex justify-content-between"
+              >
+                <div>
+                  <!-- id="mySelect" onchange="SelectLatLong($event)" -->
+                  <form
+                    class="lat-select d-flex justify-content-center align-items-center"
+                  >
+                    <label>Latitude:</label>
+                    <select
+                      (change)="uploadExcel(uploadexcel.value)"
+                      class="form-control select2"
+                      #uploadexcel
+                    >
+                      <option
+                        *ngFor="let data of ExcelHeading2; let i = index"
+                        value="{{ i }}"
+                      >
+                        {{ data }}
+                      </option>
+                    </select>
+                  </form>
+                </div>
+                <div>
+                  <form
+                    class="long-select d-flex justify-content-center align-items-center"
+                  >
+                    <label>Longtitute</label>
+                    <select
+                      (change)="uploadExcel1(uploadexcel1.value)"
+                      class="form-control select2"
+                      #uploadexcel1
+                    >
+                      <option
+                        *ngFor="let data of ExcelHeading2; let i = index"
+                        value="{{ i }}"
+                      >
+                        {{ data }}
+                      </option>
+                    </select>
+                  </form>
+                </div>
+                <div>
+                  <button (click)="UploadExcel()" class="download-btn">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="white"
+                      class="bi bi-download"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                      />
+                      <path
+                        d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HIDEEN FILE SELECTOR-->
+    <input
+      style="display: none"
+      type="file"
+      id="selectedFile"
+      (change)="onShapefileUpload($event)"
+      multiple
+    />
+
+    <!-- BUTTON COMES UP WHEN USER USES WML URL -->
+    <button
+      type="submit"
+      *ngIf="activeSearchOptionASB"
+      [ngStyle]="{ 'max-width': '30px' }"
+    >
+      <img
+        *ngIf="activeSearchOptionASB"
+        src="/assets/search-colored-svg/map-service.svg"
+        (click)="clickASBWMS($event, inputValue.value)"
+        class="searchASB"
+        matTooltipPosition="below"
+        matTooltip="Add Services Button"
+        matTooltipClass="mat-custom-tooltip"
+      />
+    </button>
+
+    <!-- OPERATION BUTTONS -->
+    <div class="go-and-dropdown-trigger-container">
+      <div class="go-and-dropdown-trigger-div">
+        <div
+          [ngClass]="{
+            'go-container': true,
+            'only-go': globalObject.pageType === 'COVID19'
+          }"
+          matTooltip="Go!"
+          matTooltipPosition="below"
+          matTooltipClass="mat-custom-tooltip"
+          (click)="onSearch($event, inputValue.value)"
+        >
+          <img
+            *ngIf="geobarValidationStatus === validStates.UNKNOWN"
+            src="assets/svgs/geobar/go_icon.svg"
+          />
+          <img
+            *ngIf="geobarValidationStatus === validStates.VALID"
+            src="assets/svgs/geobar/success_icon.svg"
+          />
+          <img
+            *ngIf="geobarValidationStatus === validStates.INVALID"
+            src="assets/svgs/geobar/fail_icon.svg"
+          />
+        </div>
+        <div
+          class="dropdown-container"
+          *ngIf="globalObject.pageType !== 'COVID19'"
+          matTooltip="Explore multilple options to add data"
+          matTooltipClass="mat-custom-tooltip"
+          (click)="showGeobarOperations()"
+        >
+          <img src="assets/svgs/geobar/dropdwon_arrow_icon.svg" />
+        </div>
+        <span
+          class="lat-lon-combo-trigger-container"
+          (click)="
+            showLatLongCombinations = !showLatLongCombinations;
+            showDropDownWithOptions = false;
+            showGeobaseArea = false
+          "
+          [ngStyle]="{ display: activeSearchOptionLLC ? 'block' : 'none' }"
+        >
+          <span
+            class="lat-lon-combo-trigger"
+            matTooltip="Latitude Longitude Combinations"
+            matTooltipClass="mat-custom-tooltip"
+          ></span>
+        </span>
+      </div>
+
+      <!-- Geobar Dropdown -->
+      <div class="geobar-options-container">
+        <div class="bnb-item">
+          Coordinate System :
+          <span class="value"
+            >{{ currentSystemname }} {{ currentCoordinateSystem }}</span
+          >
+          <img
+            (click)="openFrameworkForm()"
+            style="
+              transform: rotate(180deg);
+              width: 18px;
+              height: 10px;
+              margin-top: -1px;
+            "
+            src="assets/svgs/geosol/geosole-framework/drop-up-icon.svg"
+          />
+        </div>
+      </div>
+
+      <div class="geobar-sub-options-container" *ngIf="showFrameworkForm">
+        <div class="frameworks-container">
+          <form [formGroup]="frameworkForm">
+            <div
+              [ngClass]="{
+                'framework-option': true,
+                'selected-option':
+                  frameworkForm.get('framework').value == 'Rectangular'
+              }"
+            >
+              <input
+                bind-disabled="false"
+                type="radio"
+                id="Rectangular"
+                formControlName="framework"
+                name="framework"
+                value="Rectangular"
+              />
+              <label for="Rectangular">
+                <!-- Rectangular -->
+                <div class="framework-option-data-container">
+                  <div class="framework-option-name">
+                    <p class="primary-name">Rectangular</p>
+                    <p class="secondary-name">(Easting & Northing)</p>
+                  </div>
+                  <div class="framework-option-select-container">
+                    <select
+                      [disabled]="
+                        frameworkForm.get('framework').value != 'Rectangular'
+                      "
+                      #rectangularRef
+                      (change)="epsgChangeEvent(rectangularRef.value)"
+                    >
+                      <option value="EPSG:4326" selected>EPSG:4326</option>
+                      <option value="EPSG:2100">EPSG:2100</option>
+                      <option value="EPSG:3857">EPSG:3857</option>
+                      <option value="EPSG:27700">EPSG:27700</option>
+                      <option value="EPSG:23032">EPSG:23032</option>
+                      <option value="EPSG:5479">EPSG:5479</option>
+                      <option value="EPSG:21781">EPSG:21781</option>
+                      <option value="EPSG:3413">EPSG:3413</option>
+                      <option value="EPSG:2163">EPSG:2163</option>
+                      <option value="EPSG:54009">ESRI:54009</option>
+                      <option value="EPSG:2229">EPSG:2229</option>
+                    </select>
+                  </div>
+                </div>
+              </label>
+            </div>
+            <div
+              [ngClass]="{
+                'framework-option': true,
+                'selected-option':
+                  frameworkForm.get('framework').value == 'Angular'
+              }"
+            >
+              <input
+                [disabled]="false"
+                type="radio"
+                id="Angular"
+                formControlName="framework"
+                name="framework"
+                value="Angular"
+              />
+              <label for="Angular">
+                <div class="framework-option-data-container">
+                  <div class="framework-option-name">
+                    <p class="primary-name">Angular</p>
+                    <p class="secondary-name">(Longitude & Latitude)</p>
+                  </div>
+                  <div class="framework-option-select-container">
+                    <!-- [disabled]="frameworkForm.get('framework').value!='angular'" -->
+                    <select
+                      [disabled]="
+                        frameworkForm.get('framework').value != 'Angular'
+                      "
+                      #angularReference
+                      (change)="epsgChangeEvent(angularReference.value)"
+                    >
+                      <option value="EPSG:4326" selected>EPSG:4326</option>
+                      <option value="EPSG:3857">EPSG:3857</option>
+                      <option value="EPSG:2100">EPSG:2100</option>
+                      <option value="EPSG:27700">EPSG:27700</option>
+                      <option value="EPSG:23032">EPSG:23032</option>
+                      <option value="EPSG:5479">EPSG:5479</option>
+                      <option value="EPSG:21781">EPSG:21781</option>
+                      <option value="EPSG:3413">EPSG:3413</option>
+                      <option value="EPSG:2163">EPSG:2163</option>
+                      <option value="EPSG:54009">ESRI:54009</option>
+                      <option value="EPSG:2229">EPSG:2229</option>
+                      <!-- <option value="{{csSys.value}}" [selected]="csSys.value == selectedCoordinateSystem.value"
+                                      *ngFor="let csSys of coordinateSystemTypes">
+                                      {{csSys.name}}
+                                  </option> -->
+                    </select>
+                  </div>
+                </div>
+              </label>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DROP DOWN OPTIONS AREA -->
+  <div *ngIf="showDropDownWithOptions" class="drop-down-options-container">
+    <!-- Cloud File Manager -->
+    <!-- <div class="option-container" (click)="showFilePickerOptions=true; selectFilePickOption('aws'); showDropDownWithOptions=false;"> -->
+    <div
+      class="option-container"
+      (click)="
+        showCfmWindow = true;
+        minimizedWindow = false;
+        showDropDownWithOptions = false
+      "
+    >
+      <div
+        class="option-logo-container"
+        (mouseenter)="cfmImg.src = 'assets/svgs/geobar/cloud_icon.svg'"
+        (mouseleave)="cfmImg.src = 'assets/svgs/geobar/cloud_icon2.svg'"
+        matTooltipPosition="left"
+        matTooltip="File Manager (Cloud)"
+        matTooltipClass="mat-custom-tooltip"
+      >
+        <div class="option-logo-div">
+          <img #cfmImg src="assets/svgs/geobar/cloud_icon2.svg" />
+        </div>
+      </div>
+      <!-- <p class="option-name">File Manager (Cloud)</p> -->
+    </div>
+
+    <!-- Local File Manager -->
+    <div
+      class="option-container"
+      (click)="showDropDownWithOptions = false; selectFilePickOption('local')"
+    >
+      <div
+        class="option-logo-container"
+        (mouseenter)="lfmImg.src = 'assets/svgs/geobar/local_white_icon.svg'"
+        (mouseleave)="lfmImg.src = 'assets/svgs/geobar/local_icon.svg'"
+        matTooltipPosition="left"
+        matTooltip="File Manager (Local)"
+        matTooltipClass="mat-custom-tooltip"
+      >
+        <div class="option-logo-div">
+          <img #lfmImg src="assets/svgs/geobar/local_icon.svg" />
+        </div>
+      </div>
+      <!-- <p class="option-name">File Manager (Local)</p> -->
+    </div>
+
+    <!-- Geobase -->
+    <div
+      class="option-container"
+      (click)="triggerEventToShowGeobase(); showDropDownWithOptions = false"
+    >
+      <div
+        class="option-logo-container"
+        matTooltipPosition="left"
+        matTooltip="Geobase"
+        matTooltipClass="mat-custom-tooltip"
+      >
+        <div class="option-logo-div">
+          <img src="assets/svgs/geobar/geobase.svg" />
+        </div>
+      </div>
+      <!-- <p class="option-name">Geobase</p> -->
+    </div>
+    <!-- 
+        <button class="option-container" (click)="openPdf()" style="background-color: greenyellow; font-weight: bold; font-style: italic; height: 50px;">Open PDF in new tab and start print preview</button>
+<ng2-pdfjs-viewer #externalPdfViewer [externalWindow]="true" [startPrint]=true></ng2-pdfjs-viewer> -->
+
+    <!-- UCR STAR -->
+    <div
+      class="option-container"
+      (click)="
+        showUcrWindow = true;
+        minimizedUcrWindow = false;
+        showDropDownWithOptions = false
+      "
+    >
+      <div
+        class="option-logo-container"
+        (mouseenter)="
+          ucrImg.src = 'assets/svgs/geobar/external_source_white_icon.svg'
+        "
+        (mouseleave)="
+          ucrImg.src = 'assets/svgs/geobar/external_source_icon.svg'
+        "
+        matTooltipPosition="left"
+        matTooltip="External Source (UCR STAR)"
+        matTooltipClass="mat-custom-tooltip"
+      >
+        <div class="option-logo-div">
+          <img #ucrImg src="assets/svgs/geobar/external_source_icon.svg" />
+        </div>
+      </div>
+      <p class="option-name">External Source (UCR STAR)</p>
+    </div>
+  </div>
+
+  <!-- LAT LONG COMBINATIONS AREA -->
+  <div *ngIf="showLatLongCombinations" class="lat-long-combo-container">
+    <!-- <table ngbDropdownMenu class="table table-striped" > -->
+    <table class="table table-striped">
+      <tr>
+        <td>LAT</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>LONG</td>
+      </tr>
+      <tr
+        *ngFor="let latlng of latLngsList"
+        (click)="dropDownClickEvent($event, latlng)"
+      >
+        <td>{{ latlng.lat }}</td>
+        <td>{{ latlng.latDegree }}</td>
+        <td>
+          <!-- : -->
+        </td>
+        <td>{{ latlng.lng }}</td>
+        <td>{{ latlng.lngDegree }}</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- GEOBASE CONTAINER-->
+  <div *ngIf="showGeobaseArea" class="geobase-container">
+    <div class="geo-base-header">
+      <div class="geo-base-file-manage-container">
+        <select
+          placeholder="File Manager"
+          (change)="getGeobaseListByFilter($event.target.value)"
+        >
+          <option value="myFiles">My Sessions</option>
+          <option value="shareWithMe">Shared Sessions with Me</option>
+          <option value="shareByMe">My Shared Sessions</option>
+          <option
+            *ngIf="userInfo.type == 'INDEPENDENT'"
+            disabled
+            value="public"
+          >
+            Public Sessions
+          </option>
+        </select>
+      </div>
+      <div class="geo-base-sort-container">
+        <select class="project" placeholder="Project">
+          <option>Sort by Oldest</option>
+          <option>Sort by Latest</option>
+          <option>Sort A-Z</option>
+          <option>Sort Z-A</option>
+        </select>
+      </div>
+    </div>
+    <div class="geo-base-body">
+      <p class="data-fetching-status" *ngIf="!geoSessionDataColleced">
+        Fetching data...
+      </p>
+      <div
+        *ngIf="geoSessionDataColleced"
+        style="display: flex; flex-wrap: wrap"
+      >
+        <p class="no-session-found" *ngIf="geoSessionsList.length <= 0">
+          No sessions found...
+        </p>
+        <!-- <div class="geo-session-container" (click)="showGeoSession(session)" *ngFor="let session of geoSessionsList">
+              <span class="name">{{session.name}}</span>
+            </div> -->
+        <div
+          class="geo-session-container"
+          *ngFor="let session of geoSessionsList"
+        >
+          <!-- <div class="geo-session-div" (click)="showGeoSession(session)"> -->
+          <!-- <a class="geo-session-div" [routerLink]="'/session/'+session.id" target="_blank">
+                <span class="name">{{session.name}}</span>
+              </a> -->
+          <span class="geo-session-label" *ngIf="session.label === 'New'"
+            >New</span
+          >
+          <div class="geo-session-div" (click)="showGeoSession(session)">
+            <span class="name">{{ session.name }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COVID PAGE SUGGESTION TO ADD SITE -->
+  <div
+    class="covid-lookup-msg-and-error-container"
+    *ngIf="globalObject.pageType === 'COVID19'"
+  >
+    <div class="covid-lookup-msg-container">
+      <!-- <p class="covid-lookup-msg">Look up an address above or move pin to change location</p> -->
+      <!-- <p class="covid-lookup-msg">Look up an address above</p> -->
+      <p class="covid-lookup-msg">My Location</p>
+      <button
+        class="my-location"
+        matTooltip="Go to current location"
+        matTooltipClass="mat-custom-tooltip"
+        [ngClass]="{ disabled: currentLocationFetchStatus === 'inprogress' }"
+        [disabled]="currentLocationFetchStatus === 'inprogress'"
+        (click)="markCurrentLocation()"
+      >
+        <span
+          *ngIf="currentLocationFetchStatus !== 'inprogress'"
+          class="material-icons"
+        >
+          my_location
+        </span>
+        <span
+          *ngIf="currentLocationFetchStatus === 'inprogress'"
+          class="material-icons"
+        >
+          location_searching
+        </span>
+      </button>
+    </div>
+    <div
+      *ngIf="
+        currentLocationFetchStatus === 'inprogress' ||
+        currentLocationFetchStatus === 'error'
+      "
+      class="covid-lookup-error-container"
+    >
+      <p class="error" *ngIf="currentLocationFetchStatus === 'error'">
+        Not able find location
+      </p>
+      <p class="find" *ngIf="currentLocationFetchStatus === 'inprogress'">
+        Finding your current location...
+      </p>
+    </div>
+  </div>
+
+  <!-- </div> -->
+
+  <!-- WMS IMAGE PREVIEW -->
+  <div
+    #wmsimgEl
+    *ngIf="activewmsImg"
+    id="div-container-DPP"
+    class="div-container-DPP"
+  >
+    <i class="close-icon" (click)="clearASB($event, inputValue.value)"></i>
+    <img class="wmsimg" [src]="_wmsimg" />
+  </div>
+
+  <!-- ALERT MSGS -->
+  <app-geobar-alert></app-geobar-alert>
+  <ng-template #geobarSearchContent>
+    <!-- Click to search or add local data -->
+    Go!
+  </ng-template>
+  <ng-template #geobarLLCContent>Latitude Longitude Combinations</ng-template>
+  <ng-template #geobarASBContent>Add Services Button</ng-template>
+
+  <!-- LAYER UPLOAD STATUS -->
+  <!-- <div #layerStatus class="layer-upload-status-container" *ngIf="showLayerUploadStatus">
+  <p class="layer-upload-status">
+    <span *ngIf="layerUploadStatusInPercentage<100">Loading {{layerUploadStatusInPercentage}}%</span>
+    <span *ngIf="layerUploadStatusInPercentage>=100">Layer/Preview Loaded.</span>
+    <i *ngIf="layerUploadStatusInPercentage>=100" class="material-icons">check_outline</i>
+  </p>
+</div> -->
+
+  <!-- CLOUD FILE MANAGER -->
+  <div
+    [ngStyle]="{ left: minimizedWindow ? '-300px' : '0px' }"
+    class="cfm-data-container"
+    *ngIf="showCfmWindow"
+    #cfmWindow
+  >
+    <div class="cfm-data-body">
+      <button
+        class="cfm-data-close"
+        matTooltip="Close"
+        matTooltipClass="mat-custom-tooltip"
+        (click)="closeCfmWindow()"
+      >
+        <i class="material-icons">close</i>
+      </button>
+      <app-cloud-file-selector
+        [reset]="resetCfmFileSelection"
+        (fileSelected)="selectedAwsFile($event)"
+        (closeCfm)="closeFilePickerOptions()"
+      >
+      </app-cloud-file-selector>
+    </div>
+  </div>
+  <!-- -=--=-=-=-=-=-=-_+__+__+_+_+_+_+_++++++++++++++++++++++++++++++++++++++++++++++__+++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+
+  <!-- <div [ngStyle]="{ 'left': minimizedWindow ? '-300px' : '0px' }" 
+    class="cfm-data-container" *ngIf="showCfmWindow" #cfmWindow>
+    <div class="cfm-data-header">
+        <div class="cfm-data-title-container">
+          <span class="cfm-data-title">
+              File Manager (Cloud)
+          </span>
+          <img class="cfm-data-logo" src="assets/svgs/geobar/cloud_icon.svg">
+          <button class="cfm-data-minimize" *ngIf="!minimizedWindow" matTooltip="Minimize Cloud File Manager" matTooltipClass="mat-custom-tooltip" (click)="minimizeCloudFileManager()">
+              <span class="material-icons"> keyboard_arrow_left </span>
+          </button>
+          <button class="cfm-data-minimize" style="right: -35px; top: 5px;"
+              *ngIf="minimizedWindow" [ngStyle]="{'opacity': minimizedWindow ? '0.7' : '1'}"
+              matTooltip="Maximize Cloud File Manager" matTooltipClass="mat-custom-tooltip" (click)="maximizeCloudFileManager()">
+              <span class="material-icons"> keyboard_arrow_right </span>
+          </button>
+          <button class="cfm-data-close" matTooltip="Close" matTooltipClass="mat-custom-tooltip" (click)="closeCfmWindow()">
+              <i class="material-icons">close</i>
+          </button>
+        </div>
+    </div>
+    <div class="cfm-data-body">
+      <app-cloud-file-selector
+        [reset]="resetCfmFileSelection"
+        (fileSelected) = "selectedAwsFile($event)"
+        (closeCfm) = "closeFilePickerOptions()"
+        >
+      </app-cloud-file-selector>
+    </div>
+</div> -->
+
+  <!-- External Source (UCR STAR) -->
+  <div
+    [ngStyle]="{ left: minimizedUcrWindow ? '-300px' : '0px' }"
+    class="ucr-data-container"
+    *ngIf="showUcrWindow"
+    #ucrWindow
+  >
+    <div class="ucr-inner-data-container">
+      <div class="cfm-data-header">
+        <div class="cfm-data-title-container">
+          <img
+            class="cfm-data-logo"
+            src="assets/svgs/geobar/external_source_icon.svg"
+          />
+          <span class="cfm-data-title" style="font-size: 14px">
+            External Source (UCR STAR)
+          </span>
+          <!-- <button class="cfm-data-minimize" *ngIf="!minimizedUcrWindow" matTooltip="Minimize UCR STAR" matTooltipClass="mat-custom-tooltip" (click)="minimizeUcr()">
+                <span class="material-icons"> keyboard_arrow_left </span>
+            </button>
+            <button class="cfm-data-minimize" style="right: -35px; top: 40px;"
+                *ngIf="minimizedUcrWindow" [ngStyle]="{'opacity': minimizedUcrWindow ? '0.7' : '1'}"
+                matTooltip="Maximize UCR STAR" matTooltipClass="mat-custom-tooltip" (click)="maximizeUcr()">
+                <span class="material-icons"> keyboard_arrow_right </span>
+            </button> -->
+          <button
+            class="cfm-data-close"
+            matTooltip="Close"
+            matTooltipClass="mat-custom-tooltip"
+            (click)="closeUcr()"
+          >
+            <i class="material-icons">close</i>
+          </button>
+        </div>
+      </div>
+      <div class="cfm-data-body">
+        <p style="color: #fff">Coming soon...</p>
+      </div>
+    </div>
+  </div>
+
+  <!--PDFMANAGER-->
+
+  <div class="PDF-tool-modal-container" [hidden]="!showPDF">
+    <div class="PDF-tool-modal-area">
+      <div class="PDF-tool-page-container">
+        <div class="PDF-tool-header-container">
+          <div class="title">PDF Manager</div>
+          <button class="close-btn" (click)="showPDF = false">&#10006;</button>
+        </div>
+
+        <div class="PDF-tool-body-container">
+          <div
+            class="col-2 pdf-pages justify-content-center align-items-center"
+          >
+            <div *ngFor="let data of PDFFinal2; let i = index">
+              <div class="pdf-left">
+                <img
+                  (click)="showPage($event)"
+                  id="{{ i }}"
+                  class="pdf-img"
+                  src="{{ data }}"
+                />
+                <img
+                  (click)="RemovePage($event)"
+                  id="{{ i }}"
+                  class="cancel-btn"
+                  src="../../assets/svgs/geobar/cancel.svg"
+                />
+              </div>
+              <div>
+                <p class="page-num">Page{{ i + 1 }}</p>
+              </div>
+            </div>
+          </div>
+          <div class="col-10">
+            <div class="content" role="main"></div>
+            <img
+              class="pdf-img-preview"
+              *ngFor="let data of PdfFinal3"
+              src="{{ PdfFinal3 }}"
+            />
+            <div class="PDF-tool-footer-container">
+              <button class="download-btn" (click)="uploadpdf()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-download"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"
+                  />
+                  <path
+                    d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 
+  COVID PAGE SPECIFIC CONTENT
+ -->
+  <!-- <span #markerTail style="display: none; position: absolute; top: -16px; left: 10px;
+  cursor: pointer; user-select: none;" (click)="showAddSiteScreen()">
+  <span class="material-icons" style="transform: rotate( -180deg ); color: #5b5b5b;
+    font-size: 30px; position: absolute; left: 0;">play_arrow </span>
+  <span style="padding: 5px; background: #5b5b5b; color: #fff; font-size: 12px;
+    position: absolute; left: 19px; white-space: nowrap; top: 2px;">Enter Details</span>
+</span> -->
+  <span #markerTail class="marker-tail" (click)="showAddSiteScreen()">
+    <span class="material-icons arrow">play_arrow </span>
+    <span class="text">Enter Details</span>
+  </span>
+  <div
+    class="covid-add-site-container"
+    *ngIf="
+      globalObject.pageType === 'COVID19' &&
+      (showAddSiteWindow || showAddSiteSuccessMsg)
+    "
+  >
+    <div class="covid-add-site-area">
+      <div class="covid-form-data-container" *ngIf="showAddSiteWindow">
+        <div class="project-and-topics-container">
+          <div class="project-type-container" *ngFor="let proj of projects">
+            <label>
+              <input
+                type="checkbox"
+                [(ngModel)]="proj.selected"
+                (change)="onProjectChange($event, proj)"
+              />
+              {{ proj.name }}
+            </label>
+          </div>
+          <div class="input-select-container">
+            <label for="siteTopic" class="select-title">Resources</label>
+            <select
+              id="siteTopic"
+              class="select"
+              placeholder="Resources"
+              [formControl]="topicSelect"
+            >
+              <option *ngFor="let topic of topics" value="{{ topic.topicId }}">
+                {{ topic.name }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <p class="location-data">
+          Entering details at ({{ currSiteLocationDataToView }})
+        </p>
+        <div class="site-info-container">
+          <div class="site-info-title-container">Title:</div>
+          <div class="site-info-value-continer">
+            <input
+              type="text"
+              [formControl]="titleCtrl"
+              placeholder="Enter a short title"
+            />
+          </div>
+        </div>
+        <div class="site-info-container">
+          <div class="site-info-title-container">Contact:</div>
+          <div class="site-info-value-continer">
+            <input
+              type="text"
+              [formControl]="contactCtrl"
+              placeholder="Enter name and phone or email"
+            />
+          </div>
+        </div>
+        <div class="site-info-container">
+          <div class="site-info-title-container">Description:</div>
+          <div class="site-info-value-continer">
+            <textarea
+              [formControl]="descCtrl"
+              placeholder="Enter a brief description of your need or availability"
+            ></textarea>
+          </div>
+        </div>
+        <div class="site-info-container">
+          <div class="site-info-title-container">Tags:</div>
+          <div class="site-info-value-continer">
+            <!-- <input type="text" [formControl]="tagsCtrl" placeholder="#tags to enable searching"> -->
+            <input
+              style="font-size: smaller"
+              type="text"
+              [formControl]="tagsCtrl"
+              placeholder="#tags to enable searching (use ; to enter multiple tags)"
+            />
+          </div>
+        </div>
+        <div class="err-msg-container" *ngIf="siteErrMsg !== ''">
+          <p>{{ siteErrMsg }}</p>
+        </div>
+        <div class="add-site-close-container">
+          <p class="status" *ngIf="siteSavingStatus == 'inprogress'">
+            Saving site...
+          </p>
+          <p
+            class="status"
+            style="color: #8a5454"
+            *ngIf="siteSavingStatus == 'error'"
+          >
+            Site saving failed.
+          </p>
+          <div
+            class="submit-btn-container"
+            *ngIf="siteSavingStatus === '' || siteSavingStatus == 'error'"
+          >
+            <button (click)="createSite()">Submit</button>
+          </div>
+          <div
+            class="cancel-btn-container"
+            *ngIf="siteSavingStatus === '' || siteSavingStatus == 'error'"
+          >
+            <button (click)="closeAddSite()">Cancel</button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="covid-add-site-success-container"
+        *ngIf="showAddSiteSuccessMsg"
+      >
+        <div class="add-site-success-msg-container">
+          <p class="header">Success!!!</p>
+          <p class="msg">Site added successfully...</p>
+        </div>
+        <div class="add-site-success-close-container">
+          <div class="submit-btn-container">
+            <button (click)="gotoGeopad()">View Added site</button>
+          </div>
+          <div class="cancel-btn-container">
+            <button (click)="showAddSiteSuccessMsg = false">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

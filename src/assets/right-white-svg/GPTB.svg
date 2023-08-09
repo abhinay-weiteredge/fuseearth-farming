@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#FEFEFE;stroke-width:0.312599}
+    .str2 {stroke:white;stroke-width:0.312599}
+    .str0 {stroke:#FEFEFE;stroke-width:7.29135}
+    .fil0 {fill:none}
+    .fil1 {fill:#FEFEFE}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_1934787455904">
+   <path class="fil0 str0" d="M414 110l0 0c0,1 0,2 0,3l-8 187c-22,92 -268,105 -299,-1l-9 -185c0,-2 0,-3 0,-5l0 0c0,-47 71,-85 158,-85 87,0 158,38 158,85 0,0 0,1 0,1l0 0 0 0z"/>
+   <path class="fil1 str1" d="M256 488l83 -123c-63,16 -101,17 -166,0l83 123 0 0z"/>
+   <path class="fil1" d="M196 123l118 0c15,0 27,13 27,28l0 116c0,16 -12,29 -27,29l-118 0c-15,0 -27,-13 -27,-29l0 -116c0,-15 12,-28 27,-28l0 0zm-6 70l127 0c5,0 9,2 9,4l0 0c0,2 -4,3 -9,3l-127 0c-5,0 -9,-1 -9,-3l0 0c0,-2 4,-4 9,-4l0 0zm0 35l127 0c5,0 9,1 9,3l0 0c0,2 -4,4 -9,4l-127 0c-5,0 -9,-2 -9,-4l0 0c0,-2 4,-3 9,-3l0 0zm0 34l127 0c5,0 9,2 9,4l0 0c0,2 -4,3 -9,3l-127 0c-5,0 -9,-1 -9,-3l0 0c0,-2 4,-4 9,-4l0 0zm-7 -106l33 0c1,0 2,2 2,4l0 0c0,2 -1,4 -2,4l-33 0c-1,0 -2,-2 -2,-4l0 0c0,-2 1,-4 2,-4l0 0zm48 0l34 0c2,0 3,2 3,4l0 0c0,2 -1,4 -3,4l-34 0c-2,0 -3,-2 -3,-4l0 0c0,-2 1,-4 3,-4l0 0zm50 0l42 0c1,0 3,2 3,4l0 0c0,2 -2,4 -3,4l-42 0c-1,0 -3,-2 -3,-4l0 0c0,-2 2,-4 3,-4l0 0z"/>
+   <path class="fil1" d="M206 90l106 0c4,0 8,5 8,10l0 2c0,6 -4,10 -8,10l-106 0c-2,0 -4,-1 -5,-3 1,-2 1,-5 1,-7 0,-3 0,-6 -1,-8 1,-3 3,-4 5,-4l0 0z"/>
+   <path class="fil1 str2" d="M198 106l-15 -4c5,-2 10,-4 16,-5 2,3 2,6 -1,9l0 0z"/>
+  </g>
+ </g>
+</svg>

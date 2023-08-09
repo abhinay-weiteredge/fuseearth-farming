@@ -1,0 +1,79 @@
+@import "../tower-global.scss";
+@import '../../theme.scss';
+
+#scroll-outer {
+  -moz-transform: scale(0.8);
+  -o-transform: scale(0.8);
+  -webkit-transform: scale(0.8);
+  transform: scale(0.8);
+  position: absolute;
+  z-index: 99;
+  left: 16px; //-0px;
+  bottom: 80px; //60px;//20px;
+  background: $towerBackgroundWhite;
+  padding: 5px;
+  border-radius: 30px;
+  -webkit-box-shadow: 0 1px 8px #676767;
+  -moz-box-shadow: 0 1px 8px #676767;
+  -o-box-shadow: 0 1px 8px #676767;
+  box-shadow: 0 1px 8px #676767;
+}
+#scroll-outer:after {
+  position: absolute;
+  content: "";
+  height: 100%;
+  width: 2px;
+  background: $primary-dark-color; // $towerBackgroundColor;
+  top: 0;
+  left: 12px;
+  -moz-transform: scale(0.9);
+  -o-transform: scale(0.9);
+  -webkit-transform: scale(0.9);
+  transform: scale(0.9);
+}
+#scroll {
+  width: 16px;
+  max-height: 200px;
+  overflow: auto;
+  z-index: 9;
+  position: relative;
+}
+
+@supports (-moz-appearance:none) {
+  #scroll {
+    width: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: $primary-dark-color $white-color;
+  }
+}
+::-webkit-scrollbar {
+  width: 15px;
+  position: absolute;
+}
+
+::-webkit-scrollbar-button:vertical:increment {
+  background: url("/assets/img/scroll-bottom.svg") no-repeat center bottom;
+  background-size: 100% 100%;
+  width: 15px !important;
+}
+::-webkit-scrollbar-button:end:vertical:decrement,
+::-webkit-scrollbar-button:start:vertical:increment {
+  display: none;
+}
+::-webkit-scrollbar-button:vertical:decrement {
+  background: url("/assets/img/scroll-top.svg") no-repeat center bottom;
+  background-size: 100% 100%;
+  width: 15px !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $primary-dark-color; // $towerBackgroundColor;
+  width: 10px;
+  border-radius: 20px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: $primary-dark-color; // $towerBackgroundColor;
+}
+::-webkit-scrollbar-thumb:active {
+  background: $primary-dark-color; // $towerBackgroundColor;
+}

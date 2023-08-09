@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-6 col-sm-offset-3">
+      <ng-template #geotryTooltipContent>
+        <!-- Tool Tray -->
+        Geotray™! Click to explore fuse™ tools
+      </ng-template>
+      <div #geotrayHolder class="circle-btn">
+        <div class="inner-circle" (click)="activateGeoTray($event)">
+          <div class="image-bg">
+            <img
+              src="/assets/images/tray-open-icon.svg"
+              class="open"
+              matTooltip="Geotray™! Click to explore fuse™ tools"
+              matTooltipClass="mat-custom-tooltip"
+            />
+            <img src="/assets/images/tray-close-icon.svg" class="close_menu" />
+          </div>
+        </div>
+
+        <!-- Custom Tooltip -->
+        <div class="custom-tooltip-container" *ngIf="showTooltip">
+          <div class="msg-container">
+            <p class="msg">Click here to explore fuse.earth tools</p>
+            <span class="close-icon1" (click)="showTooltip = false"
+              >&#10006;</span
+            >
+          </div>
+          <div class="tooltip-arrow"></div>
+        </div>
+      </div>
+      <div
+        class="geotray-circle"
+        *ngIf="_isGeotrayActive"
+        [handle]="draggingGeotray"
+        [ngDraggable]="draggable"
+      >
+        <!-- <app-menu-container [options]="options" [gutter]="gutter" [startAngles]="startAngles" [wings]="wings"
+          (onWingHovered)="onWingHovered($event)" (onWingHoveredOut)="onWingHoveredOut($event)" (onWingSelected)="onWingSelected($event)"
+          (onMenuBtnClicked)="menuButtonSelected($event)"></app-menu-container> -->
+        <app-geotray-menu
+          [wings]="wings"
+          [resetAllWings]="resetAllWings"
+          [isGuest]="isGuest"
+          (onWingHovered)="onWingHovered($event)"
+          (onWingHoveredOut)="onWingHoveredOut($event)"
+          (onWingSelected)="onWingSelected($event)"
+          (onMenuBtnClicked)="menuButtonSelected($event)"
+          (showGeopadWindow)="showGeopad($event)"
+          (showGeoSessionWindow)="showGeoSession($event)"
+          (onPredefinedClicked)="onPredefinedClickedEvent($event)"
+          (onClassifiedClicked)="onClassifiedClickedEvent($event)"
+          (onBlendedClicked)="onBlendedClickedEvent($event)"
+          (onCollocatedClicked)="onCollocatedClickedEvent($event)"
+          (onExtendedClicked)="onExtendedClickedEvent($event)"
+          (onslopeClicked)="onslopeClickedEvent($event)"
+          (onAEDSClicked)="onAEDSClickedEvent($event)"
+          (onbufferClicked)="onbufferClickedEvent($event)"
+        ></app-geotray-menu>
+      </div>
+    </div>
+  </div>
+</div>
+<app-geopopup style="display: none"></app-geopopup>
+<app-prototype-window
+  [onPropertiesClicked]="onPropertiesClicked"
+  [onPredefinedClicked]="onPredefinedClicked"
+  [onClassifiedClicked]="onClassifiedClicked"
+  [onBlendedClicked]="onBlendedClicked"
+  [onCollocatedClicked]="onCollocatedClicked"
+  [onExtendedClicked]="onExtendedClicked"
+></app-prototype-window>
+<app-slope-finder [onslopeClicked]="onslopeClicked"></app-slope-finder>
+<app-slope-finder-aeds [onAEDSClicked]="onAEDSClicked"></app-slope-finder-aeds>
+<app-buffer-tool [onbufferClicked]="onbufferClicked"> </app-buffer-tool>
+<!-- <app-prototype-popup></app-prototype-popup> -->
+
+<!-- <div *ngIf="_isGeotrayActive" style="position: fixed; top: 100px; right: 100px; display: flex;">
+  <app-geotray-menu [wings]="wings" [resetAllWings]="resetAllWings"
+      (onWingHovered)="onWingHovered($event)" (onWingHoveredOut)="onWingHoveredOut($event)" (onWingSelected)="onWingSelected($event)"
+      (onMenuBtnClicked)="menuButtonSelected($event)"
+    ></app-geotray-menu>
+</div> -->

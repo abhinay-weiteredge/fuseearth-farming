@@ -1,0 +1,182 @@
+@import "../tower-global.scss";
+.layer-action {
+  // width: 130%;
+  position: absolute;
+  background: $towerBackgroundWhite;
+  left: 0;
+  top: -21px;
+  // opacity: 0;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+}
+.layer-action.active {
+  left: 100%;
+  opacity: 1;
+}
+.layer-action-option {
+  width: 100%;
+  // float: left;
+  // display: inline-flex;
+  height: 25px; // 20px;
+  display: flex; // table;//none;
+  background: #cac7c7;
+  padding: 1px;
+  span {
+    width: 30px; // 27px;
+    // display: table-cell;
+    height: 100%;
+    text-align: center;
+    // vertical-align: middle;
+    cursor: pointer;
+    border-right: solid .5px #999998; // #d0d2d3;
+  }
+  span:hover {
+    background: #e8e4e4;
+  }
+  span:last-child {
+    border: none;
+  }
+  .disable {
+    background: #e6e7e8;
+  }
+  img {
+    width: 15px;
+    // margin: 5px 0 2px;
+  }
+}
+.layer-action.active .layer-action-option {
+  display: table;
+}
+// .layer-action-option span {
+//   width: 27px;
+//   display: table-cell;
+//   height: 100%;
+//   text-align: center;
+//   vertical-align: middle;
+//   cursor: pointer;
+//   border-right: solid 1px #d0d2d3;
+// }
+// .layer-action-option span:hover {
+//   background: #e8e4e4;
+// }
+// .layer-action-option span:last-child {
+//   border: none;
+// }
+// .layer-action-option .disable {
+//   background: #e6e7e8;
+// }
+// .layer-action-option img {
+//   width: 15px;
+//   margin: 5px 0 2px;
+// }
+
+.new-layer-action-option{
+  width: 100%;
+  height: 30px; // 20px;
+  background: #e2e2e2;
+  .new-layer-action-option-row-1, .new-layer-action-option-row-2{
+    display: flex;
+    span{
+      width: 20px; // 15px;
+      height: 15px;
+      // display: table-cell;
+      // height: 100%;
+      // text-align: center;
+      // vertical-align: middle;
+      cursor: pointer;
+      border-right: solid 1px #d0d2d3;
+      overflow: hidden;
+    }
+    span:hover {
+      background: #e8e4e4;
+    }
+    span:last-child {
+      border: none;
+    }
+    .disable {
+      background: #e6e7e8;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      padding: 2px;
+      vertical-align: unset;
+      // width: 15px;
+      // margin: 5px 0 2px;
+    }
+  }
+}
+
+.slider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 10px; // 20px;//22px;
+  background: none;
+  outline: none;
+  padding-top: 5px;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+	appearance: none;
+	width: 10px;
+  height: 10px; // 20px;//22px;
+  background-image: url("/assets/img/range-selector-icon.svg");
+  background-repeat: no-repeat;
+	cursor: pointer;
+	background-size: auto 100%;
+	margin-top: -4px;
+}
+
+.slider::-moz-range-thumb {
+	width: 10px;
+  height: 10px; // 20px;//22px;
+  background-image: url("/assets/img/range-selector-icon.svg");
+  background-repeat: no-repeat;
+	cursor: pointer;
+	margin-top: -4px;
+	background-size: auto 100%;
+}
+
+.layer-opacity {
+  width: 100%;
+  display: block;//none; 
+  height: 10px; // 20px;//22px;
+  // float: left;
+  display: flex;
+  background: rgba(255, 255, 255, 1);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(255, 255, 255, 1)),
+    color-stop(100%, rgba(0, 0, 0, 1))
+  );
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000', GradientType=1 );
+}
+.layer-action.active .layer-opacity {
+  display: block;
+}
+.visible-btn.hide img {
+  background-image: url("/assets/img/layer-icon1.svg");
+  content:url("/assets/img/layer-icon1.svg");
+  background-repeat: no-repeat;
+}
+span.ungroup-btn {
+  background: #e6e7e8;
+}

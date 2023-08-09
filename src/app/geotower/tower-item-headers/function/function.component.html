@@ -1,0 +1,26 @@
+<div #container class="popup function-info-container" ngDraggable>
+  <!-- <i  #closer class="close-icon function-info-close"></i> -->
+  <button #closer class="function-info-close">
+    <img src="/assets/img/close-icon.svg">
+  </button>
+  <h3 class="function-info-title">Function</h3>
+  <div class="function-info-body-container">
+    <!-- <table class="table table-striped specification-info-table"> -->
+    <table class="table function-info-table">
+      <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Property Title</th>
+        <th scope="col">Property Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let function of funProperties; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{function.title}} </td>
+        <td>{{function.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

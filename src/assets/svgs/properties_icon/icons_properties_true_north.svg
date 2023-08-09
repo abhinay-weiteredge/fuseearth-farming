@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <font id="FontID0" horiz-adv-x="722" font-variant="normal" style="fill-rule:nonzero" font-weight="700">
+	<font-face 
+		font-family="Arial">
+		<font-face-src>
+			<font-face-name name="Arial Bold"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="N" horiz-adv-x="722" d="M73.0009 0l0 716.002 140.334 0 294.667 -479.834 0 479.834 134.001 0 0 -716.002 -144.835 0 -290.166 470.669 0 -470.669 -134.001 0z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Arial";font-variant:normal;font-weight:bold;src:url("#FontID0") format(svg)}
+    .str0 {stroke:#373435;stroke-width:25;stroke-miterlimit:22.9256}
+    .str1 {stroke:black;stroke-width:0.567;stroke-miterlimit:22.9256}
+    .fil0 {fill:none}
+    .fil1 {fill:#373435}
+    .fil2 {fill:#373435;fill-rule:nonzero}
+    .fnt0 {font-weight:bold;font-size:110.779px;font-family:'Arial'}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_1568342381040">
+   <path class="fil0 str0" d="M353.63 102.432c60.242,34.78 97.353,99.058 97.353,168.621 0,107.533 -87.173,194.706 -194.707,194.706 -107.533,0 -194.706,-87.173 -194.706,-194.706 0,-69.563 37.111,-133.841 97.353,-168.621"/>
+   <polygon class="fil1 str1" points="255.399,156.158 151.906,385.948 255.399,336.832 360.647,385.948 "/>
+   <text x="216.67" y="116.724"  class="fil1 fnt0">N</text>
+   <path class="fil2" d="M307.786 98l0 -41.877 37.042 20.938 -37.042 20.939zm0 -20.938m18.521 -10.47m0 20.939"/>
+   <path class="fil2" d="M202.042 98l0 -41.877 -37.042 20.938 37.042 20.939zm0 -20.938m-18.521 -10.47m0.001 20.939"/>
+  </g>
+ </g>
+</svg>

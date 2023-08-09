@@ -1,0 +1,478 @@
+@import '../theme.scss';
+
+$primary-dark-color: $primary-dark-color;// #007dc6;
+$secondry-dark-color: $secondry-dark-color;// #007dc6;
+$secondry-selected-color: $secondry-selected-color;
+
+
+$login-btn-color: $secondry-selected-color; // #ececec; //#859f6a;
+
+button{
+    outline-color: transparent !important;
+}
+.user-login-header{
+    // width: 100%;
+    padding: 0px; //1%; //5px;
+    // height: 50px;
+    .user-login-container{
+        // width: 100%;
+        // display: flex;
+        .login-details-container{
+            // width: 50%;
+            // text-align: right;
+            z-index: 505; // 1005;
+            position: relative;
+            .login-btn{
+                // background-color:  $primary-dark-color; // #017dc7; //#80a05e;
+                // overflow: hidden;
+                // color: white;
+                // // border: white .5px solid;
+                // border-radius: unset;
+                // width: 100px;
+                // text-transform: uppercase;
+                
+                overflow: hidden;
+                width: 50px;
+                text-transform: uppercase;
+                border: 2px solid $primary-dark-color;
+                border-radius: 25px;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+            }
+            .profile-data-container{
+                background-color: $login-btn-color; //#80a05e;
+                overflow: hidden;
+                color: white;
+                height: 50px;
+                width: auto;
+                border: $login-btn-color .5px solid;
+                border-radius: 30px;
+                // position: relative;
+                .profile-img{
+                    height: 100%;
+                    // padding: 2px;
+                    // padding-bottom: unset;
+                    width: auto;
+                    cursor: pointer;
+                }
+            }
+            .profile-drop-down{
+                position: absolute;
+                bottom: -80px;
+                right: 0;
+                background: $login-btn-color; //#80a05e;
+            }
+        }
+        .help-container{
+          // width: 50%;
+          // text-align: right;
+          z-index: 505; // 1005;
+          position: relative;
+          margin: 5px;
+          .help-link{
+            margin: 0;
+            img{
+                // background-color:  $primary-dark-color; // #017dc7; //#80a05e;
+                // overflow: hidden;
+                // color: white;
+                // // border: white .5px solid;
+                // border-radius: unset;
+                // width: 100px;
+                // text-transform: uppercase;
+                
+                overflow: hidden;
+                width: 40px;
+                text-transform: uppercase;
+                border: 2px solid $primary-dark-color;
+                border-radius: 25px;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+            }
+          }
+        }
+    }
+}
+// .user-login-header{
+//     width: 100%;
+//     padding: 1%; //5px;
+//     // height: 50px;
+//     .user-login-container{
+//         width: 100%;
+//         display: flex;
+//         .app-title-container{
+//             width: 50%;
+//             .title{
+//                 font-size: 18px;
+//                 margin: 0;
+//             }
+//         }
+//         .login-details-container{
+//             width: 50%;
+//             text-align: right;
+//             .login-btn{
+//                 background-color: red;
+//                 overflow: hidden;
+//             }
+//             .user-data{
+
+//             }
+//         }
+//     }
+// }
+
+.login-btn-container{
+    padding: 5px;
+    min-height: 100px;
+    text-align: center;
+    .social-login-btn{
+        background-color: $login-btn-color; //#80a05e;
+        margin: 5px;
+        color: white;
+        .login-icon{
+            height: 20px;
+            margin-right: 5px;
+        }
+    }
+}
+
+.user-drop-down{
+    position: absolute;
+    // bottom: -80px;
+    top: 46px;
+    right: 0;
+    background-color: transparent;
+    // height: 170px;
+    // width: 180px;
+    // position: absolute;
+    // right: 10px;
+    // top: 38px;
+    .arrow-container{
+      margin: 0;
+      text-align: right;
+      .arrow{
+        font-size: 40px;
+        color: #a2a2a2; // $primary-dark-color; // #017dc7;
+        // height: 30px;
+        margin-right: 12px;
+        transform: rotate(-90deg);
+      }
+    }
+    .user-drop-down-body{
+      margin: 0;
+      margin-top: -21px;
+      background: $primary-dark-color; //#ffffff;
+      border: 3px solid #a2a2a2; // $login-btn-color; // #017dc7;
+	    box-shadow: 2px 3px 5px #828282;
+      //border-top: unset;
+      height: auto;//200px;
+      width: 265px; // 200px;
+      max-width: 100vw;
+      color: $white-color;
+      .user-detail-container{
+        padding: 5px 10px;
+        text-align: center;
+        display: flex;
+        .user-img-container{
+          text-align: center;
+          padding: 5px 0px;
+          img{
+            width: 55px; // auto;
+            border-radius: 45px;
+            height: auto; // 90px;
+            border: 3px solid #b9b9b9;
+          }
+        }
+        .user-name-container{
+          padding: 0px 5px;
+          width: calc(100% - 55px);
+          .user-name, .user-mail{
+            font-size: 12px;
+            border-top: 1px solid #b9b9b9;
+            margin: 0;
+            overflow-wrap: break-word;
+            line-height: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            text-align: left;
+          }
+          .user-name{
+            font-size: 14px;
+            font-weight: bold;
+            border-top: unset;
+          }
+          
+        }
+      }
+      .org-name-container{
+        margin: 0;
+        font-size: 14px;
+        text-align: center;
+        border-top: 1px solid #d0d0d0;
+        padding: 5px 0px;
+        .org-name, .user-role{
+          margin: 0;
+        }
+        .org-name{
+          font-weight: bold;
+        }
+        .user-role{
+          font-style: italic;
+          text-transform: capitalize;
+        }
+      }
+      
+      .admin-ops-container{
+        margin: 0;
+        .admin-op{
+          display: flex;
+          width: 100%;
+          cursor: pointer;
+          border-top: 1px solid #d0d0d0;
+          padding: 5px;
+          font-size: 14px;
+          p{
+            margin: 0;
+            width: 100%;
+          }
+        }
+        .admin-op:hover{
+          margin: 0;
+          background: #a2a2a2;
+        }
+      }
+      .logout-container{
+        text-align: center;
+        padding: 10px 5px;
+        border-top: 1px solid #d0d0d0;
+        // background-color: #ebf6ee;
+		
+        button{
+          background-color: #696969; // $primary-dark-color; // #017dc7;
+          color: /*$primary-op-color;/*/#ffffff;
+          text-decoration: none;
+          font-weight: bold;
+          line-height:30px;
+          padding: 0px 30px;
+          font-size: 15px;
+		  
+        }
+      }
+    }
+}
+.align-right{
+  right: unset;
+  left: 0;
+  .arrow-container{
+    text-align: left;
+  }
+}
+
+
+.login-prompt-container{
+  position: fixed;
+  width: 100%;
+  height: 60%;
+  top: 0;
+  left: 0;
+  background: transparent;
+  z-index: 560; // 1060;
+    .login-prompt-area{
+      height: 75vh;
+      margin-top: 24vh;
+      width: 70vw;
+      margin-left: 23vw;
+  
+      .screens-btns-container{
+        border-radius: 20px; // 80px;
+        display: flex;
+        text-align: center;
+        background: rgba(0, 0, 0, 0.7);
+        overflow: hidden;
+        width: 75%;
+        height: 78%;
+        padding: 10px;
+        position: relative;
+        .close-btn{
+          position:absolute;
+          top: 15px;
+          right: 15px;
+          border: unset;
+          border-radius: 7px;
+          cursor: pointer;
+          z-index: 1;
+        }
+        .screens-image-container{
+          width: 50%;
+          position: relative;
+          height: 100%;
+          max-height: 100%;
+          overflow: hidden;
+          border-right: 2px solid;
+          border-image: linear-gradient(#2B2E34,#ececec,#2B2E34) 1 100%;
+          .tScreens{
+            display: block; 
+            margin-left: auto; 
+            margin-right: auto;
+            // margin: 0;
+            height: 100%;
+            width: 100%; // 100%;
+          }
+          .org-logo{
+            position: absolute;
+            height: 20%;
+            width: 60%;
+            bottom: 0;
+            right: 25%;
+            left: 17%
+          }
+        }
+        .logo-and-login-btn-container{
+          width: 50%;
+          overflow: hidden;
+          margin: 0px; // 5% 0px;
+          margin-left: 10px;
+          // height: 80%; // calc( 100% - 90px );
+          .product-name-container, .g-login-btn-container, .org-logo-container{
+            // height: 100%;
+            padding: 10px; // 5px 35px;
+            // display: table-cell;
+            img{
+              margin: 0;
+              // width: 100%;
+              // height: auto;
+            }
+          }
+          .product-name-container{
+            // height: 90px;
+            // max-height: 90px;
+            img{
+              height: auto; // 100%;
+              width: 100%; // auto;
+            }
+          }
+          .g-login-btn-container{
+            // height: 75px;
+            // max-height: 75px;
+            padding: 0px 15%;
+            margin: 5% 0px;
+            img{
+              height: auto; // 60px;
+              width: 100%; // auto;
+              cursor: pointer;
+            }
+          }
+          .org-logo-container{
+            // height: calc( 100% - 165px );
+            padding: 0px 25%;
+            img{
+              height: auto; // 100%;
+              width: 100%; // auto;
+            }
+          }
+        }
+        .orgazaniation-container{
+          color: #ffffff;
+          width: 100%;
+          height: 100%;
+          border: 1px solid #d0d0d0;
+          // border-radius: 20px;
+          background: rgba(255, 255, 255, 0.7);
+        }
+      }
+      @media (max-width: 1000px) {
+        .screens-btns-container{
+          display: block;
+          .screens-image-container{
+            width: 100%;
+            height: 35%;
+            border-right: unset;
+            border-bottom: 2px solid;
+            .tScreens{
+              margin: 0;
+              margin-top: 0 !important;
+              height: 90%; // 100%;
+              width: auto;
+            }
+            .org-logo{
+              width: 65px;
+            }
+          }
+          .logo-and-login-btn-container{
+            width: 100%;
+            height: 65%; // calc( 100% - 60px );
+            margin: 0;
+            // overflow: auto;
+            // display: flex;
+          }
+        }
+      }
+    }
+    @media (max-width: 650px) {
+      .login-prompt-area{
+        height: 98vh; // 100vh;
+        width: 100vw;
+        margin: 0;
+        .screens-btns-container{
+          border-radius: 0px;
+          // .screens-image-container{
+          //   img{
+          //     height: auto;
+          //     width: 100%;
+          //   }
+          // }
+          .logo-and-login-btn-container{
+              // width: 100%;
+              // height: 50%; // calc( 100% - 60px );
+              // margin: 0;
+              display: block;
+              // overflow: auto;
+          }
+        }
+      }
+    }
+    
+}
+
+.custom-tooltip-container{
+  background: transparent;
+  position: absolute;
+  right: -30px;
+  top: 75px;
+  font-weight: 500;
+  animation: blinker 2s linear infinite;
+  .msg-container{
+    background: #ccccfe;
+    position: relative;
+    .msg{
+      margin: 0;
+      padding: 2px 10px;
+      padding-right: 30px;
+      white-space: nowrap;
+      font-size: 14px;
+      line-height: 24px;
+    }
+    .close-icon{
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: center;
+      line-height: 28px;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+  .tooltip-arrow{
+    width: 0px;
+    height: 0px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-bottom: 25px solid #ccccfe;
+    position: absolute;
+    top: -25px;
+    right: 40px;
+  }
+}
+.custom-tooltip-container:hover{
+  animation: none;
+}

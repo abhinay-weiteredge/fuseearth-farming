@@ -1,0 +1,263 @@
+
+<!-- PREVIEW MODE-->
+<div class="preview-container" *ngIf="viewMode === 'preview'">
+    <div class="zoomin" (click)="zoomIn()">
+        <img src="assets/svgs/geosol/plus_white.svg">
+    </div>
+    <div class="zoomout" (click)="zoomOut()">
+        <img src="assets/svgs/geosol/minus_white.svg">
+    </div>
+    <div id="miniMapView" class="preview-map"></div>
+    <p *ngIf="layerInfo.fileType !== '.zip' && layerInfo.fileType !== '.jpg' && layerInfo.type !== 'jpg'"
+        style="background: #fff; position: absolute; top: 90px; width: 99%;">
+        This layer view not supported yet.
+    </p>
+</div>
+
+
+
+<!-- GEOREF MODE -->
+
+<div class="georef-legend" *ngIf="showGeorefLegend">
+    <div class="original-point"><p> <span>Original Point</span></p> </div>
+    <div class="resultant-point"><p> <span>Resultant Point</span></p></div>
+    <div class="georef-layer-opacity">
+        <input type="range" min="1" max="100" value="50" (change)="changeGeorefImageOpacity($event)" class="georef-layer-opacity-slider">
+    </div>
+    <div>
+        <img matTooltip="Show/ Hide" matTooltipClass="mat-custom-tooltip"
+            style="width: auto; cursor: pointer; margin: 5px;"
+            [ngStyle]="{'height': showGeorefLayerPreview ? '20px':'12px',
+                        'top': showGeorefLayerPreview ? '-4px':'0px'}"
+            [src]="showGeorefLayerPreview ? '/assets/svgs/geotower/toggle_active.svg':
+                '/assets/svgs/geotower/raster_vector_toggle_disable.svg'"
+            (click)="toggleGeorefLayerPreview()">
+    </div>
+</div>
+<!-- Opacity tool-->
+<!-- <div cdkDrag #opacityToolContainer style="display: none; position: relative; border: 1px solid;">
+    <div style="position: relative; background: #d0d0d0; width: 20px; overflow: hidden;">
+        <img matTooltip="Show/ Hide" matTooltipClass="mat-custom-tooltip"
+            style="width: auto; position: absolute; cursor: pointer;"
+            [ngStyle]="{'height': showGeorefLayerPreview ? '20px':'12px',
+                        'top': showGeorefLayerPreview ? '-4px':'0px'}"
+            [src]="showGeorefLayerPreview ? '/assets/svgs/geotower/toggle_active.svg':
+                '/assets/svgs/geotower/raster_vector_toggle_disable.svg'"
+            (click)="toggleGeorefLayerPreview()">
+    </div>
+    <div class="georef-layer-opacity" style="border-left: 1px solid #000;">
+        <input type="range" min="1" max="100" value="50" (change)="changeGeorefImageOpacity($event)" class="georef-layer-opacity-slider">
+    </div>
+</div> -->
+
+<!-- Georef Legend-->
+<!-- <div cdkDrag #georefLegendContainer class="georef-legend">
+    <div class="original-point"><p> <span>Original Point</span></p> </div>
+    <div class="resultant-point"><p> <span>Resultant Point</span></p></div>
+</div> -->
+
+<!-- Georef Window -->
+<div class="georef-container" *ngIf="viewMode === 'georef'">
+    <div class="georef-ops-container">
+        <div class="left-ops">
+            <!-- <div matTooltip="Pan Tool" matTooltipClass="mat-custom-tooltip"
+                [ngClass]="{'file-picker':true,'selected': selectedTab=='pan'}" (click)="operationChange('pan')">
+                <img src="assets/svgs/geotower/pan_icon_white.svg">
+            </div> -->
+            <div matTooltip="Referencing Tool" matTooltipClass="mat-custom-tooltip"
+                [ngClass]="{'file-picker':true, 'selected': selectedTab=='geo-ref'}" (click)="operationChange('geo-ref')">
+                <img src="assets/svgs/geotower/referencing_icon_white.svg">
+            </div>
+            <div matTooltip="Cropping Tool" matTooltipClass="mat-custom-tooltip"
+                [ngClass]="{'file-picker':true, 'selected': selectedTab=='crop'}" (click)="operationChange('crop')">
+                <img src="assets/svgs/geotower/crop_icon_white.svg">
+            </div>
+            
+        </div>
+        <div class="right-ops">
+            <div matTooltip="Save" matTooltipClass="mat-custom-tooltip"
+                [ngClass]="{'file-picker':true}" (click)="saveRefInfo()">
+                <img src="assets/svgs/geopad/save-white-icon.svg">
+            </div>
+        </div>
+    </div>
+    <div class="georef-image-container">
+        <div class="georef-suggestion-container" *ngIf="showGeorefSuggestion">
+            <i class="material-icons"> info </i>
+            <p>Mark atleast 3 control points for georeferencing accuracy.</p>
+            <i class="material-icons" (click)="showGeorefSuggestion=false">close</i>
+        </div>
+        <div class="georef-suggestion-container" *ngIf="validPointsCount >= maximumAllowedPoints">
+            <p>Maximum {{maximumAllowedPoints}} points allowed.</p>
+        </div>
+        <div class="zoomin" (click)="zoomIn()">
+            <img src="assets/svgs/geosol/plus_white.svg">
+        </div>
+        <div class="zoomout" (click)="zoomOut()">
+            <img src="assets/svgs/geosol/minus_white.svg">
+        </div>
+        <div id="miniMapView" class="mini-map"></div>
+    </div>
+    <div class="georef-manual-coords-container" *ngIf="showManualCoordsCollectScreen">
+        <div class="georef-manual-coords">
+            <div class="georef-manual-coords-header">
+                <p>Co-ordinates</p><i class="fa fa-times" (click)="closeManualPointWindow()"></i>
+            </div>
+            <div class="georef-manual-coords-body">
+                <div class="georef-points-type-container">
+                    <div [ngClass]="{'georef-point-type': true, 'active': georefManualPointType==='xy'}"
+                        (click)="georefManualPointType = 'xy'">
+                        X and Y
+                    </div>
+                    <div [ngClass]="{'georef-point-type': true, 'active': georefManualPointType==='lat-long'}"
+                        (click)="georefManualPointType = 'lat-long'">
+                        Lat and Long
+                    </div>
+                </div>
+                <div class="manual-point-data-container" *ngIf="georefManualPointType==='xy'">
+                    <table>
+                        <tr>
+                            <td>
+                                <label style="margin: 0px 5px;">X</label>
+                                <input style="max-width: 100px;" type="number" [(ngModel)]="manualPoint.xSource">
+                            </td>
+                            <td>
+                                <label style="margin: 0px 5px;">Y</label>
+                                <input style="max-width: 100px;" type="number" [(ngModel)]="manualPoint.ySource">
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="manual-point-data-container" *ngIf="georefManualPointType==='lat-long'">
+                    <table>
+                        <tr>
+                            <td></td> <td>Degree</td> <td>Minutes</td> <td>Seconds</td> <td></td>
+                        </tr>
+                        <tr>
+                            <td>Lat</td>
+                            <td><input type="number" min=-18000 max=18000 [(ngModel)]="manualPoint.latDeg"></td>
+                            <td><input type="number" min="-6000" max="6000" [(ngModel)]="manualPoint.latMin"></td>
+                            <td><input type="number" [(ngModel)]="manualPoint.latSec"></td>
+                            <td>
+                                <input type="radio" id="e" [(ngModel)]="manualPoint.latDirection" name="E" value="E">
+                                <label for="e">E</label>
+                                <input type="radio" id="w" [(ngModel)]="manualPoint.latDirection" name="W" value="W">
+                                <label for="w">W</label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Long</td>
+                            <td><input type="number" min="-18000" max="18000" [(ngModel)]="manualPoint.longDeg"></td>
+                            <td><input type="number" min="-6000" max="6000" [(ngModel)]="manualPoint.longMin"></td>
+                            <td><input type="number" [(ngModel)]="manualPoint.longSec"></td>
+                            <td>
+                                <input type="radio" id="n" [(ngModel)]="manualPoint.longDirection" name="N" value="N">
+                                <label for="n">N</label>
+                                <input type="radio" id="s" [(ngModel)]="manualPoint.longDirection" name="S" value="S">
+                                <label for="s">S</label>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="manual-point-save">
+                    <p class="err-msg" [ngStyle]="{'display': manualPointErrMsg==='' ? 'hidden':'visible'}">{{manualPointErrMsg}}</p>
+                    <button (click)="saveManualPoint()">save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="georef-coords-table-container">
+        <table>
+            <tr class="coords-table-row head">
+                <th>Link</th> <th>Xsource</th> <th>Ysource</th> <th>Xmap</th> <th>Ymap</th>
+                <th>Residual X</th> <th>Residual Y</th>
+                <!-- <th>Residual</th> -->
+                <th></th>
+            </tr>
+            <tr class="coords-table-row" *ngFor="let point of geoRefPoints; let i = index">
+                <td>
+                    <!-- {{point.link}} -->
+                    {{i+1}}
+                </td>
+                <td matTooltip="{{point.xSource}}" matTooltipClass="mat-custom-tooltip">
+                    <p *ngIf="point.xSourceViewMode" class="point-data-view" (dblclick)="point.xSourceViewMode=false">
+                        {{point.xSource}}
+                    </p>
+                    <input [autofocus]="!point.xSourceViewMode" *ngIf="!point.xSourceViewMode" class="point-edit-view" type="number" [(ngModel)]="point.xSource"
+                        (blur)="pointDataChanged(point, 'xSource', i)" (keyup.enter)="pointDataChanged(point, 'xSource', i)"/>
+                </td>
+                <td matTooltip="{{point.ySource}}" matTooltipClass="mat-custom-tooltip">
+                    <p *ngIf="point.ySourceViewMode" class="point-data-view" (dblclick)="point.ySourceViewMode=false">
+                        {{point.ySource}}
+                    </p>
+                    <input [autofocus]="!point.ySourceViewMode" *ngIf="!point.ySourceViewMode" class="point-edit-view" type="number" [(ngModel)]="point.ySource"
+                        (blur)="pointDataChanged(point, 'ySource', i)" (keyup.enter)="pointDataChanged(point, 'ySource', i)"/>
+                </td>
+                <td matTooltip="{{point.xMapOrLatitude}}" matTooltipClass="mat-custom-tooltip">
+                    <!-- {{point.xMapOrLatitude}} -->
+                    <p *ngIf="point.xMapOrLatitudeViewMode" class="point-data-view" (dblclick)="point.xMapOrLatitudeViewMode=false">
+                        {{point.xMapOrLatitude}}
+                    </p>
+                    <input autofocus *ngIf="!point.xMapOrLatitudeViewMode" class="point-edit-view" type="number" [(ngModel)]="point.xMapOrLatitude"
+                        (blur)="pointDataChanged(point, 'xMapOrLatitude', i)" (keyup.enter)="pointDataChanged(point, 'xMapOrLatitude', i)"/>
+                </td>
+                <td matTooltip="{{point.yMapOrLongitude}}" matTooltipClass="mat-custom-tooltip">
+                    <!-- {{point.yMapOrLongitude}} -->
+                    <p *ngIf="point.yMapOrLongitudeViewMode" class="point-data-view" (dblclick)="point.yMapOrLongitudeViewMode=false">
+                        {{point.yMapOrLongitude}}
+                    </p>
+                    <input autofocus *ngIf="!point.yMapOrLongitudeViewMode" class="point-edit-view" type="number" [(ngModel)]="point.yMapOrLongitude"
+                        (blur)="pointDataChanged(point, 'yMapOrLongitude', i)" (keyup.enter)="pointDataChanged(point, 'yMapOrLongitude', i)"/>
+                </td>
+                <td matTooltip="{{point.residualX}}" matTooltipClass="mat-custom-tooltip">
+                    <p class="point-data-view" style="background: transparent; color: #000; cursor: unset;">
+                        {{point.residualX}}
+                    </p>
+                </td>
+                <td matTooltip="{{point.residualY}}" matTooltipClass="mat-custom-tooltip">
+                    <p class="point-data-view" style="background: transparent; color: #000; cursor: unset;">
+                        {{point.residualY}}
+                    </p>
+                </td>
+                <!-- <td matTooltip="{{point.residual}}" matTooltipClass="mat-custom-tooltip">
+                    <p class="point-data-view" style="background: transparent; color: #000; cursor: unset;">
+                        {{point.residual}}
+                    </p>
+                </td> -->
+                <td class="point-remove">
+                    <i class="material-icons" style="cursor: pointer;" (click)="removePoint(point, true)">close</i>
+                </td>
+            </tr>
+
+<!-- 1 540.32 -815.71 -89.71 29.94 0.009 0.001 0.009 -->
+        </table>
+    </div>
+    <div class="georef-transform-select-container">
+        <select>
+            <option>Affine Transformation</option>
+            <!-- <option>First Order polynomial</option>
+            <option>Adjust</option>
+            <option>Projective Transformation</option>
+            <option>Zero Order Polynomial</option> -->
+        </select>
+    </div>
+
+    <div class="confirm-delete-container" *ngIf="showGeorefConfirmDeletePoint">
+        <div class="confirm-delete" *ngIf="showGeorefConfirmDeletePoint">
+            <div class="header">
+              <i class="fa fa-times" (click)="showGeorefConfirmDeletePoint=false"></i>
+            </div>
+            <div class="confirm-body">
+              <p class="confirm-text">Are you sure you want to delete the point <b>{{selectedPointIndex}}</b> ?</p>
+              <div class="btns-container">
+                <div class="yes-btn-container">
+                    <button (click)="deleteSelectedPoint()">Yes</button>
+                </div>
+                <div class="no-btn-container">
+                  <button (click)="showGeorefConfirmDeletePoint=false">No</button>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>

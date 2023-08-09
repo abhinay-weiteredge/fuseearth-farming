@@ -1,0 +1,118 @@
+<!-- <li [ngClass]="{'hide-layer': layer.previewLayer}" class="layer-main" id="{{layer.name}}"
+  *ngFor="let layer of layersList; let i = index;" [ngStyle]="{'z-index': layersList.length-i }"> -->
+  <!-- <app-tower-item-options *ngIf="layer.selected" [layerItemOptActive]="layerItemOptActive" [isGroup]="false" [layerData]="layer" -->
+    <!-- <div #draggingTower [ngStyle]="{
+      'width': towerWidth+'px', 
+      'height': layerOptionsHeight+'px',
+      'margin-top': '0px' 
+    }" 
+    class="tower-before-noscroll" [ngStyle]="{'z-index': layerOrder*3}"></div> -->
+    <!-- class="tower-before-noscroll" [ngStyle]="{'z-index': showLayerCapFun()  ? layerOrder*3+1 : layerOrder*3}"></div> -->
+  <app-tower-item-options *ngIf="layer.selected" [isGroup]="false" [layerData]="layer"
+    [ngStyle]="{'left': towerWidth+'px', 'width': towerOptionsWidth+'px' }"
+    [towerWidth]="towerWidth"
+    [towerOptionsWidth]="towerOptionsWidth"
+    (saveTowerLayer)="saveTowerLayerFun($event)"
+    (previewIsActiveEmit)="previewIsActiveEmit($event)"
+    (collapseRibbon)="_layerOptionActivateEvent($event, layer, false)"
+    [towerId]="towerId" 
+    [isDeleteDisable]="isDeleteDisable"
+    (sliderVal)="sliderValue=$event">
+  </app-tower-item-options>
+
+  <!--circular///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+
+  <!-- <div [ngClass]="{'hide-layer': layer.previewLayer}" [ngStyle]="{'width': towerWidth+'px' }" class="tower-item-div"> -->
+    <ul class="circle" >
+      <!-- <span [ngStyle]="{'height': layerOptionsHeight+'px', 'background': !isValid(layer.proj) ? 'gray' : '' }" matTooltip="Connection" container="body" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer)" style="cursor: pointer;">c</span> -->
+      <li>
+        <div class="text" style="color: black;cursor: pointer;" title="Preview" (click)="showPreviewFun(layer)" longPress (mouseLongPress)="previewORgrouplayer()" *ngIf="searchorhand">
+         
+          <img src="../../../assets/svgs/geotower/preview.svg" alt=""  style="width: 12px;transform: skewY(174deg) rotate(256deg);margin-top: -5px;margin-left: -1px;">
+        </div>
+        <div class="text" style="color: black;cursor: pointer;"  title="Group Layer" (click)="showLayer(layer)" longPress (mouseLongPress)="previewORgrouplayer()" *ngIf="!searchorhand"><img src="../../../assets/svgs/geotower/group_layer.svg" alt=""  style="width: 12px;transform: skewY(174deg) rotate(256deg);margin-top: -5px;margin-left: -1px;"></div>
+      </li>
+      <li>
+        <div class="text" style="color: black;cursor: pointer;"  (click)="tables()" title="Table" longPress (mouseLongPress)="tableORdatabase()" *ngIf="tableordatabase"><img src="../../../assets/svgs/geotower/table.svg" alt=""  style="width: 12px;transform: skewY(353deg) rotate(214deg);padding-top: 5px;margin-left: -3px;"></div>
+        <div class="text" style="color: black;cursor: pointer;" (click)="savelayer($event)"  title="Save To Database" longPress (mouseLongPress)="tableORdatabase()" *ngIf="!tableordatabase"><img src="../../../assets/svgs/geotower/save_to_db.svg" alt=""  style="width: 12px;transform: skewY(353deg) rotate(214deg);padding-top: 5px;margin-left: -3px;"></div>
+      </li>
+      <li>
+        <div class="text" style="color: black;cursor: pointer;" 
+        title="Active / Inactive Toggle"  [ngClass]="{'showlayer' :'showlayervisibility' , 'hidelayer': !showlayervisibility}" (click)="showLayer(layer)" title="Show Layer" longPress (mouseLongPress)="showlayerORdeletelayer()" *ngIf="showlayerordeletelayer"><img *ngIf="!showlayervisibility" src="../../../assets/svgs/geotower/raster_vector_toggle_disable.svg" alt=""  style="width: 12px;transform: skewY(353deg) rotate(185deg);" >
+        <img *ngIf="showlayervisibility" src="../../../assets/svgs/geotower/toggle_active.svg" alt=""  style="width: 12px;transform: skewY(353deg) rotate(185deg);" ></div>
+        <div class="text" style="color: black;cursor: pointer;" 
+        title="Active / Inactive Toggle" (click)="deletelayer()" title="Delete Layer"  longPress (mouseLongPress)="showlayerORdeletelayer()"  *ngIf="!showlayerordeletelayer"><img src="../../../assets/svgs/geotower/delete_layer.svg" alt=""   style="width:13px;margin-top: -3px;margin-left: -3px;transform: skewY(353deg) rotate(179deg);"></div>
+      </li>
+      <li>
+        <div class="text" style="color: black;cursor: pointer;" title="Selection" longPress (mouseLongPress)="selectionORlabel()" *ngIf="selectionorlabel"><img src="../../../assets/svgs/geotower/selection.svg" alt="" style="width: 12px;transform: skewY(353deg) rotate(56deg);"></div>
+        <div class="text" style="color: black;cursor: pointer;" title="Label" longPress (mouseLongPress)="selectionORlabel()" *ngIf="!selectionorlabel"><img src="../../../assets/svgs/geotower/label.svg" alt="" style="width: 12px;transform: skewY(353deg) rotate(145deg);"></div>
+      </li>
+      <li>
+        <div class="text"  title="Zoom to Layer" (click)="zoomToLayer(layer)" style="color: black;cursor: pointer;"   longPress (mouseLongPress)="zoomORpan()" *ngIf="zoomorpan"><img src="../../../assets/svgs/geotower/zoom_to_layer.svg" alt="" style="width: 12px;transform: skewY(353deg) rotate(95deg);"></div>
+        <div class="text"  title="Pan To Layer" (click)="pantolayer()" style="color: black;cursor: pointer;"   longPress (mouseLongPress)="zoomORpan()" *ngIf="!zoomorpan"><img src="../../../assets/svgs/geotower/pan_to_layer.svg" alt="" style="width: 12px;transform: skewY(353deg) rotate(115deg);"></div>
+      </li>
+      <li>
+        <div class="text" 
+        title="Connection" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;">C</div>
+      </li>
+      <li>
+        <div class="text" title="Specification" id="{{layer.name}}" (click)="showItemPropertyWindow($event, layer, SPECIFICATION_HEADER)" style="cursor: pointer;">S</div>
+      </li>
+      <li>
+        <div class="text" title="Function" container="body" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, FUNCTION_HEADER)" style="cursor: pointer;" >F</div>
+      </li>
+      <li>
+        <div class="text" title="Depicition" id="{{layer.name}}" (click)="showItemPropertyWindow($event, layer, DEPICTION_HEADER)" style="cursor: pointer;">D</div>
+      </li>
+      <li>
+        <div class="text" title="Interaction" id="{{layer.name}}" (click)="showItemPropertyWindow($event, layer, INTERACTION_HEADER)" style="cursor: pointer;">I</div>
+      </li>
+     
+    </ul>
+  <!-- </div> -->
+  <div class="inner-coin" #container>
+   
+   <div class="layer-opacity"  [ngStyle]="{'background': 'linear-gradient(to right, ' + firstColor + sliderValue + '%,' + secondColor + ' ' + sliderValue + '%' }">
+    <span *ngIf="showslidervalue" style="align-items: center;
+    position: absolute;
+ top: 25%;
+ left: 20%;
+ font-size: 22px;z-index: 1;cursor: pointer;transform: rotate(90deg);
+ -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Standard */" title="{{layer.name}}" matTooltipClass="mat-custom-tooltip" ><b>{{sliderValue}}%</b></span>
+  <span *ngIf="!showslidervalue" style="align-items: center;
+  position: absolute;
+top: 13%;
+left: 38%;
+font-size: 34px;z-index: 1;cursor: pointer;transform: rotate(90deg);
+-webkit-user-select: none; /* Safari */
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* Internet Explorer/Edge */
+user-select: none; /* Standard */" title="{{layer.name}}" matTooltipClass="mat-custom-tooltip" ><b>{{layer.name.toUpperCase( )  | slice:0:1}}</b></span>
+    <input matTooltipPosition="left" matTooltip="{{layer.name}}" matTooltipClass="mat-custom-tooltip" (change)="layerSlider($event)" type="range" min="1" max="100" value="75" class="slider"  [(ngModel)]="sliderValue" [value]="sliderValue" (mousedown)="dragfeature(false)" (mouseup)="dragfeature(true)">
+  </div>
+  </div>
+  
+  
+  <!--circular///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<!-- </li> -->
+<app-connection style="display:none"></app-connection>
+<app-depiction style="display:none"></app-depiction>
+<app-function style="display:none"></app-function>
+<app-interaction style="display:none"></app-interaction>
+<app-specification style="display:none"></app-specification>
+<ng-template #geotowerItemConnectionContent>Connection</ng-template>
+<ng-template #geotowerItemSpecificationContent>Specification</ng-template>
+<ng-template #geotowerItemFunctionContent>Function</ng-template>
+<ng-template #geotowerItemDepictionContent>Depiction</ng-template>
+<ng-template #geotowerItemInteractionContent>Interaction</ng-template>
+
+<ng-template #geotowerItemZoomToLayer>Zoom to Layer</ng-template>
+<ng-template #geotowerItemSelection>Selection</ng-template>
+<ng-template #geotowerItemRasterVectorToggle>Raster / vector Toggle</ng-template>
+<ng-template #geotowerItemActiveInactiveToggle>Active / Inactive Toggle</ng-template>
+<ng-template #geotowerItemPreview>Preview</ng-template>
+

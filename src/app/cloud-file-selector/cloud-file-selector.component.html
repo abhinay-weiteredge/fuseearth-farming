@@ -1,0 +1,60 @@
+
+<div style="height: 100%;">
+  <div *ngIf="fileSelectorView === 'GOOGLE'">
+    <!-- <button id="authorize_button" style="display: none;" (click)="handleAuthClick($event)">Authorize</button>
+    <button id="signout_button" style="display: none;" (click)="handleSignoutClick($event)">Sign Out</button> -->
+    <!-- <button id="driveLoginBtn" (click)="doGoogleDriveLogin($event)">Drive Login</button> -->
+    
+    <button id="driveLoginBtn" disabled *ngIf="!googleAuthAPILoaded || !googlePickerApiLoaded" (click)="doGoogleDriveLogin($event)">Drive Login</button>
+    <button id="driveLoginBtn" *ngIf="googleAuthAPILoaded && googlePickerApiLoaded" (click)="doGoogleDriveLogin($event)">Drive Login</button>
+  </div>
+
+
+  <div class="file-selector-view-container" *ngIf="fileSelectorView === 'AWS'">
+      
+      <div class="file-selector-header">
+        <div class="file-selector-title-container">
+          <img class="cfm-data-logo" src="assets/svgs/geobar/cloud_icon2.svg">
+          <span class="cfm-data-title">
+            File Manager (Cloud)
+          </span>
+        </div>
+        <div class="links-container">
+          <div class="navigation-links-container" (click)='doUnSelect($event)'>
+              <span class="navigation-link" *ngFor="let dir of dirStruct; let i = index" (click)="navLinkClicked(dir, i)">{{dir}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="files-and-folders-container" *ngIf="fileListingStatus === 'loaded'" (click)='doUnSelect($event)'>
+          <p *ngIf="currentFilesList.length <= 0">No files present.</p>
+          <div class="selected-files-count-container" *ngIf="selectedFilesList.length > 0">
+            <div class="selected-files-coutn">
+              <p>Selected Files: {{selectedFilesList.length}}</p>
+            </div>
+            <div class="clear-selected-files">
+              <button (click)="clearAllSelectedFiles()">Clear All</button>
+            </div>
+          </div>
+          <div [ngClass]="{'file-or-folder':true, 'folder': currFile.Type === 'Folder',
+              'file': currFile.Type === 'File', 'selected-file': currFile.selected}" 
+            matTooltip="{{currFile.name}}" matTooltipClass="mat-custom-tooltip" *ngFor="let currFile of currentFilesList" (click)="fileClicked(currFile)">
+            <span *ngIf="currFile.selected" class="material-icons selected-icon"> check_circle_outline </span>
+            <span *ngIf="currFile.Type === 'Folder'" class="material-icons icon"> folder </span>
+            <span *ngIf="currFile.Type === 'File'" class="material-icons icon"> description </span>
+            <div class="file-name">
+              <span>{{currFile.name}}</span>
+              <span *ngIf="currFile.Type === 'File'" class="file-size">({{currFile.shortFileSize}})</span>
+            </div>
+            <!-- <span class="file-type">{{currFile.Type}}</span> -->
+          </div>
+      </div>
+      <div class="file-selections-container" *ngIf="currentFilesList.length > 0">
+          <button class="close-btn" (click)="closeAwsFilePicker()">Close</button>
+          <button *ngIf="selectedFilesList.length > 0" class="select-btn" (click)="fileSelectionFun()">Select</button>
+          <button *ngIf="selectedFilesList.length == 0" disabled class="disable-btn">Select</button>
+      </div>
+      <div class="loading-conainer" *ngIf="fileListingStatus === 'loading'">
+          <p>Loading...</p>
+      </div>
+  </div>
+</div>

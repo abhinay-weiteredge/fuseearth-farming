@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil1 {fill:white}
+   ]]>
+  </style>
+   <clipPath id="id0">
+    <path d="M211.931 20.127c-130.267,24.339 -216.142,149.674 -191.804,279.942 24.338,130.267 149.674,216.142 279.942,191.804 130.267,-24.338 216.142,-149.674 191.804,-279.942 -24.339,-130.267 -149.674,-216.142 -279.942,-191.804z"/>
+   </clipPath>
+    <clipPath id="id1">
+     <path d="M211.931 20.127c-130.267,24.339 -216.142,149.674 -191.804,279.942 24.338,130.267 149.674,216.142 279.942,191.804 130.267,-24.338 216.142,-149.674 191.804,-279.942 -24.339,-130.267 -149.674,-216.142 -279.942,-191.804z"/>
+    </clipPath>
+    <clipPath id="id2">
+     <path d="M211.931 20.127c-130.267,24.339 -216.142,149.674 -191.804,279.942 24.338,130.267 149.674,216.142 279.942,191.804 130.267,-24.338 216.142,-149.674 191.804,-279.942 -24.339,-130.267 -149.674,-216.142 -279.942,-191.804z"/>
+    </clipPath>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <path class="fil1" d="M211.931 20.127c-130.267,24.339 -216.142,149.674 -191.804,279.942 24.338,130.267 149.674,216.142 279.942,191.804 130.267,-24.338 216.142,-149.674 191.804,-279.942 -24.339,-130.267 -149.674,-216.142 -279.942,-191.804z"/>
+  <g style="clip-path:url(#id0)">
+   <g id="_3290948601856">
+   </g>
+   <g style="clip-path:url(#id1)">
+    <image x="-127.244" y="-100.504" width="766.486" height="713.007" xlink:href="map-4_Images\map-4_ImgID1.png"/>
+   </g>
+   <g style="clip-path:url(#id2)">
+   </g>
+  </g>
+  <path class="fil0" d="M211.931 20.127c-130.267,24.339 -216.142,149.674 -191.804,279.942 24.338,130.267 149.674,216.142 279.942,191.804 130.267,-24.338 216.142,-149.674 191.804,-279.942 -24.339,-130.267 -149.674,-216.142 -279.942,-191.804z"/>
+ </g>
+</svg>

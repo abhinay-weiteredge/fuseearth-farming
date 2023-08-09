@@ -1,0 +1,28 @@
+<div>
+<!-- <app-loading-spinner></app-loading-spinner> -->
+<div class="route-container" *ngIf="latestToken" (click)="pageClickEvent=$event">
+    <router-outlet></router-outlet>
+</div>
+<!-- <div id="page-loader" *ngIf="!latestToken" class="loading-container">
+    <p class="loading-text">Loading...</p>
+</div> -->
+<ng-progress
+    [positionUsing]="'marginLeft'"
+    [direction]="'leftToRightIncreased'"
+    [color]="'#4286f4'"
+    [trickleSpeed]="500" 
+    [thick]="true" 
+    [ease]="'easeInSine'"
+></ng-progress>
+
+
+</div>
+
+<!-- <div [ngClass]="{'login-and-app-info-container': true, 'move-left': pageType === pageTypes.COVID19}">
+    <div class="login-container">
+        <app-user-login
+        [pageType]="pageType"
+        [pageClickEvent]="pageClickEvent"></app-user-login>
+    </div>
+</div> -->
+

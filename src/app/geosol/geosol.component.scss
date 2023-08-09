@@ -1,0 +1,759 @@
+@import '~compass-mixins/lib/compass/css3';
+@import '../theme.scss';
+
+$primary-dark-color: $primary-dark-color;// #007dc6;
+$secondry-dark-color: $secondry-dark-color;// #007dc6;
+$secondry-selected-color: $secondry-selected-color;
+
+$btn-color : #017dc7;
+$icon-width : 60; // 65;
+$center-controller-width : 132; // 112;
+
+
+.icon-img{
+  // padding: 6px;
+  width: 100%;
+  height: 100%;
+}
+
+.geosol-left-sub-options-container{
+  min-width: 100px;
+  // max-width: #{(($icon-width*5)+20)}px ; //320px;
+  max-width: 344px;
+  // margin-top: 12px;
+  // height: #{($icon-width+10)}px; //70px;
+  height: 70px;
+  position: fixed;
+  // bottom: #{75+$notification-bar-height}px;
+  bottom: 100px;
+  // left: calc( 50% - #{(($icon-width*5)+45+ ($center-controller-width/2) )}px );
+  left: calc( 50% - 411px );
+  background: #e6e6e7;
+  .observations-container{
+    margin: 0;
+    padding: 5px 0px;
+    display: flex;
+    width: auto;
+    transition: width .5s;
+    overflow: auto;
+  }
+  .observations-container::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 4px $primary-dark-color; //#006dad; /*#afafaf; */ 
+  }
+  .observations-container::-webkit-scrollbar-thumb {
+    background: /*#afafaf; */ $primary-dark-color; // #006dad;
+  }
+  .frameworks-container{
+    margin: 0;
+    // padding: 5px;
+    width: auto;
+    transition: width .5s;
+    overflow: auto;
+    .framework-option{
+      display: flex;
+      padding: 2px 5px;
+      font-size: 12px;
+      height: 35px;
+      input{
+        margin: 5px 0px;
+      }
+      label{
+        margin: 0;
+        margin-left: 5px;
+        .framework-option-data-container{
+          display: flex;
+          .framework-option-name{
+            margin: 0;
+            min-width: 100px;
+            .primary-name{
+              margin: 0;
+            }
+            .secondary-name{
+              margin: 0;
+              font-size: 9px;
+            }
+          }
+          .framework-option-select-container{
+            margin: 0;
+            select{
+              min-width: 65px;
+              margin-top: 5px;
+            }
+          }
+          .bufferdropdown {
+            background-color: white;
+            position: relative;
+            z-index: 505;
+            border-radius: 50%;
+            background: white;
+            // box-shadow: 1px 1px 7px 0px;
+            cursor: pointer;
+            position: absolute;
+            border: 0.5px solid black;
+        
+            .dropdown {
+              top: 15px;
+              left: -77px;
+              overflow: auto;
+              width: 90px;
+              height: auto;
+            
+        
+        
+            }
+        
+          }
+        }
+      }
+    }
+    .selected-option{
+      background: $primary-dark-color;
+      color: $white-color;
+      select{
+        background: $primary-dark-color;
+        color: $white-color;
+      }
+    }
+  }
+}
+.geosol-options-container{
+  // display: flex;
+  // position: absolute;
+  // bottom: 0;
+  // left: calc( 50% - 397px );
+  margin: 0;
+  .geosol-left-options-container{
+    width: #{(($icon-width*5)+20)}px ; //320px;
+    // margin-top: 12px;
+    height: #{($icon-width+10)}px; //70px;
+    position: fixed;
+    bottom: #{$notification-bar-height}px; // 0;
+    left: calc( 50% - #{(($icon-width*5)+45+ ($center-controller-width/2) )}px );
+
+    // transition: width .5s;
+    // background: transparent;
+    // background: #fff;
+    .geosol-left-options{
+      display: flex;
+      float: right;
+      width: auto;
+      // height: 100%;
+      transition: width .5s;
+      overflow: hidden;
+      background: #e6e6e7; // #fff;
+      padding: 5px 0px;
+      // margin-right: 5px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      // app-geosol-option:nth-child(1){
+      //   margin-left: 5px;
+      // }
+    }
+  }
+  // .geosol-orientation-globe-container{
+  //   width: 35px;
+  //   height: 35px;
+  //   transform: rotate(22deg);
+  //   padding: 2px;
+  //   position: absolute !important;
+  //   top: calc( 100% - 170px ) !important;
+  //   left: calc( 50% - 17.5px ) !important;
+  //   .geosol-orientation-globe{
+  //     width: 100%;
+  //     height: 100%;
+  //     background: radial-gradient(white 35%, #006dad 65%);
+  //     border-radius: 50%;
+  //     padding: 3px;
+  //     .geosol-orientation-bg{
+  //       background-image: url("/assets/svgs/geosol/circle.png");
+  //       background-repeat: no-repeat;
+  //       background-size: contain;
+  //       height: 100%;
+  //       width: 100%;
+  //       position: relative;
+  //       img{
+  //         width: 100%; 
+  //         height: 90%; //100%; 
+  //         margin: 0;
+  //       }
+  //     }
+  //   }
+  // }
+  .display-units-scale-container{
+    display: flex;
+    position: absolute;
+    top: calc( 100% - #{165+$notification-bar-height}px) !important;
+    left: calc( 50% - 60px) !important;
+    // width: 120px;
+    // height: 130px;
+    position: absolute !important;
+    text-align: center;
+    color: $white-color;
+    font-size: 12px;
+    .units-container{
+      margin: 0;
+      width: 60px; // 50%;
+      background-color: #4d4d4d;
+      select{
+        background: transparent;
+        color: $white-color;
+        border: none;
+        option{
+          color: $black-color;
+        }
+      }
+    }
+    .scale-container{
+      margin: 0;
+      min-width: 40px;
+      background-color: #e2e2e2;
+      color: $black-color;
+      transition: 1.5s width;
+      border: .5px solid;
+    }
+  }
+  .geosol-orientation-globe-container-outer:hover{
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
+    -webkit-box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
+    -o-box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.6);
+  }
+  .geosol-orientation-globe-container-outer{
+    @include transform(rotate(-23deg) scale(0.2));
+    @include transition(.1s ease-out all);
+    // transform: rotate(22deg);
+    // top: calc( 100% - 120px) !important;
+    top: calc( 100% - #{135+$notification-bar-height}px) !important;
+    left: calc( 50% - 65px) !important;
+    width: 130px;
+    height: 130px;
+    position: absolute !important;
+    border-radius: 50%;
+    overflow: hidden;
+    background: transparent;
+    .geosol-orientation-globe-container{
+      border-radius: 50%;
+      box-shadow: none;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      /* border: 15px solid #4d4d4d; */
+      background: #4d4d4d;
+      span{
+        color: #fff;
+        width: 10px;
+        height: 10px;
+        position: absolute;
+        font-size: 11px;
+      }
+      .north{
+        top: 0px;
+        left: calc( 50% - 4px );
+      }
+      // .east{
+      //   right: 0px;
+      //   top: calc( 50% - 1px);
+      //   transform: rotate(90deg);
+      // }
+      // .south{
+      //   bottom: 6px;
+      //   left: calc( 50% - 3px );
+      // }
+      // .west{
+      //   left: 0px;
+      //   top: calc( 50% - 6px);
+      //   transform: rotate(-90deg);
+      // }
+      
+    }
+    &.active {
+      @include transition(1s ease-out all);
+      @include transform(rotate(22deg) scale(1));
+    }
+    .rotation-angle-container{
+      bottom: 0px;
+      transform: rotate(-20deg);
+      right: calc( 50% - 39px );
+      position: absolute;
+      input{
+        color: #fff !important;
+        height: 12px;
+        width: 36px;
+        background: #4d4d4d;
+        font-size: 11px;
+        padding: 1px 5px;
+        border: none;
+        text-align: center;
+      }
+      input:hover{
+        border: 1px solid;
+      }
+    }
+  }
+
+  // .geosol-orientation-globe-container:hover{
+  //   .geosol-orientation-globe{
+  //     .geosol-orientation-bg{
+  //         transform: scale(1.1);
+  //         background: transparent;
+  //     }
+  //   }
+  // }
+
+  .geosol-options-controller-container{
+    z-index: 2;
+    width: 142px; // 112px;
+    height: 0px; //70px;
+    // display: flex;
+    // position: relative;
+
+    position: fixed;
+    bottom: #{$notification-bar-height}px; // 0;
+    left: calc( 50% - 71px ); // 56px );
+    
+    .controller-container{
+      // margin-top: 10px;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      bottom: 120px; // 90px;
+      // margin-top: -20px; //-8px;
+      // .controller{
+      //   position: absolute;
+      //   margin-left: calc( 50% - 25px );
+      //   bottom: 25px;
+      // }
+      .controller-btn-card-container{
+        width: 100px; //70px;
+        height: 100px; // 70px;
+        display: flex;
+        margin-left: calc( 50% - 50px); // 35px );
+        border-radius: 50px; // 35px;
+        overflow: hidden;
+        .controller-btn-inner-left-container, .controller-btn-inner-right-container{
+          width: 50%;
+          // height:100%;
+          background: #e2e2e2;
+          cursor: pointer;
+        }
+        .controller-btn-inner-left-container{
+          border-right: 1px solid #4d4d4d;
+        } 
+        .controller-btn-inner-right-container{
+          border-left: 1px solid #4d4d4d;
+        }
+        .controller-btn-inner-left-container:hover, .controller-btn-inner-right-container:hover{
+          background: $primary-dark-color; // #96bbd1;
+        }
+        
+      }
+      // .controller-btn-img-ouline-container{
+      //   border-radius: 50%;
+      //   width: 46px;
+      //   height: 46px;
+      //   padding: 5px;
+      //   position: absolute;
+      //   background: radial-gradient(white 35%, $primary-dark-color/*#006dad*/ 65%);
+      //   top: 12px;
+      //   left: calc( 50% - 23px);
+      //   cursor: pointer;
+      //   .controller-btn-img-bg{
+          
+      //     background-image: url("/assets/svgs/geosol/circle.png");
+      //     background-repeat: no-repeat;
+      //     background-size: contain;
+      //     border-radius: 50%;
+      //     height: 100%;
+      //   }
+      // }
+      // .controller-btn-img-ouline-container:hover{
+      //   box-shadow: 2px 2px 9px 0px;
+      //   .controller-btn-img-bg{
+      //           transform: scale(1.1);
+      //           background: transparent;
+      //   }
+      // }
+      .geohub-outline-container{
+        border-radius: 50%;
+        width: 80px;
+        height: 80px;
+        padding: 5px;
+        background-color: $white-color;
+        position: absolute;
+        top: 10px;
+        left: calc( 50% - 40px);
+        // cursor: pointer;
+        .geohub-options-container{
+          // background: $primary-dark-color;
+          height: 70px;
+          width: 70px;
+          border-radius: 35px;
+          position: absolute;
+          top: 5px;
+          overflow: hidden;
+          transform: rotate(-45deg);
+          .geohub-zoomin-container, .geohub-zoomout-container{
+            display: flex;
+            height: calc( 50% - 1px );
+            .previous-extent, .zoomin, .zoomout, .next-extent{
+              width: calc( 50% - 1px );
+              background-color: $primary-dark-color;
+              position: relative;
+              cursor: pointer;
+              img{
+                width: 10px;
+                transform: rotate(45deg);
+                position: absolute;
+                left: calc( 50% - 5px);
+                top: calc( 50% - 5px);
+              }
+            }
+          }
+          .geohub-zoomin-container{
+              margin-bottom: 2px;
+              .previous-extent{
+                margin-right: 1px;
+              }
+              .zoomin{
+                margin-left: 1px;
+              }
+          }
+          .geohub-zoomout-container{
+              margin-top: 1px;
+              .zoomout{
+                margin-right: 1px;
+              }
+              .next-extent{
+                margin-left: 1px;
+              }
+          }
+        }
+
+        .globe-compass-ouline-container{
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          padding: 3px;
+          position: absolute;
+          background: #4d4d4d; // radial-gradient(white 35%, $primary-dark-color/*#006dad*/ 65%);
+          top: calc( 50% - 20px);
+          left: calc( 50% - 20px);
+          cursor: pointer;
+          .globe-btn-img-bg{
+            
+            background-image: url("/assets/svgs/geosol/circle.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            border-radius: 50%;
+            height: 100%;
+            .globe{
+              height: 100%;
+              width: 100%;
+              padding: 3px;
+            }
+            .compass{
+              position: absolute;
+              top: 3px;
+              left: 5px;
+              width: 30px;
+              height: 12px;
+            }
+          }
+        }
+      
+      }
+      
+      
+    }
+    .geo-units{
+      margin: 0;
+      position: absolute;
+      bottom: 0;
+      left: calc( 50% - 42.5px );
+      font-size: 11px;
+      background: $primary-dark-color; // #017dc7;
+      padding: 0px 5px;
+      color: #fff;
+      border: 1px solid;
+      width: 85px;
+      height: 20px;
+      text-align: center;
+    }
+    .geosol-zoomin-control{
+      font-size: 14px;//11px;
+      position: fixed;
+      cursor: pointer;
+      top: 5px; //-22px;//-15px;
+      // right: calc( 50% - 42.5px);
+      left: 5px;
+      background: $primary-dark-color; // #017dc7;
+      // border-radius: 6px;
+      font-weight: bold;
+      // border-radius: 3px;
+      padding: 3px; 
+      color: #fff;
+      border: .5px solid;
+      // z-index: 111;
+    }
+    .geosol-zoomout-control{
+      font-size: 14px;//11px;
+      position: fixed;
+      cursor: pointer;
+	  top: 26px;//-22px; //-15px;
+      left: 5px; //calc( 50% - 42.5px );
+      background: $primary-dark-color; // #017dc7;
+      // border-radius: 6px; 
+      font-weight: bold; 
+      // z-index: 111;
+      // border-radius: 3px;
+      padding: 3px;
+      color: #fff;
+      border: .5px solid;
+      border-bottom: unset;
+    }
+    .map-types{
+      margin-top: 5px;
+      position: fixed;
+      top: 45px; //-22px;//-15px;
+      left: 5px; //calc( 50% - 42.5px );
+      font-size: 11px;
+      background: $primary-dark-color; // #017dc7;
+      padding: 0px 5px;
+      color: #fff;
+      border: 1px solid;
+      width: 85px;
+      height: 20px;
+      text-align: center;
+    }
+    .projection-types{
+      margin-top: 5px;
+      position: fixed;
+      top: 66px; //-22px;//-15px;
+      left: 5px; //calc( 50% - 42.5px );
+      font-size: 11px;
+      background: $primary-dark-color; // #017dc7;
+      padding: 0px 5px;
+      color: #fff;
+      border: 1px solid;
+      width: 85px;
+      height: 20px;
+      text-align: center;
+    }
+
+  }
+
+  .geosol-right-options-container{
+    width: #{(($icon-width*5)+20)}px ; //320px;
+    // margin-top: 12px;
+    height: #{($icon-width+10)}px;//70px;
+    position: fixed;
+    bottom: #{$notification-bar-height}px; // 0;
+    left: calc( 50% + 66px );
+    // transition: width .5s;
+    // background: transparent;
+    // background: #fff;
+    .geosol-right-options{
+      direction: rtl;
+      display: flex;
+      width: auto;
+      transition: width .5s;
+      overflow: hidden;
+      background: #e6e6e7; // #fff;
+      padding: 5px 0px;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+      app-geosol-option:nth-child(1){
+        margin-left: 5px;
+      }
+    }
+  }
+}
+
+
+@media( max-width:930px ){
+  .geosol-options-container{
+    
+    .geosol-left-options-container{
+      width: #{($icon-width+10)}px !important; //70px;
+      height: #{(($icon-width*5)+20)}px !important; //320px;
+      position: fixed;
+      bottom: #{$notification-bar-height}px; // 0;
+      // left: calc( 50% - 126px);
+      left: calc( 50% - #{($icon-width+10+($center-controller-width/2) )}px );
+      .geosol-left-options{
+        display: block;
+        float: right;
+        width: auto;
+        transition: height .5s;
+        overflow: hidden;
+        background: #fff;
+        padding: 3px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        app-geosol-option:nth-child(1){
+          margin: 0px;
+        }
+      }
+    }
+    .geosol-right-options-container{
+      width: #{($icon-width+10)}px !important; //70px;
+      height: #{(($icon-width*5)+20)}px !important; //320px;
+      position: fixed;
+      bottom: #{$notification-bar-height}px; // 0;
+      left: calc( 50% + 56px );
+      .geosol-right-options{
+        display: block;
+        width: auto;
+        transition: height .5s;
+        overflow: hidden;
+        background: #fff;
+        padding: 3px;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        app-geosol-option:nth-child(1){
+          margin-left: 0px;
+        }
+      }
+    }
+
+  }
+}
+.modalHeader{
+  margin: 0;
+  background: linear-gradient(to right, #0033cc 0%, #003366 100%);//$btn-color;
+  padding: 0px;
+  text-align: center;
+  color: #fff;
+  text-transform: uppercase;
+  .modalTitle{
+      width: 100%;
+      font-weight: 400;
+  }
+  .modalCloseButton{
+      color: #fff;
+      outline: transparent;
+      .modalCloseSpan{
+          margin: 0;
+      }
+  }
+}
+.modalBody{
+  height: 69px;
+  padding: 1px;
+}
+
+.units-change-container{
+  padding: 3px;
+  .select-submit-container{
+    display: flex;
+    margin: 0px 0px;
+    .select-container{
+      margin: 10px;
+      label{
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      select{
+        margin: 0;
+        width: 100px;
+        padding: 5px;
+      }
+    }
+    .submit-container{
+      margin: 10px;
+      button{
+        background: $primary-dark-color; // $btn-color;
+        color: #fff;
+        border: unset;
+        font-weight: bold;
+        padding: 5px 20px;
+      }
+    }
+  }
+}
+
+.tc-privacy-head-container{
+  display: flex;
+  border-bottom: .5px solid #d0d0d0;
+  .tc-head, .privacy-head{
+      padding: 5px;
+      color: #000000;
+      width: 50%;
+      text-align: center;
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 14px !important;
+  }
+  .active{
+      // background: $btn-color;
+      // color: #fff;
+      border-bottom: 3px solid $primary-dark-color; // $btn-color;
+      color: $primary-dark-color; // $btn-color;
+  }
+}
+.tc-privacy-body-container{
+  // margin-top: 5px;
+  max-height: 360px;
+  overflow: auto;
+  font-size: 14px;
+  .tc-data, .privacy-data{
+      // height: 100%;
+      margin: 0;
+      // padding: 5px;
+      padding: 5px 0px 5px 5px;
+      // max-height: 350px;
+      overflow: auto;
+      
+        // max-height: 350px;
+      
+  }
+}
+
+.custom-tooltip-container{
+  background: transparent;
+  position: absolute;
+  left: 30px;
+  top: -55px;
+  font-weight: 500;
+  animation: blinker 2s linear infinite;
+  .msg-container{
+    background: #c1376b;
+    position: relative;
+    color: $white-color;
+    .msg{
+      margin: 0;
+      padding: 2px 10px;
+      font-size: 14px;
+      line-height: 24px;
+      padding-right: 30px;
+      white-space: nowrap;
+    }
+    .close-icon{
+      position: absolute;
+      right: 0;
+      top: 0;
+      text-align: center;
+      line-height: 28px;
+      width: 30px;
+      cursor: pointer;
+    }
+  }
+  .tooltip-arrow{
+    width: 0px;
+    height: 0px;
+    border-left: 15px solid transparent;
+    border-right: 15px solid transparent;
+    border-top: 25px solid #c1376b;
+    position: absolute;
+    top: 28px;
+    left: 55px;
+  }
+}
+.custom-tooltip-container:hover{
+  animation: none;
+}
+
+
+
+
+

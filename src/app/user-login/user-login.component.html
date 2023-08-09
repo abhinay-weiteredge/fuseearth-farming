@@ -1,0 +1,131 @@
+<!-- <p>
+  user-login works!
+</p> -->
+<div class="user-login-header">
+    <div class="user-login-container" style="display: flex;">
+      
+      <div class="login-details-container">
+        <img matTooltip="Welcome! Click to login and begin using fuse™" matTooltipClass="mat-custom-tooltip" *ngIf="isGuest"
+          src="assets/svgs/new-logos/login_icon.svg" class="login-btn" (click)="showLoginPrompt = true"/>
+
+        <div *ngIf="!isGuest" class="profile-data-container" (click)="updateTimeStamp();" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+          <img src="{{imageSrc}}" class="profile-img" (mousedown)="mouseDown()" (click)="showHideProfileData()"/>
+        </div>
+          <div [ngClass]="{'user-drop-down': true, 'align-right': pageType==='COVID19' }" *ngIf="showProfileData" (focusout)="hideDropDown($event)"
+              (click)="updateTimeStamp();" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+              <div class="arrow-container">
+                  <i class="arrow material-icons"> play_arrow  </i>
+              </div>
+              <div class="user-drop-down-body">
+                  
+                  <div class="user-detail-container">
+                    <div class="user-img-container">
+                      <img src={{imageSrc}}>
+                    </div>
+                    <div class="user-name-container">
+                      <p class="user-name" >{{ name }}</p>
+                      <p class="user-mail" >{{ email }}</p>
+                    </div>
+                  </div>
+                  <div class="org-name-container" *ngIf="userRole.toLowerCase() !== 'solve'">
+                    <p class="org-name">{{orgName}}</p>
+                    <p class="user-role">{{userRole | lowercase}}</p>
+                  </div>
+                  <div class="admin-ops-container">
+                    <div class="admin-op" (click)="openPageFun('profile')">
+                      <p>Profile</p>
+                    </div>
+                    <!-- *ngIf="userRole === 'USER_ADMIN'" -->
+                    <div class="admin-op" (click)="openPageFun('user-mgmt')">
+                      <p>User Management</p>
+                    </div>
+                    <!-- *ngIf="userRole === 'USER_ADMIN'" -->
+                    <div class="admin-op" (click)="openPageFun('proj-mgmt')">
+                      <p>Project Management</p>
+                    </div>
+                    <!-- *ngIf="userRole === 'USER_ADMIN'" -->
+                    <div class="admin-op"  (click)="openPageFun('team-mgmt')">
+                      <p>Team Management</p>
+                    </div>
+                    <!-- *ngIf="userRole === 'USER_ADMIN'" -->
+                    <div >
+                      <p>Subscription/ Billing</p>
+                    </div>
+                  </div>
+                  <div class="logout-container">
+                      <button mat-raised-button (click)="signOut($event)">Logout</button>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Custom Tooltip -->
+          <div class="custom-tooltip-container" *ngIf="showTooltip">
+            <div class="msg-container">
+              <p class="msg">Welcome, begin here by logging in!</p>
+              <span class="close-icon" (click)="showTooltip=false;">&#10006;</span>
+            </div>
+            <div class="tooltip-arrow"></div>
+          </div>
+      </div>
+      <!-- <div class="help-container">
+        <a class="help-link" target="_blank" href="https://mapsolgeo.com/fuseearth/index.html">
+          <img matTooltip="Help" matTooltipClass="mat-custom-tooltip" src="assets/images/login/help.png"/>
+        </a>
+      </div> -->
+    </div>
+</div>
+
+
+<!-- LOGIN PROMPT SCREEN START -->
+<div class="login-prompt-container" *ngIf="showLoginPrompt">
+  <div class="login-prompt-area">
+
+    <!-- LOGIN PAGE -->
+    <div class="screens-btns-container" *ngIf="mainPage === mainPages.LOGIN">
+      <button class="close-btn" (click)="cancelLogin()">
+        &#10006;
+      </button>
+      <div class="screens-image-container">
+        <!-- <img class="tScreens" #tScreen [ngStyle]="{'margin-top': 'calc(50% - ' + (tScreen.height/2) + 'px)'}" 
+            src="assets/images/login/3screens.png"> -->
+        <div style="height: 25%;">
+
+        </div>
+        <div style="height: 50%;">
+          <img class="tScreens" #tScreen [ngStyle]="{'margin-top': 'calc(20% - ' + (tScreen.height/2) + 'px)'}" 
+              src="assets/svgs/new-logos/fe-logo.svg">
+        </div>
+        <div style="height: 25%;">
+          <img class="org-logo" src="assets/svgs/new-logos/mapsol.svg">
+        </div>
+      </div>
+      <div class="logo-and-login-btn-container">
+        <app-user-sign-up
+          [authStatusMsgs]="authStatusMsgs"
+          (showPage)="showPageFun($event)"
+          (closeLogin)="cancelLogin()"
+          (createOrg)="createOrganization($event)">
+
+        </app-user-sign-up>
+      </div>
+
+    </div>
+
+    <!-- CREATE ORGANIZATION PAGE -->
+    <div class="screens-btns-container" style="background: transparent; padding: 0px"
+        *ngIf="mainPage === mainPages.CREATE_ORG">
+      <button class="close-btn" (click)="cancelLogin()">
+        &#10006;
+      </button>
+      <div class="orgazaniation-container">
+        <app-organization
+          (closeLogin)="cancelLogin()"
+          (showPage)="showPageFun($event)">
+          
+        </app-organization>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOGIN PROMPT SCREEN END -->

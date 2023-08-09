@@ -1,0 +1,344 @@
+@import '../theme.scss';
+
+$main-color:#017dc7;
+
+.geo-note-pad-container{
+    width: 330px;
+    // background-color: #d0d0d0;
+    border: 1px solid $main-color;//#859f6a;
+    z-index: 5;
+    position: absolute;
+    // bottom: 10px;
+    top: 80px;
+    right: 100px;
+    .geo-note-pad-header{
+        height: 40px;
+        background: linear-gradient(to right, #0033cc 0%, #003366 100%);//#859f6a;
+        position: relative;
+        .geo-note-pad-title{
+            color: #ffffff;
+            font-weight: bold;
+            margin: 0;
+            line-height: 40px;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+        .geo-note-pad-close{
+            position: absolute;
+            right: 0;
+            top: 0;
+            height: 40px;
+            width: 40px;
+            background: transparent;
+            border: unset;
+            outline-color: transparent !important;
+            color: #ffffff;
+            cursor: pointer;
+        }
+        .geo-note-pad-minimize{
+            position: absolute;
+            right: 30px;
+            top: -5px;
+            height: 40px;
+            width: 40px;
+            background: transparent;
+            border: unset;
+            outline-color: transparent !important;
+            color: #ffffff;
+            cursor: pointer;
+        }
+    }
+    .geo-note-pad-body{
+        height: 400px;
+        // min-height: 300px;
+        // max-height: 400px;
+        max-width: 100%;
+        background-color: #ffffff;
+        .geo-notes-container{
+            height: 300px; //307px;
+            // min-height: 250px;
+            // max-height: 350px;
+            max-width: 100%;
+            overflow-y: hidden;
+            position: relative;
+            .error-msg-container{
+                position: absolute;
+                top: 1px;
+                width: 100%;
+                padding: 5px;
+                text-align: center;
+                background: $error-msg-color; // red;
+                background: #bcc5e2;
+                border-radius: 14px;
+                z-index: 1;
+                .error-msg{
+                    margin: 5px;
+                }
+                .error-close{
+                    position: absolute;
+                    top: 0;
+                    right: 6px;
+                    font-size: 16px;
+                    cursor: pointer;
+                }
+            }
+            .geo-no-notes{
+                margin: 10px 2px;
+                color: #d0d0d0;
+                text-align: center;
+            }
+            .geo-notes-div{
+                // max-width: 100%;
+                width: 100%;
+                // margin: 5px;
+                // border-radius: 5px;
+                // border: 1px solid #859f6a;
+                padding: 2px 5px 20px;
+                background-color: #b7e8f9;//#dcddb4;
+                position: relative;
+                .geo-notes-msg{
+                    margin: 0;
+                    font-size: 14px;
+                    word-break: break-word;
+                    white-space: pre-line;
+                    .locationLink{
+                        cursor: pointer;
+                        text-decoration: underline;
+                        color: blue;
+                    }
+                }
+                .geo-note-time-and-mark-container{
+                    position: absolute;
+                    font-size: 10px;
+                    bottom: 0;
+                    margin: 0;
+                    width: 97%;
+                    .geo-note-time{
+                        margin:0;
+                    }
+                    .geo-location-mark{
+                        margin:0;
+                        float: right;
+                    }
+                }
+                .geo-notes-ops{
+                    display: none;
+                    position: absolute;
+                    right: 0;
+                    top: 0;
+                }
+            }
+            .geo-notes-location-div{
+                background-color: #99b3cc;
+                color: #fff;
+                width: 100%;
+            }
+            .geo-notes-location-icon{
+                width: 13%;
+                svg{
+                    cursor: pointer;
+                }
+            }
+            .geo-notes-div:hover{
+                .geo-notes-ops{
+                    display: block;
+                    cursor: pointer;
+                    padding: 2px;
+                    // width: 35px;
+                    // padding: 0px 5px;
+                    // border-bottom-left-radius: 10px;
+                    background: rgba(133, 159, 106, 0.4);
+                    color: #2e2115;
+                    .edit{
+                        font-size: 16px;
+                    }
+                    .delete{
+                        font-size: 16px;
+                        margin-left: 8px;
+                    }
+                    .edit:hover, .delete:hover{
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        .geo-notes-container:hover{
+            overflow-y: auto;
+        }
+        .geo-notes-writer-container{
+            // // height: 46px;
+            // height: 90px;
+            // // display: flex;
+            // padding-top: 4px;
+            // width: 100%;
+            // border-top: 1px solid #d0d0d0;
+
+            height: 110px; //80px;
+            // padding-top: 4px;
+            width: 100%;
+            margin: 5px;
+            margin-top: 0px;
+            width: calc( 100% - 10px );
+            // border-top: 1px solid #d0d0d0;
+            .geo-location-container{
+                height: 30px;
+                display: flex;
+                // border-bottom: 1px solid #d0d0d0;
+                margin-bottom: 4px;
+                // margin-top: -3px;
+                .geo-notes-marker{
+                    // position: absolute;
+                    // bottom: 30px;
+                    height: 30px;
+                    cursor: pointer;
+                    transition: height .3s;
+                }
+                .geo-notes-location{
+                    margin: 0;
+                    height: 30px;
+                    font-size: 14px;
+                    line-height: 30px;
+                    position: relative;
+                    width: calc( 100% - 35px );
+                    input{
+                        height: 25px;
+                        width: 100%;//80%;
+                        // border-radius: 8px;
+                        border: 1px solid #99b3cc;//#837f6f;
+                        outline-color: transparent;
+                        color: #837f6f;
+                        padding: 0px 5px;
+                    }
+                    .geo-notes-location-close{
+                        font-size: 20px;
+                        position: absolute;
+                        right: 5px;
+                        cursor: pointer;
+                        bottom: 4px;
+                    }
+                }
+            }
+            .geo-notes-writer-container-div{
+                margin: 0;
+                height: 55px;
+                position: relative;
+                background: $main-color;
+                .geo-notes-writer{
+                    // width: calc( 100% - 35px);
+                    // border-top-left-radius: 10px;
+                    // border: 1px solid #859f6a;
+                    // // margin: 0px 5px;
+                    // height: 100%;
+                    // border-bottom-left-radius: 10px;
+                    // resize: none;
+    
+                    font-size: 12px; //14px;
+                    outline-color: transparent;
+                    width: calc( 100% - 35px);
+                    // border-radius: 10px;
+                    border: 1px solid #99b3cc;//#859f6a;
+                    height: 100%;
+                    resize: none;
+                    overflow: hidden;
+                }
+                .geo-notes-writer:hover{
+                    overflow: auto;
+                }
+                .geo-notes-save-btn{
+                    // color: #fff;
+                    // width: 38px;
+                    // margin-left: 0px;//-5px;
+                    // margin-right: 0px;//5px;
+                    // border-top-right-radius: 10px;
+                    // border: 1px solid #859f6a;
+                    // background-color: #859f6a;
+                    // border-bottom-right-radius: 10px;
+                    // cursor: pointer;
+                    // position: absolute;
+                    // bottom: 12px;
+                    color: #fff;
+                    max-width: 33px;
+                    margin-left: -3px;
+                    // border-radius: 10px;
+                    border: unset; //1px solid #859f6a;
+                    background-color: $main-color;//#859f6a;
+                    cursor: pointer;
+                    position: absolute;
+                    // bottom: 30px;
+                    height: 100%;
+                    outline-color: transparent;
+                }
+            }
+            
+        }
+    }
+}
+
+
+.min-geo-note-pad-container{
+    width: 140px;
+    // background-color: #d0d0d0;
+    border: 1px solid $main-color;
+    z-index: 5;
+    position: absolute;
+    // bottom: 10px;
+    bottom: 0;
+    right: 100px;
+    .min-geo-note-pad-header{
+        height: 40px;
+        background: linear-gradient(to right, #0033cc 0%, #003366 100%);//#859f6a;
+        position: relative;
+        .min-geo-note-pad-title{
+            color: #ffffff;
+            font-weight: bold;
+            margin: 0;
+            line-height: 38px;
+            margin-left: 10px;
+            text-transform: uppercase;
+        }
+        // .min-geo-note-pad-close{
+        //     position: absolute;
+        //     right: 0;
+        //     top: 0;
+        //     height: 40px;
+        //     width: 40px;
+        //     background: transparent;
+        //     border: unset;
+        //     outline-color: transparent !important;
+        //     color: #ffffff;
+        //     cursor: pointer;
+        // }
+        .min-geo-note-pad-maximize{
+            position: absolute;
+            right: 0;
+            top: 10px;
+            height: 40px;
+            width: 40px;
+            background: transparent;
+            border: unset;
+            outline-color: transparent !important;
+            color: #ffffff;
+            cursor: pointer;
+        }
+    }
+}
+// .dropdown {
+//     position: relative;
+//     display: inline-block;
+//   }
+  
+//   .dropdown-content {
+//     display: none;
+//     position: absolute;
+//     background-color: #f9f9f9;
+//     min-width: 160px;
+//     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+//     padding: 12px 16px;
+//     z-index: 1;
+//   }
+  
+//   .dropdown:hover .dropdown-content {
+//     display: block;
+//     right: 0;
+//     top: 0;
+//   }

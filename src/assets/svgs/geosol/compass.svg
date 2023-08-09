@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#47494F;stroke-width:1.38858}
+    .str3 {stroke:white;stroke-width:1.38858}
+    .str1 {stroke:#47494F;stroke-width:0.694489}
+    .str2 {stroke:white;stroke-width:0.694489}
+    .fil0 {fill:none}
+    .fil2 {fill:#2B2E34}
+    .fil1 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_1835616279840">
+   <ellipse class="fil1" cx="256" cy="255" rx="197" ry="100"/>
+   <path class="fil0" d="M23 261c163,150 319,150 466,0"/>
+   <ellipse class="fil1 str0" cx="256" cy="256" rx="233" ry="118"/>
+   <ellipse class="fil2 str1" cx="256" cy="255" rx="154" ry="76"/>
+   <ellipse class="fil1 str2" cx="256" cy="254" rx="25" ry="13"/>
+   <line class="fil0 str3" x1="311" y1="198" x2="258" y2= "255" />
+  </g>
+ </g>
+</svg>

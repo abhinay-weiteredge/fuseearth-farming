@@ -1,0 +1,193 @@
+@import "../theme.scss";
+
+.project-menu{
+    width:33.33%;
+    padding-top: 8px;
+    height: 40px;
+    text-align: center;
+    color: white;
+    background-color: #2B2E34;
+    border-radius: 5px 5px 0px 0px; 
+    margin-right: 5px;
+    
+}
+
+.project-menu:hover{
+    background-color: white;
+    color: #2B2E34;
+}
+
+.active {
+    background-color: white;
+    color: #2B2E34;
+}
+
+.notActive {
+    background-color: #2B2E34;
+    color: white;
+}
+.input-box{
+    position: relative;
+    
+    padding-bottom: 10px;
+    width: 100%;
+
+    ::placeholder {
+        color: white;
+        opacity: 1; /* Firefox */
+      }
+  }
+  
+  .input-box i {
+    position: absolute;
+    right: 10px;
+    top:10px;
+    color:#ced4da;
+  
+  }
+  .proj-tabel-head{
+    color: white;
+  }
+  .user-table-container{
+    position: relative;
+    margin: 0;
+    overflow: auto;
+    height: 585px;
+    .user-table{
+        width: 100%;
+        font-size: 14px;
+        border: .5px solid #d0d0d0;
+        .user-table-head{
+            background: $primary-dark-color;
+        }
+        .user-data-container{
+            color: $black-color;
+            
+        }
+        .user-data-container:nth-child(odd){
+            background: #fff;
+        }
+        .user-data-container:nth-child(even){
+            background: #e1e1e1;
+        }
+
+        .name{
+            text-align: center;
+            padding: 3px 0px;
+            border-left: .5px solid #d0d0d0;
+            border-right: .5px solid #d0d0d0;
+            word-break: break-all;
+        }
+        .head{
+            font-weight: 500;
+            white-space: nowrap;
+            padding: 5px;
+            color: white;
+        }
+        .ops{
+            min-width: 80px;
+            .edit, .delete{
+                border: unset;
+                background: #d0d0d0;
+                width: 30px;
+                height: 30px;
+                line-height: 30px;
+                margin: 0px 2px;
+                cursor: pointer;
+                i{
+                    font-size: 20px;
+                }
+            }
+        }
+    }
+}
+.userdeletecon{
+    width:45%; height:23%;background-color: black; text-align: center; color: white;
+  }
+  .userdeletecon:hover{
+    background-color: red;
+  }
+
+.sub-user-table-container{
+    position: absolute;
+    top: 26%;
+    left: 30%;
+    margin: 0;
+    height: 30%;
+    width: 40%;
+    border-radius: 20px;
+    background:rgba(226, 226, 226, 0.8);
+    box-shadow: 0px 1px 8px #888888;
+.sub-user-table-container-header{
+    display: flex;
+    position: relative;
+    height: 40px;
+    background: $primary-dark-color;
+    color: $white-color;
+    border: 1px solid white;
+    border-radius: 20px 20px 0px 0px;
+    .title{
+      margin: 0;
+      display: flex;
+      width: 100%;
+      padding: 2px 10px;
+      justify-items: center;
+      align-items: center;
+      img{
+        margin: 0;
+      }
+      p{
+        margin: 0;
+        line-height: 36px;
+      }
+    }
+    .close-btn{
+      position:absolute;
+      top: 7px;
+      right: 8px;
+      border: unset;
+      border-radius: 7px;
+      cursor: pointer;
+      z-index: 1;
+    }
+}
+}
+
+
+
+.main{
+    background: rgb(235, 235, 235);
+    border: 1px solid rgb(216, 216, 216);
+    width: 80px;
+    height: 30px;
+    cursor: pointer;
+    padding: 1px 0px 0px 24px;
+   }
+   .content{
+    background: #ebebeb;
+    border: 1px solid #d8d8d8;
+    width: 80px;
+    cursor: pointer;
+    align-items: center;
+    height: 30px;
+   }
+
+   .content ul{
+    padding: 0;
+    margin: 0;
+    background: #ebebeb;
+    }
+    .content ul li{
+        list-style-type: none;
+        padding: 1px 24px;
+        border-bottom: 1px solid #d8d8d8;
+}
+
+.content ul li:hover{
+    background: rgb(255, 223, 223);
+    }
+    .active{ 
+    background: rgb(255, 223, 223);
+    }
+
+   

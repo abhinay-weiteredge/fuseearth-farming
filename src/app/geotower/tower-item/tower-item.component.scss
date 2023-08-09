@@ -1,0 +1,487 @@
+@import "../tower-global.scss";
+@import "../../theme.scss";
+.showlayer{
+  background:url(../../../assets/svgs/geotower/toggle_active.svg);
+  width: 12px;transform: skewY(353deg) rotate(185deg);
+}
+.hidelayer{
+  background: url(../../../assets/svgs/geotower/raster_vector_toggle_disable.svg);
+  width: 12px;transform: skewY(353deg) rotate(185deg);
+}
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none !important;
+}
+.layer-main .layer.opt {
+  z-index: 2 !important;
+}
+.layer-main .layer.name {
+  z-index: 1 !important;
+}
+.hide-layer.tower-item-div .layer.name {
+  background: #bbb9b9;
+}
+.layer.opt {
+  // background-image: url("/assets/img/c-color.png"),  url("/assets/img/s-color.png"), url("/assets/img/f-color.png"),
+  // url("/assets/img/d-color.png"), url("/assets/img/i-color.png");
+  background-position: 0 0, 25% 0, 50% 0, 75% 0, 100% 0;
+  background-size: 20% 100%;
+  background-repeat: no-repeat;
+  z-index: 1;
+}
+.popup-left{
+transform: translate(0%, 0%) translate(191px, 839px);
+}
+.layer.opt span {
+  font-weight: bold;
+  width: 20%;
+  height: 40px; //25px;
+  margin: 0;
+  padding: 0;
+  float: left;
+  text-align: center;
+  color: #fff;
+  font-size: 12px;
+  text-transform: uppercase;
+  // margin-top: 14px;
+  padding-top: 14px;
+  // background: radial-gradient(ellipse at center, #ffffff 0%,#bd8f5d 0%,#804d20 100%);
+  background: $tower-option-c-color; // #8c6b56;
+  // background: $primary-dark-color !important;
+}
+.layer.opt .c-disabled{
+  background: #bbb9b9;
+  color: rgba(0,0,0,0.5);
+}
+.layer.opt span:nth-child(2) {
+  // margin-top: 21px;
+  padding-top: 21px;
+  // background: radial-gradient(ellipse at center, #ffffff 0%,#fb852b 0%,#f04a18 100%);
+  background: $tower-option-s-color; // #cc9900;; //#bf2f66 100%;
+  // bf2f66
+  // background: $secondry-dark-color;
+}
+.layer.opt span:nth-child(3) {
+  // margin-top: 22px;
+  padding-top: 22px;
+  // background: radial-gradient(ellipse at center, #ffffff 0%,#006fb1 0%,#014670 100%);
+  background: $tower-option-f-color; // #00b0f0;
+  // #00b0f0
+  // background: $primary-dark-color;
+}
+.layer.opt span:nth-child(4) {
+  // margin-top: 21px;
+  padding-top: 21px;
+  // background: radial-gradient(ellipse at center, #ffffff 0%,#399c3f 0%,#317333 100%);
+  background: $tower-option-d-color; // #bf2f66 100%; // #cc9900;
+  // cc9900
+  // background: $secondry-dark-color;
+}
+.layer.opt span:nth-child(5) {
+  padding-top: 14px;
+  // background: radial-gradient(ellipse at center, #ffffff 0%,#9961aa 0%,#5f2079 100%);
+  background: $tower-option-i-color; // #7030a0;
+  // #7030a0
+  // background: $primary-dark-color;
+}
+.layer {
+  width: 100%;
+  background: #fff;
+  height: 40px;
+  font-size: 10px;
+  border-radius: 0 0 50% 50% / 50%;
+  margin-top: -20px;
+  position: relative;
+  float: left;
+  overflow: hidden;
+}
+.__selected .layer.name {
+  background: #353535;
+}
+.layer-text {
+  // float: left;
+  color: $black-color; // #949697;
+  text-align: center;
+  // width: 100%;
+  // position: absolute;
+  // left: 0;
+  bottom: 4px;
+  margin-top: 20px;
+  width: 65px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 0px 5px;
+  font-weight: bold;
+}
+
+/*custom checkbox*/
+/* The container */
+.tower-checkBox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 22px;
+  float: left;
+  margin: 20px 5px 0 5px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.tower-checkBox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 7px;
+  width: 7px;
+  background-color: #eee;
+  border: solid 1px #919395;
+  z-index: 9;
+}
+
+/* On mouse-over, add a grey background color */
+.tower-checkBox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.tower-checkBox input:checked ~ .checkmark {
+  background-color: $towerCheckboxCheckedBackground;
+  border: solid 1px $towerCheckboxCheckedBackground;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.tower-checkBox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.tower-checkBox .checkmark:after {
+  left: 2px;
+  top: -1px;
+  width: 2px;
+  height: 5px;
+  border: solid #f9f9f9 1px;
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/*custom checkbox*/
+
+.right-arrow {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  width: 8px;
+  background: $towerBackgroundColor;
+  height: 29px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  border-radius: 50px 0;
+}
+.right-arrow img {
+  width: 4px;
+  margin-top: 11px;
+}
+li:hover .right-arrow {
+  display: block;
+}
+
+.tower-item-div:hover .right-arrow{
+  display: block;
+}
+
+.right-arrow.active {
+  background: $towerBackgroundColorActive;
+}
+.right-arrow.active img {
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.layer-main {
+  position: relative;
+  width: 100%;
+  float: left;
+}
+.layer-option-with-name{
+  min-width: 12px;
+  max-width: 12px;
+  height: 12px;
+  background-size: 100% auto !important;
+  overflow: hidden;
+  text-indent: 500px;
+  cursor: pointer;
+  background-repeat: no-repeat !important;
+}
+.move {
+  background: url("/assets/svgs/geotower/move.svg");
+  margin: 12px 0 0 3px;
+}
+.zoom-to-layer{
+  background: url("/assets/svgs/geotower/zoom_to_layer.svg");
+  margin: 18px 0 0 3px;
+}
+.selection{
+  background: url("/assets/svgs/geotower/selection.svg");
+  margin: 22px 0 0 3px;
+}
+.raster_vector_toggle{
+  background: url("/assets/svgs/geotower/raster_vector_toggle.svg");
+  margin: 22px 0 0 3px;
+}
+.toggle_active{
+  background: url("/assets/svgs/geotower/toggle_active.svg");
+  margin: 19px 0 0 3px;
+}
+.toogle_inactive{
+  background: url("/assets/svgs/geotower/raster_vector_toggle_disable.svg");
+  margin: 21px 0 0 3px;
+}
+.preview{
+  background: url("/assets/svgs/geotower/preview.svg");
+  margin: 14px 0 0 3px;
+}
+.preview-disabled{
+  opacity: 0.5;
+}
+
+.tower-before-noscroll {
+  position: relative;
+  height: 40px;
+  background: #cccccc; // #fff;
+  z-index: 499; // 999;
+  border-radius: 50%;
+  width: 100%;
+}
+
+
+@media (max-width: 1040px) {
+.tower-before-noscroll {
+  width: 100%;
+}
+}
+
+@media (min-width: 1600px) {
+.tower-before-noscroll {
+  width: 100%;
+}
+}
+
+.circle {
+  position: relative;
+ 
+  padding: 0;
+  margin-bottom: 40px;
+  width: 7em;
+  height: 7em;
+  border-radius: 50%;
+  list-style: none;
+  overflow: hidden;
+  transform: rotate(90deg) 
+  
+}
+li {
+  overflow: hidden;
+  position: absolute;
+  top: -15px;
+  right: 0;
+  width: 49%;
+  height: 65%;
+  transform-origin: 0% 100%;
+
+
+
+
+}
+ul{
+  margin-bottom: 20px;
+}
+.text {
+position: relative;
+left: -101%;
+width: 221%;
+height: 167%;
+text-align: center;
+transform: skewY(54deg) rotate(20deg);
+padding-top: 25px;
+color: white;
+}
+li:first-child {
+  transform: rotate(0deg) skewY(-54deg);
+  
+}
+li:nth-child(2) {
+  transform: rotate(36deg) skewY(-54deg);
+}
+li:nth-child(3) {
+  transform: rotate(72deg) skewY(-54deg);
+}
+li:nth-child(4) {
+  transform: rotate(108deg) skewY(-54deg);
+}
+li:nth-child(5) {
+  transform: rotate(144deg) skewY(-54deg);
+}
+li:nth-child(6) {
+  transform: rotate(180deg) skewY(-54deg);
+  
+}
+li:nth-child(7) {
+  transform: rotate(216deg) skewY(-54deg);
+}
+li:nth-child(8) {
+  transform: rotate(252deg) skewY(-54deg);
+}
+li:nth-child(9) {
+  transform: rotate(288deg) skewY(-54deg);
+}
+li:nth-child(10) {
+  transform: rotate(324deg) skewY(-54deg);
+}
+
+li:first-child .text {
+  background: #EDEDED;
+}
+li:nth-child(2) .text {
+  background: #EDEDED;
+}
+li:nth-child(3) .text {
+  background: #EDEDED;
+}
+li:nth-child(4) .text {
+  background: #EDEDED;
+}
+li:nth-child(5) .text {
+  background: #EDEDED;
+}
+li:nth-child(6) .text {
+  background: #8E6D57;
+}
+li:nth-child(7) .text {
+  background: #D19D00;
+}
+li:nth-child(8) .text {
+  background: #00B5F7;
+}
+li:nth-child(9) .text {
+  background: #C42F68;
+}
+li:nth-child(10) .text {
+  background: #7331A5;
+}
+.inner-coin {
+  height: 56%;
+  width: 42%;
+  border-radius: 50%;
+  
+  position: absolute;
+  /* text-align: center; */
+  top: 0;
+  left: 0;
+  margin-left: 12.5%;
+    margin-top: 14%;
+}
+#scrollable-div {
+  height: 300px; /* Set the height of the div to make it scrollable */
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+.layer-opacity {
+  width: 100%;
+  display: block;//none; 
+  height: 67px;
+  border-radius: 50%;
+  transform: rotate(270deg);
+  // float: left;
+  display: flex;
+  background: rgba(255, 255, 255, 1);
+  background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -webkit-gradient(
+    left top,
+    right top,
+    color-stop(0%, rgba(255, 255, 255, 1)),
+    color-stop(100%, rgba(0, 0, 0, 1))
+  );
+  background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+  
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000', GradientType=1 );
+}
+.layer-action.active .layer-opacity {
+  display: block;
+}
+.slider {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  width: 111%;
+  height: 10px; // 20px;//22px;
+  background: none;
+  outline: none;
+  padding-top: 5px;
+  transform: rotate(0deg);
+  margin-top: 28px;
+  position: absolute;
+  z-index: 1;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+	-webkit-appearance: none;
+  -moz-appearance: none;
+  -o-appearance: none;
+	appearance: none;
+	width: 10px;
+  height: 10px; // 20px;//22px;
+  background-image: url("/assets/img/scroller.png");
+  color: #353535;
+  background-repeat: no-repeat;
+	cursor: pointer;
+	background-size: auto 100%;
+	margin-top: -4px;
+  margin-left: -2px;
+}
+
+.slider::-moz-range-thumb {
+	width: 10px;
+  height: 10px; // 20px;//22px;
+  background-image: url("/assets/img/scroller.png");
+  color: black;
+  background-repeat: no-repeat;
+	cursor: pointer;
+	margin-top: -4px;
+  margin-left: -2px;
+	background-size: auto 100%;
+}

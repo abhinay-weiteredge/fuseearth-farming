@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil3 {fill:none}
+    .fil1 {fill:url(#id0)}
+    .fil2 {fill:url(#id1)}
+    .fil0 {fill:url(#id2)}
+   ]]>
+  </style>
+  <radialGradient id="id0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.999989 -0 -0 0.919001 0 17)" cx="349.201" cy="211.732" r="114.47" fx="349.201" fy="211.732">
+   <stop offset="0" style="stop-opacity:1; stop-color:#666666"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:black"/>
+  </radialGradient>
+  <radialGradient id="id1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.999999 -0 -0 0.700763 0 77)" xlink:href="#id0" cx="256" cy="256.001" r="590.505" fx="256" fy="256.001">
+  </radialGradient>
+  <radialGradient id="id2" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.999991 -0 -0 0.91982 0 17)" xlink:href="#id0" cx="155.488" cy="212.076" r="115.839" fx="155.488" fy="212.076">
+  </radialGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1812124475312">
+   <g>
+    <path class="fil0" d="M200 224c19,-54 -71,-79 -89,-26 -18,54 69,84 89,26z"/>
+    <path class="fil1" d="M303 219c10,55 102,43 92,-15 -10,-54 -101,-43 -92,15z"/>
+   </g>
+   <path class="fil2" d="M491 226c-6,49 -40,82 -80,96 -30,11 -203,6 -257,6 -32,0 -48,-1 -73,-15 -88,-48 -79,-180 21,-213 33,-11 130,-7 170,-7 50,0 123,-7 161,16 32,20 65,58 58,117zm-424 196c11,-5 33,-21 43,-28l86 -57c13,-8 75,-4 102,-4 21,0 14,-2 26,8 25,23 102,73 131,83 4,-5 7,-22 8,-30 7,-32 12,-66 16,-100 5,-46 10,-30 15,-63 10,-64 -27,-121 -91,-138 -29,-8 -116,-4 -151,-4 -35,0 -120,-4 -149,5 -62,20 -97,80 -84,143 2,10 5,20 10,28 7,14 4,18 5,35 3,38 12,100 33,122z"/>
+  </g>
+  <rect class="fil3" width="512" height="512"/>
+ </g>
+</svg>

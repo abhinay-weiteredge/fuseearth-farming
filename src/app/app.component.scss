@@ -1,0 +1,123 @@
+
+
+.loading-container{
+    position: fixed;
+    top: 0;
+    background: rgba(43, 46, 52, 0.90);
+    width: 100vw;
+    height: 100vh;
+    z-index: 9999999999;
+    left: 0;
+    .loading-text{
+        position: relative;
+        color: #ffffff;
+        font-weight: 500;
+        font-size: 25px;
+        width: 110px;
+        line-height: 40px;
+        margin: 0;
+        margin-left: calc( 50% - 55px );
+        margin-top: 200px;
+    }
+}
+  
+
+// .user-login-position{
+//     position: absolute;
+//     top: 5px;
+//     right: 100px; //5px;
+//     // width: 100%;
+//     z-index: 504; // 1004;
+//     // background-color: #d0d0d0;
+//     // height: 50px;
+// }
+// .login-and-app-info-container{
+//     position: fixed;
+//     top: 5px;
+//     right: 40px; // 5px;
+//     z-index: /*1060; /*/ 504; // 1004;
+//     display: flex;
+//     padding: 1px;
+//     background: none;
+//     .login-container{
+//         // margin-left: 1px;
+//         app-user-login{
+//             margin: 0;
+//         }
+//     }
+//     .app-info-container{
+//         margin: 0;
+//         margin-left: 3px;
+//         button{
+//             background-color: $btn-color;
+//             overflow: hidden;
+//             color: white;
+//             border-radius: unset;
+//             width: 100px;
+//             text-transform: uppercase;
+//             // border: white .5px solid;
+//         }
+//     }
+// }
+// .move-left{
+//     top: 130px;
+//     right: unset;
+//     left: 10px;
+// }
+.route-container{
+    // margin-top: 50px;
+    position: relative;
+}
+// .modalHeader{
+//     margin: 0;
+//     background: linear-gradient(to right, #0033cc 0%, #003366 100%);//$btn-color;
+//     padding: 10px;
+//     text-align: center;
+//     color: #fff;
+//     text-transform: uppercase;
+//     .modalTitle{
+//         width: 100%;
+//         font-weight: 400;
+//     }
+//     .modalCloseButton{
+//         color: #fff;
+//         outline: transparent;
+//         .modalCloseSpan{
+//             margin: 0;
+//         }
+//     }
+// }
+// .modalBody{
+//     height: 400px;
+//     padding: 1px;
+// }
+// .tc-privacy-head-container{
+//     display: flex;
+//     border-bottom: .5px solid #d0d0d0;
+//     .tc-head, .privacy-head{
+//         padding: 5px;
+//         color: #000000;
+//         width: 50%;
+//         text-align: center;
+//         cursor: pointer;
+//         text-transform: uppercase;
+//     }
+//     .active{
+//         // background: $btn-color;
+//         // color: #fff;
+//         border-bottom: 3px solid $btn-color;
+//         color: $btn-color;
+//     }
+// }
+// .tc-privacy-body-container{
+//     margin-top: 5px;
+//     max-height: 355px;
+//     // overflow: auto;
+//     .tc-data, .privacy-data{
+//         // height: 100%;
+//         margin: 0;
+//         padding: 5px;
+//         max-height: 350px;
+//         overflow: auto;
+//     }
+// }

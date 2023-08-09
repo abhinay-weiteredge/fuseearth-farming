@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#FEFEFE;stroke-width:7.29135}
+    .str1 {stroke:#FEFEFE;stroke-width:1.44646}
+    .str2 {stroke:#FEFEFE;stroke-width:5.20788}
+    .fil0 {fill:none}
+    .fil1 {fill:#FEFEFE}
+    .fil2 {fill:#2B2E34}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_1900019728672">
+   <path class="fil0 str0" d="M385 98l0 0c0,1 0,2 0,3l-7 156c-18,78 -224,89 -251,-1l-7 -154c0,-2 0,-3 0,-4l0 0c0,-39 59,-71 132,-71 73,0 133,32 133,71 0,0 0,0 0,0l0 0 0 0z"/>
+   <ellipse class="fil0 str1" cx="252" cy="415" rx="161" ry="61"/>
+   <g>
+    <ellipse class="fil1" cx="252" cy="477" rx="19" ry="14"/>
+    <ellipse class="fil2" cx="252" cy="477" rx="9" ry="7"/>
+   </g>
+   <g>
+    <ellipse class="fil1" cx="139" cy="372" rx="19" ry="14"/>
+    <ellipse class="fil2" cx="139" cy="372" rx="9" ry="7"/>
+   </g>
+   <ellipse class="fil1" cx="366" cy="372" rx="19" ry="14"/>
+   <ellipse class="fil2" cx="366" cy="372" rx="9" ry="7"/>
+   <g id="_2077788783120">
+    <circle class="fil0 str2" cx="252" cy="123" r="27"/>
+    <path class="fil0 str2" d="M188 227c21,-52 7,-64 64,-63 58,-1 43,11 65,63"/>
+    <line class="fil0 str2" x1="224" y1="202" x2="214" y2= "232" />
+    <line class="fil0 str2" x1="280" y1="202" x2="291" y2= "232" />
+   </g>
+   <path class="fil1" d="M252 414l70 -103c-53,15 -85,16 -140,1l70 102z"/>
+  </g>
+ </g>
+</svg>

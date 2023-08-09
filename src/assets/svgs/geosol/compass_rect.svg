@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="516px" height="264px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 516 263.46"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#47494F;stroke-width:2.17;stroke-miterlimit:22.9256}
+    .str2 {stroke:white;stroke-width:2.17;stroke-miterlimit:22.9256}
+    .str0 {stroke:#47494F;stroke-width:4.34;stroke-miterlimit:22.9256}
+    .str3 {stroke:white;stroke-width:4.34;stroke-miterlimit:22.9256}
+    .fil1 {fill:none}
+    .fil2 {fill:#2B2E34}
+    .fil0 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="_1835616279840">
+   <ellipse class="fil0" cx="258" cy="130.63" rx="216.3" ry="109.8"/>
+   <path class="fil1" d="M2.17 137.22c178.97,164.7 350.26,164.7 511.66,0"/>
+   <ellipse class="fil0 str0" cx="258" cy="131.73" rx="255.83" ry="129.56"/>
+   <ellipse class="fil2 str1" cx="258" cy="130.63" rx="169.09" ry="83.45"/>
+   <ellipse class="fil0 str2" cx="258" cy="129.53" rx="27.45" ry="14.27"/>
+   <line class="fil1 str3" x1="318.39" y1="68.05" x2="260.2" y2= "130.63" />
+  </g>
+ </g>
+</svg>

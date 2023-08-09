@@ -1,0 +1,84 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  transform-origin: 0px 50%;
+  transition: all .3s cubic-bezier(0.680, -0.550, 0.265, 1.550);
+  cursor: pointer;
+  user-select: none;
+  pointer-events: none;
+}
+
+.wing {
+  width: inherit;
+  height: inherit;
+  transform-origin: inherit;
+
+  i {
+    text-align: center;
+    transform-origin: 50% 50%;
+  }
+}
+::ng-deep .ptb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(150deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .atb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(150deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .gtb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(90deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .qtb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(30deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .vtb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(-30deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .rtb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(270deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}
+
+::ng-deep .atb-text-rotation {
+  .tooltip-inner {    
+    transform: rotate(210deg) !important;
+  }
+  .arrow {
+    display: none !important;    
+  }
+}

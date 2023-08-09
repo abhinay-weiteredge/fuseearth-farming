@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str1 {stroke:#47494F;stroke-width:0.312599}
+    .str2 {stroke:#2B2E34;stroke-width:7.29135}
+    .str0 {stroke:#2B2E34;stroke-width:1.44646}
+    .str3 {stroke:#2B2E34;stroke-width:0.3}
+    .fil0 {fill:none}
+    .fil1 {fill:#2B2E34}
+    .fil2 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" x="-11" y="-11" width="533" height="533"/>
+  <g id="_2077818177536">
+   <ellipse class="fil0 str0" cx="251" cy="437" rx="182" ry="70"/>
+   <line class="fil0 str1" x1="251" y1="437" x2="433" y2= "437" />
+   <ellipse class="fil1" cx="433" cy="437" rx="22" ry="17"/>
+   <ellipse class="fil2" cx="433" cy="437" rx="10" ry="7"/>
+  </g>
+  <path class="fil0 str2" d="M403 83l0 0c0,1 0,2 0,3l-8 175c-21,88 -257,99 -287,-1l-8 -173c-1,-2 -1,-3 -1,-4l0 0c0,-44 68,-79 152,-79 84,0 152,35 152,79 0,0 0,0 0,0l0 0 0 0z"/>
+  <path class="fil1" d="M251 437l80 -115c-60,15 -98,16 -159,1l79 114 0 0z"/>
+  <g id="_2196507600208">
+   <path class="fil1" d="M179 216l129 -137c5,-5 15,-4 22,2l2 2c7,7 8,16 3,22l-129 136c-3,3 -7,5 -11,4 -1,-4 -4,-8 -7,-11 -4,-3 -8,-6 -12,-7 -1,-4 0,-8 3,-11z"/>
+   <path class="fil1 str3" d="M189 245l-26 14c5,-8 9,-17 13,-26 7,1 12,6 13,12z"/>
+  </g>
+ </g>
+</svg>

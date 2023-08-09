@@ -1,0 +1,9 @@
+
+
+<div #mainDiv id="abcd123" class="icon-card-container" (click)="setRipple($event)" [ngStyle]="{'width': width+'px', 'height':width+'px'}">
+  <div [ngClass]="{'icon-container':true, 'active': isActive}" class="{{cssClass}}" [ngStyle]="{'background': backgroundStyle.gradientBorder}">
+    <div class="icon-bg-container">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

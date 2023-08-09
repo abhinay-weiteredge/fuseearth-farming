@@ -1,0 +1,152 @@
+<!-- PRESENTATION TOOL SCREEN -->
+<div class="presentation-tool-modal-container" [hidden]="!showPresentaiton">
+    <div class="presentation-tool-modal-area" >
+        <div class="presentation-tool-page-container">
+            <div class="presentation-tool-header-container">
+                <div class="title">
+                    <img class="icon-img" src="assets/svgs/new-logos/presentation_svg.svg"/>Presentation
+                </div>
+                <button class="close-btn" (click)="showPresentaiton=false;">
+                    &#10006;
+                </button>
+            </div>
+
+            <div class="presentation-tool-body-container">
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div id="main-div" class="col-xl-8" style="background: gainsboro;height: 40rem;" #ptbc>
+                            <div class="print-style" id="print-style"  #childDiv>
+                                <div class="print-map" id="map-mini" #mapDiv  >
+
+                                </div>
+                                <div style="position: absolute;top: 0%;left: 0%;" id="navigateArrow" class="compass-move" #navigateN >
+                                    <div #rotateN>
+                                    <img src="../../assets/svgs/properties_icon/new/true-north.svg"  style="height: 60px;width: 60px;" id="rotationN"  >
+                                </div>
+                                    <div style="background: #e2e2e2;color:#2B2E34;border:0.5px solid black;text-align:center;font-size: 10px;">{{mapProjectionUnitsPopup}}</div>
+                                </div>
+                                <img src="../../assets/svgs/properties_icon/new/logo-bg.svg" class="logo-move"  style="bottom: 0%;position:absolute;right: 0%;" #mapLogo>
+                                <div style="position: absolute;bottom: 0%;margin: 0 1rem;" *ngIf="checkCredit" class="credit-move">{{creditData}}</div>
+                                <img [src]=uploadedImage *ngIf="checkUpload" style="width: 160px;height:40px;position: absolute;" class="upload-move">
+                            </div>
+                        </div>
+                        <div class="col-xl-4" style="background: none;">
+                            <form [formGroup]="addPresentationFormGroup">
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <p style="margin: 0.1rem 1rem;font-size: 21px;font-weight: bold;letter-spacing: 0.1rem;">Map Details</p>
+                                    <div style="height: 0.1rem;background:#2B2E34;margin: 0 1rem;width: 100%"></div> 
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Map Type</p>
+                                        <select class="form-control" style="margin: 0;padding:0" name="addMaptype" formControlName="addMaptype" #mapType (change)="getMaptypeSelected(mapType)">
+                                            <option value={{maptype.name}}  *ngFor="let maptype of mapTypesList"> {{maptype.name}} </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Map Orientation</p>
+                                    <div class="row" style="background-color: white;margin: 0;width: 176px;">
+                                        <input type="text" class="form-control" value="{{angleRotate}}" style="text-align: center;width: 80%;border: 0;" formControlName="addMapOrientation" name="addMapOrientation" >
+                                        <img src="../../assets/svgs/rotationknob_icon.svg" style="width: 30px;height:30px;float: right;" id="rotationField" #rotationField>
+
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Map Scale (units)</p>
+                                        <select class="form-control" style="margin: 0;padding:0" name="addMapscale" formControlName="addMapscale" >
+                                            <option *ngFor="let unit of unitsList" [value]="unit.value">
+                                                {{unit.view}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Legend</p>
+                                        <select class="form-control" style="margin: 0;padding:0" formControlName="addLegend" #legend (change)="onPageOptionSelected(pagesize.value)">
+                                            <option value="Show">Show</option>
+                                            <option value="Hide">Hide</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Image Upload</p>
+                                        <div class="form-control" style="height: 37.99px;">
+                                            <label for="checkBtn" style="float: right;">
+                                                <img src="../../assets/svgs/upload.svg" style="width: 20px;height:20px;" >
+                                            </label>
+                                            <input type="file" id="checkBtn" style="display: none;" name="addImageUpload" formControlName="addImageUpload" (change)="checkButtonFunction($event)">
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-6">
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-12">
+                                        <p style="margin: 0;font-size:14px">Credits</p>
+                                        <textarea class="form-control" rows="4" style="margin: 0;padding: 0;width: 100%;" formControlName="addCredit"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <p style="margin: 0.1rem 1rem;font-size: 21px;font-weight: bold;letter-spacing: 0.1rem;">Print Details</p>
+                                    <div style="height: 0.1rem;background:#2B2E34;margin: 0 1rem;width: 100%"></div> 
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Orientation</p>
+                                        <select class="form-control" style="margin: 0;padding:0" name="addOrientation" formControlName="addOrientation" #orientation (change)="onOrientOptionSelected(orientation.value)">
+                                            <option value="Portrait">Portrait</option>
+                                            <option value="Landscape">Landscape</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Page Size</p>
+                                        <select class="form-control" style="margin: 0;padding:0" formControlName="addPageSize" #pagesize (change)="onPageOptionSelected(pagesize.value)">
+                                            <option value={{pages.name}} *ngFor="let pages of presentationPageSizes ">{{pages.name}}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 1rem -0.5rem;">
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">DPI</p>
+                                        <select class="form-control" style="margin: 0;padding:0" formControlName="addDpi" #dpi >
+                                            <option value="100">100</option>
+                                            <option value="200">200</option>
+                                            <option value="300">300</option>
+                                            <option value="400">400</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xl-6">
+                                        <p style="margin: 0;font-size:14px">Output Format</p>
+                                        <select class="form-control" style="margin: 0;padding:0" formControlName="addOutputFormat">
+                                            <option value="PDF">PDF</option>
+                                            <option value="TIFF">TIFF</option>
+                                            <option value="JPG">JPG</option>
+                                        </select>
+                                    </div>
+                                </div>
+                           </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="presentation-tool-footer-container">
+                <button class="print-btn">
+                    <span class="material-icons" (click)="checkPdfDownload(mapLogo,navigateN)"> print </span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,129 @@
+@import '../../theme.scss';
+$primary-dark-color: $primary-dark-color;// #007dc6;
+$secondry-dark-color: $secondry-dark-color;// #007dc6;
+$secondry-selected-color: $secondry-selected-color;
+
+$active-option-color: #703d90;
+
+.icon-card-container{
+    position: relative;
+    // padding: 5px;
+    margin: 3px 3.5px; // 0px 1px;
+    // width: 60px;
+    // height: 70px;
+    border-radius: 50%;
+    background: white;
+    // box-shadow: 1px 1px 7px 0px;
+    cursor: pointer;
+    .icon-container{
+        border-radius: 50%;
+        height: 100%;
+        // background: -webkit-radial-gradient(red, yellow, green);
+        // background: radial-gradient(red, yellow, green);
+        padding: 2px; //5px;
+        // background: radial-gradient(white 35%, $primary-dark-color/*#0068a6*/ 65%) !important;
+        background: $primary-dark-color !important;
+        .icon-bg-container{
+            // background-color: #ffffff;
+            // background-image: url("/assets/svgs/geosol/circle.png");
+            // background-repeat: no-repeat;
+            // background-size: contain;
+            border-radius: 50%;
+            height: 100%;
+        }
+    }
+    // .active{
+    //     background: $active-option-color !important;
+    // }
+    .active.option-c{
+        background: $tower-option-c-color !important; // #8c6b56 !important;
+    }
+    .option-c:hover{
+        background: $tower-option-c-color !important; // #8c6b56 !important;
+    }
+    .active.option-d{
+        background: $tower-option-d-color !important; // #bf2f66 !important;
+    }
+    .option-d:hover{
+        background: $tower-option-d-color !important; // #bf2f66 !important;
+    }
+    .active.option-s{
+        background: $tower-option-s-color !important; // #cc9900 !important;
+    }
+    .option-s:hover{
+        background: $tower-option-s-color !important; // #cc9900 !important;
+    }
+    .active.option-f{
+        background: $tower-option-f-color !important; // #00b0f0 !important;
+    }
+    .option-f:hover{
+        background: $tower-option-f-color !important; // #00b0f0 !important;
+    }
+    .active.option-i{
+        background: $tower-option-i-color !important; // #7030a0 !important;
+    }
+    .option-i:hover{
+        background: $tower-option-i-color !important; // #7030a0 !important;
+    }
+    .default{
+        background: $primary-dark-color !important;
+    }
+    .ripple {
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.4);
+        transform: scale(0);
+        position: absolute;
+        opacity: 1;
+    }
+    .rippleEffect {
+          animation: rippleDrop .6s linear;
+    }
+      
+    @keyframes rippleDrop {
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+    }
+    .span-ele{
+        background: transparent;
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        border-radius: 50%;
+        top: 0;
+        left: 0;
+    }
+}
+.icon-card-container:hover{
+    box-shadow: 2px 2px 9px 0px;
+    .icon-container{
+        // background: radial-gradient(white 35%, $primary-dark-color/*#0068a6*/ 65%) !important;
+        .icon-bg-container{
+            transform: scale(0.95); // scale(1.1);
+            background: transparent;
+        }
+    }
+}
+
+.ripple {
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    transform: scale(0);
+    position: absolute;
+    opacity: 1;
+}
+.rippleEffect {
+      animation: rippleDrop .6s linear;
+}
+  
+@keyframes rippleDrop {
+    100% {
+      transform: scale(2);
+      opacity: 0;
+    }
+}

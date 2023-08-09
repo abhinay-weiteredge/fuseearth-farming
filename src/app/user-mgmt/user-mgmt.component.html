@@ -1,0 +1,264 @@
+
+<div class="" style=" position:absolute;width:50%; height:20%; background-color:white;z-index: 1;top:35%; left:24%; border-radius: 5px; box-shadow: 5px 10px 18px #888888;" [hidden]=!showdeleteuser>
+    <div style="width: 100%;height:15%;background-color:#2B2E34;">
+        <img src="../assets/images/crossbutton.png" (click)="showdeleteuser=false" alt="" width="30px" height="30px" style="float:right ;padding-right: 2px; padding-top: 1px;" >
+    </div>
+    <h3 style="padding-top:20px;text-align:center">Are you sure you want to delete the user ?</h3>
+    <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;">
+        <div class="userdeletecon" style=" margin-right: 60px; left:10px " (click)="removeSelectedRows()">Yes</div>
+        <div class="userdeletecon" (click)="showdeleteuser=false">No</div>
+        
+    </div>
+    </div>
+    <div class="user-mgmt-page">
+        <div class="loadin-status-container" *ngIf="!usersDataCollected">
+            <p>Getting users list...</p>
+        </div>
+    <div class="d-flex" >
+        <div class="d-flex justify-content-center align-items-center" >
+            <img  (click)="add_user_show()" src="../assets/images/adduser.png" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%; margin-right: 12px;">
+            <img (click)="edit_user_show()" src="../assets/images/edit.png" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../assets/images/delete.png" (click)="showdeleteconfirm()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+    
+        </div>
+        <div class="col" style="padding-left: 65%;padding-right:20px; z-index: 1;">
+            <div class="input-box" style="height: 50%;">
+              <input type="text"  placeholder="Search" (keyup)="searchfilter($event.target.value)" style="background: transparent; color:white ; border: 1px solid white ;" class="form-control">
+              <i class="fa fa-search" style="color:white"></i>                    
+            </div>
+        </div>
+    </div>
+        <div *ngIf="usersDataCollected" class="user-table-container" style=" padding-right: 12px; height: 100%;">
+            <table class="user-table" >
+                <thead class="user-table-head">
+                    <th  class="name head"> <input type="checkbox" (click)="CheckAllOptions()"></th>
+                    <th class="name head">Name</th>
+                    <th class="name head">User Email</th>
+                    <th class="name head">Data Rights</th>
+                    <th class="name head">User Role</th>
+                    <th class="name head">Status</th>
+                    
+                </thead>
+                <tr class="user-data-container" *ngFor="let user of allUsers; let i=index" >
+                    <td class="name"> 	<input type="checkbox" id ={{i}} [(ngModel)]="user.checked" [value]="user.value" (click)="checkid($event)"></td>
+                    <td class="name">{{user.name}}</td>
+                    <td class="name">{{user.email}}</td>
+                    <td class="name">{{user.dataRights}}</td>
+                    <td class="name">{{user.userRole}}</td>
+                    <td class="name" style="text-transform: capitalize; color:green">{{user.statusToDisplay}}</td>
+                    
+                        <!-- <button class="edit" (click)="editUser(user)">
+                            <i class="material-icons"> edit </i>
+                        </button> -->
+                        <!-- <button class="delete">
+                            <i class="material-icons"> delete </i>
+                        </button> -->
+                    
+                </tr>
+            </table>
+        </div>
+    
+        <!-- ADD USER=================================== -->
+        <div [hidden]="!addUserHide" class="add-user-modal-container" >
+            <div class="add-user-modal-area">
+                <div class="add-user-page-container">
+    
+                    <div class="add-user-header-container">
+                        <div class="title">
+                            Add User
+                        </div>
+                        <button class="close-btn" (click)="addUserHide=!addUserHide">
+                            &#10006;
+                        </button>
+                    </div>
+    
+                    <div class="add-user-body-container">
+                        
+                        <form #userName="ngForm" [formGroup]="registerForm" (ngSubmit)="onSubmit()" > 
+                            <div class="d-lg-flex justify-content-between align-items-center">
+                                <input formControlName="firstName" type="text"  placeholder="First Name" ngModel> 
+                                <input type="text" formControlName="lastName"  placeholder="Last Name" ngModel> 
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-lg-4">
+                                <input type="text" formControlName="Email" placeholder="Email ID" ngModel> 
+                               
+                                <select (change)="onChangeDataRights($event.target.value)" formControlName="DataRightsOption" [(ngModel)]='dataRightsSelected'>
+                                    <option value="Group" class="DataRights_option"> 
+                                        <img class="group_img" src="../../assets/img/group_test.png" alt="group">
+                                         Group
+                                    </option>
+                                    <option value="Custom"> 
+                                        Custom
+                                  </option>
+                                  </select>
+                                 
+                                  <select  (change)="onChangeUserRole($event.target.value)" formControlName="UserRoleOption" [(ngModel)]='userRoleSelectedValue'>
+                                    <option *ngFor="let i of userRoleOptions">{{i.value}}</option>
+                                </select>
+                                
+                               
+                                
+                            </div>
+                            
+                            <div [hidden]="!showGroupTable" class="data-management mt-lg-4">
+                                <div class="data-management-header">Data Management</div>
+                                
+                                    <div class="data-management-table">
+                                <table>
+                                    <tr *ngFor="let data of  dataManagementGroup"> 
+                                        <td>{{ data.label }}</td>
+                                        <td> <img src={{data.url}} alt=""> </td>
+    
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+    
+                        <div [hidden]="!showCustomTable" class="data-management mt-lg-4">
+                            <div class="data-management-header d-flex justify-content-between align-items-center">
+                            <div>Data Management</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                Select All <input  style="width:15px; height:15px; margin-right:2px; margin-left: 4px;" type="checkbox" (click)="customTotalCheckbox()">
+                        </div>
+                        </div>
+                                <div class="data-management-table">
+                            <table>
+                                <tr class="form-check d-flex justify-content-between align-items-center" style="margin:0px" *ngFor="let data of  dataManagementCustom"> 
+                                    <td class="form-check-label" for="{{data.label}}">{{ data.label }}</td>
+                                    <td>  <input  class="form-check-input" style="width:15px; height:15px; " (change)="customIndividualCheck(data.label, $event.target.checked)"name="{{ data.label }}" type="checkbox" id="{{data.label}}"></td>
+    
+                                </tr>
+                            </table>
+
+                            
+
+                        </div>
+                    </div>
+    
+                        <div class="add-user-body-down d-flex justify-content-between align-items-center">
+                        
+                        <select  id="activeStatus" formControlName="activeStatus" [(ngModel)]='activeStatus'>
+                            <option value="Active"> 
+                                Active
+                            </option>
+                            <option value="Inactive"> 
+                                Inactive
+                          </option>
+                          </select>
+                        
+                        <button class="button" type="submit">Save</button>
+                    </div>
+                         </form>
+    
+                    </div>
+    
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- EDIT USER=============================================== -->
+        <div [hidden]="!editUserHide" class="edit-user-modal-container" >
+            <div class="edit-user-modal-area">
+                <div class="edit-user-page-container">
+    
+                    <div class="edit-user-header-container">
+                        <div class="title">
+                            Edit User
+                        </div>
+                        <button class="close-btn" (click)="editUserHide=!editUserHide">
+                            &#10006;
+                        </button>
+                    </div>
+    
+                    <div class="edit-user-body-container">
+                        
+                        <form #userName="ngForm" [formGroup]="registerForm" (ngSubmit)="onUpdate()" > 
+                            <div class="d-lg-flex justify-content-between align-items-center">
+                                <input formControlName="firstName" type="text"  placeholder="First Name" ngModel> 
+                                <input type="text" formControlName="lastName"  placeholder="Last Name" ngModel> 
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-lg-4">
+                                
+                                
+                                <mat-input style="background: white;
+                                width: 45%;
+                                height: 35px;
+                                color: black;" *ngFor="let stage of editUserEmail" [value]="stage">{{stage}}
+                                </mat-input>
+                                <select (change)="onChangeDataRightsEditUser($event.target.value)" formControlName="DataRightsOption" [(ngModel)]='dataRightsSelected'>
+                                    <option value="Group" class="DataRights_option"> 
+                                        <img class="group_img" src="../../assets/img/group_test.png" alt="group">
+                                         Group
+                                    </option>
+                                    <option value="Custom"> 
+                                        Custom
+                                  </option>
+                                  </select>
+                                 
+                                  <select  (change)="onChangeUserRole($event.target.value)" formControlName="UserRoleOption" [(ngModel)]='userRoleSelectedValueEditUser'>
+                                    <option *ngFor="let i of userRoleOptions">{{i.value}}</option>
+                                </select>
+                                
+                               
+                                
+                            </div>
+                            
+                            <div [hidden]="!showGroupTableEditUser" class="data-management mt-lg-4">
+                                <div class="data-management-header">Data Management</div>
+                                
+                                    <div class="data-management-table">
+                                <table>
+                                    <tr *ngFor="let data of  dataManagementGroup"> 
+                                        <td>{{ data.label }}</td>
+                                        <td> <img src={{data.url}} alt=""> </td>
+    
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+    
+                        <div [hidden]="!showCustomTableEditUser" class="data-management mt-lg-4">
+                            <div class="data-management-header d-flex justify-content-between align-items-center">
+                            <div>Data Management</div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                Select All <input  style="width:15px; height:15px; margin-right:2px; margin-left: 4px;" type="checkbox" (click)="customTotalCheckbox()">
+                        </div>
+                        </div>
+                                <div class="data-management-table">
+                            <table>
+                                <tr class="form-check d-flex justify-content-between align-items-center" style="margin:0px" *ngFor="let data of  dataManagementCustom"> 
+                                    <td class="form-check-label" for="{{data.label}}">{{ data.label }}</td>
+                                    <td>  <input  class="form-check-input" style="width:15px; height:15px; " (change)="customIndividualCheck(data.label, $event.target.checked)"name="{{ data.label }}" type="checkbox" id="{{data.label}}"></td>
+    
+                                </tr>
+                            </table>
+
+                            
+
+                        </div>
+                    </div>
+    
+                        <div class="edit-user-body-down ">
+                            <div class="d-flex justify-content-between align-items-center">
+                        <select  (change)="onChangeApproveStatus($event.target.value)" id="approveStatus" [(ngModel)]='approveStatusSelected'>
+                            <option *ngFor="let i of approveStatus">{{i.label}}</option>
+                        </select>
+                        
+                        <button class="button" type="submit">Update</button>
+                    </div>
+                    <textarea  [hidden]="!showComments" class="form-control mt-lg-2" rows="5" placeholder="Comments"  ng-model="CommentText"></textarea>  
+                    </div>
+
+                    
+                         </form>
+    
+                    </div>
+    
+                    
+                </div>
+            </div>
+        </div>
+    </div>

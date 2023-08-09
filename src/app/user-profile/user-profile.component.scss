@@ -1,0 +1,118 @@
+@import '../theme.scss';
+
+$login-btn-color: $secondry-selected-color;
+
+.pwd-change{
+    display: flex;
+    height: 100%;
+    position: relative;
+    .pwd-change-fields-container{
+        min-height: 100%;
+        overflow-y: auto;
+        width: 50%;
+        .fields-container-div{
+            height: 400px;
+            width: 50%;
+            display: table-cell;
+            vertical-align: middle;
+        }
+    }
+    .profile-pic-and-info-container{
+        margin: 0;
+        width: 50%;
+        overflow-y: auto;
+        .profile-info-container{
+            height: 400px;
+            width: 50%;
+            display: table-cell;
+            vertical-align: middle;
+            .profile-pic-container{
+                height: 100px;
+                text-align: center;
+                img{
+                    overflow: hidden;
+                    color: white;
+                    width: auto;
+                    border-radius: 50px;
+                    border: 3px solid #b9b9b9;
+                    height: 100%;
+                }
+            }
+            .op-btn-container{
+                text-align: center;
+                padding: 0 5%;
+                .error-msg{
+                    background: $error-msg-color;
+                    color: #fff;
+                }
+                .success-msg{
+                    background: green;
+                    color: $white-color;
+                }
+                button{
+                    border: $login-btn-color .5px solid;
+                    border-radius: 3px;
+                    width: 100%;
+                    background: $primary-dark-color;
+                    color: $white-color;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    .saving-status{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.6);
+        padding: 10% 0;
+        p{
+            text-align: center;
+            color: $white-color;
+        }
+    }
+}
+
+// .fields-row-container{
+//     width: 100%;
+//     display: flex;
+//     padding: 0;
+//     margin: 16px 0px;
+    .fields-container{
+        margin: 0;
+        width: 100%;
+        padding: 10px 5px;
+        position: relative;
+        text-align: center;
+        input[type=text], input[type=password]{
+            margin: 0;
+            padding: 0px 5px;
+            line-height: 30px;
+            border: unset;
+            border-radius: 5px;
+            width: 90%;
+        }
+        .error{
+            display: block;
+            color: $error-msg-color; // red;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .description{
+            font-size: 12px;
+            display: flex;
+            width: 90%;
+            margin-left: 5%;
+            color: #fff;
+        }
+    }
+// }
+.err-msg{
+    color: $error-msg-color; // red;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    // text-align: left;
+}

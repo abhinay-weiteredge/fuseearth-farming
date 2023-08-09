@@ -1,0 +1,302 @@
+
+@import '../../theme.scss';
+
+.signin-header{
+    height: 75px;
+    padding-top: 15px;
+}
+.signin-body{
+    height: calc(100% - 140px);
+    overflow: auto;
+}
+.signin-footer{
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #fff;
+    // border-image: linear-gradient(#2B2E34,#ececec,#2B2E34) 1 100%;
+    .footer-msg{
+        margin: 0;
+        margin-top: 10px;
+        color: $white-color;
+        text-align: center;
+        width: 100%;
+        font-size: 12px;
+        button{
+            border: 2px solid #fff;
+            border-radius: 3px;
+            background: #d0d0d0;
+            margin-left: 5px;
+            cursor: pointer;
+        }
+    }
+    .create-org{
+        display: block;
+        width: 100%;
+        font-size: 12px;
+        text-align: center;
+        text-align: -webkit-center;
+        text-align: -moz-center;
+        text-align: -o-center;
+        text-align: -ms-center;
+        margin-top: 10px;
+        .msg{
+            width: calc(100% - 130px);
+            p{
+                margin: 0;
+            }
+        }
+        .op-btn-container{
+            width: 130px;
+            button{
+                background: #d0d0d0;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .signin-header{
+        height: 70px;
+        padding: 0;
+    }
+    .signin-body{
+        height: calc(100% - 130px);
+    }
+    .signin-footer{
+        .footer-msg{
+            margin: 0;
+        }
+    }
+}
+.product-logo-container{
+    margin: 0px 0px 10px;
+    img{
+        height: 60px;
+    }
+}
+.main-page{
+    margin: 0;
+    color: $white-color;
+    font-size: 14px;
+    position: relative;
+    .sign-in-up-tabs-container{
+        display: flex;
+        width: 100%;
+        .option-btn{
+            width: 50%;
+            background: $primary-dark-color;
+            color: $white-color;
+            border: unset;
+            cursor: pointer;
+            outline: transparent;
+            border-bottom: 1px solid #636363;
+            padding: 5px 0px;
+        }
+        .active-btn{
+            background: $secondry-selected-color;
+            color: $black-color;
+        }
+    }
+
+    .sub-page{
+        margin: 0;
+        margin-top: 60px; // 30px;
+    }
+    @media screen and (max-width: 1000px) {
+        .sub-page{
+            margin-top: 30px;
+        }
+    }
+    .page-title{
+        font-size: 20px;
+    }
+    .arrow-back-btn{
+        position: absolute;
+        left: 5px;
+        top: 0px; //5px;
+        z-index: 1;
+        color: #fff;
+    }
+
+    .fields-row-container{
+        width: 100%;
+        display: flex;
+        padding: 0;
+        margin: 16px 0px;
+        .fields-container{
+            margin: 0;
+            width: 100%;
+            padding: 0 5px;
+            position: relative;
+            input[type=text], input[type=password]{
+                margin: 0;
+                padding: 0px 5px;
+                line-height: 30px;
+                border: unset;
+                border-radius: 5px;
+                background: #ececec;
+            }
+            .op-button{
+                background: $primary-dark-color;
+                color: $white-color;
+                border: 2px solid $white-color;
+                border-radius: 2px;
+                cursor: pointer;
+                width: 100%;
+            }
+            .error{
+                display: block;
+                color: $error-msg-color; // red;
+                font-size: 12px;
+                font-weight: normal;
+                text-align: left;
+            }
+            .forgot-pwd{
+                cursor: pointer;
+                //text-decoration: underline;
+            }
+            .org-search-list-container{
+                position: absolute;
+                width: 95%;
+                max-height: 100px;
+                overflow: auto;
+                border: 1px solid #d0d0d0;
+                background: rgba(43, 46, 52, 0.8);
+                color: #fff;
+                z-index: 5;
+                top: 30px;
+                .org-name-container{
+                    text-align: left;
+                    padding: 5px;
+                    cursor: pointer;
+                    color: #000;
+                    .org-name{
+                        margin: 0;
+                    }
+                }
+                .org-name-container:nth-child(odd){
+                    background: #fff;
+                }
+                .org-name-container:nth-child(even){
+                    background: #e1e1e1;
+                }
+                .org-name-container:hover{
+                    background: $primary-dark-color;
+                    color: #fff;
+                    .org-name{
+                        margin: 0;
+                    }
+                }
+                p{
+                    margin: 10px 0px;
+                    font-size: 12px;
+                }
+            }
+        }
+        .desclamair{
+            font-size: 11px;
+            span{
+                font-weight: 500;
+            }
+            .links{
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+        .err-msg{
+            color: $error-msg-color; // red;
+            width: 100%;
+            text-align: center;
+            font-weight: bold;
+            // text-align: left;
+        }
+    }
+    .login-input{
+        width: 80%;
+        margin-left: 10%;
+        .fields-container{
+            input[type=text], input[type=password]{
+                width: 100%;
+            }
+        }
+    }
+    .full-width{
+        width: 100%;
+    }
+    .pointer{
+        cursor: pointer;
+    }
+    
+    .op-button{
+        background: $primary-dark-color;
+        color: $white-color;
+        border: 2px solid $white-color;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .reg-success-msg{
+        margin: 15px 0px;
+        // font-size: 20px !important;
+        color: green !important;
+        font-weight: 500;
+        span{
+          font-size: 12px; //16px;
+          // text-decoration: underline;
+        }
+    }
+    .sign-in-verify-email{
+        font-size: 12px;
+        color: #ff5722;
+        margin: 0;
+        font-weight: 500;
+        span{
+          text-decoration: underline;
+          cursor: pointer;
+        }
+    }
+}
+
+
+.social-login-container{
+    display: flex;
+    color: #fff;
+    font-size: 12px;
+    width: fit-content;
+    .text{
+        margin: 0;
+        line-height: 25px;
+    }
+    .social-login-btn{
+        border: unset;
+        border-radius: 20px;
+        width: 25px;
+        height: 25px;
+        cursor: pointer;
+        overflow: hidden;
+        background: #fff;
+        padding: 1px;
+        margin: 0px 3px;
+        img{
+            margin: 0;
+            // width: 100%;
+        }
+    }
+}
+.packagecard{
+    width: 30%; height:30%; background-color:white;margin-right: 3px;
+    margin-left: 7px; border-radius: 10px; position: relative;
+}
+.month{
+    margin-top: 8px;
+    width: 75%;
+     height: 62%;
+    border-radius: 4px;
+    border-color: #BCBCBC;
+    color: #636262;
+    text-align: center;
+    font-size: 14px;
+    option:hover {
+        background: #1b1a1a !important;
+        color: #357b1d !important;
+    }
+}

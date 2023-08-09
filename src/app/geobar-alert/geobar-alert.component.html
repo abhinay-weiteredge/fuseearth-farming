@@ -1,0 +1,13 @@
+<div #ngbAlert>
+  <!-- <ngb-alert *ngIf="activeAlert" class="alert-position" (close)="closeAlert()">
+    <strong></strong> {{alertMessage}}
+  </ngb-alert> -->
+  <div *ngIf="activeAlert" class="alert-position" >
+    <div class="alert-msg">{{alertMessage}}</div>
+    <img class="alert-close-icon" src="/assets/svgs/geopad/session/close_icon.svg" (click)="closeAlert()"/>
+  </div>
+  <!-- <div style="position: fixed; left: 100px; top: 100px;">
+    <button (click)='showAlert("Error...")'>Show</button>
+    <button (click)="closeAlert()">Hide</button>
+  </div> -->
+</div>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:#FFFFFF;}
+	.st1{fill:#D3D3D3;}
+</style>
+<title>compass navigation</title>
+<g>
+	<g>
+		<path d="M304.3,112.3c0,0,53.8-53.1,100-6.9s0,100.2,0,100.2"/>
+		<path class="st0" d="M407.7,208.6l-6.8-5.8c0.1-0.1,11.1-13.2,16.5-31.4c7-23.8,1.6-44.9-16.3-62.7c-17.7-17.7-38.7-22.1-62.3-13
+			c-18.2,7-31.2,19.8-31.4,19.9l-6.3-6.4c0.6-0.6,14.3-14,34.2-21.8c26.9-10.5,51.9-5.4,72.1,14.9c25.4,25.4,24.1,53.1,18.5,71.9
+			C420,194.1,408.2,208,407.7,208.6z"/>
+	</g>
+	<g>
+		<polygon class="st0" points="82.7,430 101.8,309.4 105.6,310 110.2,305.4 113.1,308.4 95.8,417.3 200.4,404.7 201.7,415.6 		"/>
+	</g>
+	<g>
+		<polyline points="304.3,112.3 109.5,309.1 201.9,408 354.1,255.8 404.3,205.6 		"/>
+		<polygon class="st0" points="201.8,414.4 103.3,309 301.2,109.1 307.5,115.5 115.8,309.2 202,401.5 401.1,202.4 407.5,208.8 		"/>
+	</g>
+	<g>
+		<polyline class="st1" points="352.4,160.4 304.3,112.3 397.3,205.3 		"/>
+		
+			<rect x="285.1" y="153.3" transform="matrix(0.7071 0.7071 -0.7071 0.7071 215.0404 -201.5658)" class="st0" width="131.5" height="11"/>
+	</g>
+</g>
+</svg>

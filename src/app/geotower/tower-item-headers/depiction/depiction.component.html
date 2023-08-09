@@ -1,0 +1,229 @@
+
+<script src="https://cdn.rawgit.com/openlayers/openlayers.github.io/master/en/v6.1.1/build/ol.js"></script>
+<div>
+  <div #container class="popup depiction-info-container"  ngDraggable>
+    <!-- <i  #closer class="close-icon depiction-info-close"></i> -->
+    <button #closer class="depiction-info-close">
+      <img src="../../../../assets/images/table.png" style="border-radius: 50%;
+      border: 1px solid black;
+      position: absolute;
+      top: -9px;
+      left: 21px;
+      color: white;
+      background: white;
+      width: 17px;
+      margin-right: 10px;">
+      <img src="../../../../assets/images/closebutton.png" style="border-radius: 50%;
+      border: 1px solid black;
+      position: absolute;
+      top: -9px;
+      left: 21px;
+      color: white;
+      background: white;
+      width: 17px;">
+    </button>
+   
+    <!--for normal files excluding shp/zip/vector-->
+    <div *ngIf="depictionforlayer =='Notgeometric'">
+      
+        <h3 class="depiction-info-title">Depiction</h3>
+        <div class="depiction-info-body-container">
+          <!-- <table class="table table-striped specification-info-table"> -->
+          <table class="table depiction-info-table">
+            <thead>
+            <tr>
+              <th scope="col">S.No</th>
+              <th scope="col">Property Title</th>
+              <th scope="col">Property Value</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let depiction of depProperties; index as i">
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      
+    </div>
+
+    <!--for shpfiles with geometric type Multipolygon-->
+    <div *ngIf="depictionforlayer == 'MultiPolygon'">
+      
+      <div class="depiction-info-body-container" style="border: 2px solid rgb(196, 47, 104);">
+
+        <table class="table depiction-info-table">
+          <thead>
+            <tr style="background-color: rgb(221, 221, 221);">
+              <th scope="col" ><h3 style="text-align: left; ">Property title</h3></th>
+              <th scope="col"><h3 style="text-align: left;padding-left: 18px;" > 
+                Values
+              </h3></th>
+         
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <th style="margin-right: 5px;text-align: left;    margin-left: 7px;font-weight: 500;">Outline Color</th>
+              <th scope="row"><div class="col-md-5">
+                <input type="color" id="colorpicker" [(ngModel)]="selectedColor" (change)="selectOutlineColorFun(selectedColor)" style="border: none;">
+              </div></th>
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr><tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Outline thickness</th>
+              <th  scope="row"><div class="col-md-5 d-flex" style="padding-left: 2px;margin-left: 15px;
+                border: 1px solid black; cursor: pointer;" (click)="showoutlinethicknesspopup=!showoutlinethicknesspopup ;showoutlinestylepopup=false"><div style="margin-bottom:5px">________ </div></div></th>
+              
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+            <div *ngIf="showoutlinethicknesspopup" style="position: absolute;left: 101%;top: 15px;background-color: white; border-radius: 12px;">
+              <ul style="list-style: none">
+                <li style="display: flex;margin-top: 19px;"><div style="width: 93px;background-color: black;border: .5px solid black;margin-top: 24px;margin-bottom: 18px;cursor: pointer;margin-right: 40px;" matTooltip="1px" (click)="setlinethickness(1)"></div></li>
+                <li style="display: flex;"> <div style="width: 93px;background-color: black;border: 2px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="2px"  (click)="setlinethickness(2)"></div></li>
+                <li style="display: flex;"><div style="width: 93px;background-color: black;border: 3px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="3px"  (click)="setlinethickness(3)"></div></li>
+                <li style="display: flex;"><div style="width: 93px;background-color: black;border: 5px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="5px"  (click)="setlinethickness(5)"></div></li>
+              </ul>
+            </div>
+            <tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Outline style</th>
+              <th  scope="row"><div class="col-md-5 d-flex" style="padding-left: 2px;margin-left: 15px;
+                border: 1px solid black; cursor: pointer;" (click)="showoutlinestylepopup=!showoutlinestylepopup;showoutlinethicknesspopup=false"><div style="margin-bottom:5px">............. </div></div></th>
+              <div  *ngIf="showoutlinestylepopup"  style="position: absolute;left: 101%;top: 15px;background-color: white; border-radius: 12px; width: 154px;">
+                <ul style="list-style: none">
+                  <li style="display: flex; font-size: 31px; cursor: pointer;" matTooltip="Dashed"  (click)="setlinestyle('dashed')">--------</li>
+                  <li style="display: flex;  font-size: 31px;cursor: pointer;"  matTooltip="Dotted"  (click)="setlinestyle('dotted')">........</li>
+                  <li style="display: flex;  font-size: 31px; cursor: pointer;"  matTooltip="Line"  (click)="setlinestyle('line')">_____</li>
+                  
+                </ul>
+              </div>
+              
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+            <tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Fill Color </th>
+              <th scope="row"><div class="col-md-5">
+                <input type="color" id="colorpicker" [(ngModel)]="selectedColor2" (change)="selectfillColorFun(selectedColor2)" style="border: none;">
+              </div></th>
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+    <div *ngIf="depictionforlayer == 'Point'">
+      
+      <div class="depiction-info-body-container" style="border: 2px solid rgb(196, 47, 104);">
+
+        <table class="table depiction-info-table">
+          <thead>
+            <tr style="background-color: rgb(221, 221, 221);">
+              <th scope="col" ><h3 style="text-align: left; ">Property title</h3></th>
+              <th scope="col"><h3 style="text-align: left;padding-left: 18px;" > 
+                Values
+              </h3></th>
+         
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <th style="margin-right: 5px;text-align: left;    margin-left: 7px;font-weight: 500;">Fill Color</th>
+              <th scope="row"><div class="col-md-5">
+                <input type="color" id="colorpicker" [(ngModel)]="selectedColor3" (change)="selectsymbolColorFun(selectedColor3)" style="border: none;">
+              </div></th>
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr><tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Symbol</th>
+              <th  scope="row"><div class="col-md-5 d-flex" style="padding-left: 2px;margin-left: 15px;
+                 cursor: pointer;" (click)="showsymbolpopup=!showsymbolpopup">
+                <div style="margin-bottom:5px"><img [src]="firstsymbol"  class="image" alt="" style="margin-left: 9px;"> </div></div></th>
+              
+              <div  *ngIf="showsymbolpopup" style="position: absolute;left: 101%;top: 9px;background-color: white; border-radius: 12px; width: 154px;">
+                <div class="grid-container" style="padding:16px;">
+                  <div *ngFor="let image of symbols; let i = index;" class="grid-item">
+                    <img [src]="image" class="image" (click)="selectsymbol(i)">
+                  </div>
+                </div>
+                
+              </div>
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+           
+           
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+
+    <div *ngIf="depictionforlayer == 'LineString'">
+      
+      <div class="depiction-info-body-container" style="border: 2px solid rgb(196, 47, 104);">
+
+        <table class="table depiction-info-table">
+          <thead>
+            <tr style="background-color: rgb(221, 221, 221);">
+              <th scope="col" ><h3 style="text-align: left; ">Property title</h3></th>
+              <th scope="col"><h3 style="text-align: left;padding-left: 18px;" > 
+                Values
+              </h3></th>
+         
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <th style="margin-right: 5px;text-align: left;    margin-left: 7px;font-weight: 500;">Outline Color</th>
+              <th scope="row"><div class="col-md-5">
+                <input type="color" id="colorpicker" [(ngModel)]="selectedColor4" (change)="selectOutlineColorFun4(selectedColor4)" style="border: none;">
+              </div></th>
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr><tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Outline thickness</th>
+              <th  scope="row"><div class="col-md-5 d-flex" style="padding-left: 2px;margin-left: 15px;
+                border: 1px solid black; cursor: pointer;" (click)="showoutlinethicknesspopup1=!showoutlinethicknesspopup1 ;showoutlinestylepopup=false"><div style="margin-bottom:5px">________ </div></div></th>
+              
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+            <div *ngIf="showoutlinethicknesspopup1" style="position: absolute;left: 101%;top: 15px;background-color: white; border-radius: 12px;">
+              <ul style="list-style: none">
+                <li style="display: flex;margin-top: 19px;"><div style="width: 93px;background-color: black;border: .5px solid black;margin-top: 24px;margin-bottom: 18px;cursor: pointer;margin-right: 40px;" matTooltip="1px" (click)="setlinethickness1(1)"></div></li>
+                <li style="display: flex;"> <div style="width: 93px;background-color: black;border: 2px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="2px"  (click)="setlinethickness1(2)"></div></li>
+                <li style="display: flex;"><div style="width: 93px;background-color: black;border: 3px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="3px"  (click)="setlinethickness1(3)"></div></li>
+                <li style="display: flex;"><div style="width: 93px;background-color: black;border: 5px solid black; margin-bottom: 18px;cursor: pointer;" matTooltip="5px"  (click)="setlinethickness1(5)"></div></li>
+              </ul>
+            </div>
+            <tr >
+              <th style="text-align: left;    margin-left: 7px;font-weight: 500;">Outline style</th>
+              <th  scope="row"><div class="col-md-5 d-flex" style="padding-left: 2px;margin-left: 15px;
+                border: 1px solid black; cursor: pointer;" (click)="showoutlinestylepopup1=!showoutlinestylepopup1;showoutlinethicknesspopup1=false"><div style="margin-bottom:5px">............. </div></div></th>
+              <div  *ngIf="showoutlinestylepopup1"  style="position: absolute;left: 101%;top: 15px;background-color: white; border-radius: 12px; width: 154px;">
+                <ul style="list-style: none">
+                  <li style="display: flex; font-size: 31px; cursor: pointer;" matTooltip="Dashed"  (click)="setlinestyle1('dashed')">--------</li>
+                  <li style="display: flex;  font-size: 31px;cursor: pointer;"  matTooltip="Dotted"  (click)="setlinestyle1('dotted')">........</li>
+                  <li style="display: flex;  font-size: 31px; cursor: pointer;"  matTooltip="Line"  (click)="setlinestyle1('line')">_____</li>
+                  
+                </ul>
+              </div>
+              
+              <!-- <td>{{depiction.title}} </td>
+              <td>{{depiction.value}}</td> -->
+            </tr>
+           
+           
+          </tbody>
+          
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

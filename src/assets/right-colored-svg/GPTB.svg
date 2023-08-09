@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#373435;stroke-width:6.99962}
+    .str2 {stroke:#373435;stroke-width:2.99961}
+    .str3 {stroke:white;stroke-width:0.3}
+    .str1 {stroke:#373435;stroke-width:0.3}
+    .fil0 {fill:none}
+    .fil1 {fill:#FEFEFE}
+    .fil2 {fill:#373435}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_2077818194496">
+   <path class="fil1 str0" d="M412 112l0 0c0,1 0,2 0,3l-8 184c-22,91 -264,104 -295,-1l-9 -182c0,-2 0,-3 0,-5l0 0c0,-46 70,-83 156,-83 86,0 156,37 156,83 0,0 0,1 0,1l0 0z"/>
+   <path class="fil2 str1" d="M256 484l82 -121c-62,16 -100,17 -164,0l82 121z"/>
+   <rect class="fil0 str2" x="170" y="125" width="170" height="170" rx="27" ry="28"/>
+   <path class="fil2" d="M207 93l104 0c4,0 8,4 8,9l0 2c0,6 -4,10 -8,10l-104 0c-2,0 -4,-1 -5,-3 1,-2 1,-5 1,-7 0,-3 0,-6 -1,-8 1,-2 3,-3 5,-3z"/>
+   <path class="fil2 str3" d="M199 108l-15 -4c5,-2 10,-4 16,-5 2,3 2,6 -1,9z"/>
+   <g>
+    <rect class="fil2" x="182" y="194" width="142.822" height="7.28424" rx="9" ry="5"/>
+    <rect class="fil2" x="182" y="228" width="142.822" height="7.28424" rx="9" ry="5"/>
+    <rect class="fil2" x="182" y="262" width="142.822" height="7.28424" rx="9" ry="5"/>
+    <rect class="fil2" x="182" y="158" width="36.1377" height="7.28424" rx="2" ry="5"/>
+    <rect class="fil2" x="228" y="158" width="40.0657" height="7.28424" rx="3" ry="5"/>
+    <rect class="fil2" x="278" y="158" width="46.6523" height="7.28424" rx="3" ry="5"/>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,175 @@
+
+<div [ngStyle]="{ 'right': minimizedWindow ? '-450px' : '0px' }" 
+    class="geo-session-container" *ngIf="showGeoSession" #geoSessionWindow>
+    <div class="geo-session-header">
+        <div class="geo-session-head-ops-container">
+        <button class="geo-session-minimize" *ngIf="!minimizedWindow" matTooltip="Minimize Geo Session" matTooltipClass="mat-custom-tooltip" (click)="minimizeNotePage()">
+            <span class="material-icons"> keyboard_arrow_right </span>
+        </button>
+        <button class="geo-session-minimize" cdkDragLockAxis="y" cdkDrag style="left: -35px; top: 40px;"
+            *ngIf="minimizedWindow" [ngStyle]="{'opacity': minimizedWindow ? '0.7' : '1'}"
+            matTooltip="Maximize Geo Session" matTooltipClass="mat-custom-tooltip" (mousedown)="mouseDownOnSession()" (mouseup)="mouseUpOnSession()">
+            <!-- matTooltip="Maximize Geo Session" matTooltipClass="mat-custom-tooltip" (click)="maximizeNotePage()"> -->
+            <span class="material-icons"> keyboard_arrow_left </span>
+        </button>
+        <button class="geo-session-close" matTooltip="Close" matTooltipClass="mat-custom-tooltip" (click)="closeNotePage()">
+            <i class="material-icons">close</i>
+        </button>
+        </div>
+        <div class="geo-session-title-container">
+        <span class="geo-session-title">
+            <!-- Save & Share -->
+            Collaborate
+        </span>
+        <img class="geo-session-logo" src="assets/right-white-svg/STB.svg">
+        </div>
+    </div>
+    <div class="geo-session-body">
+        <div class="geo-session-search-container">
+            <div class="geo-session-name-container">
+                <div class="geo-session-name-div">
+                    <input #sessionName type="text" placeholder="Session name">
+                </div>
+                <div class="geo-session-owner-div">
+                    <div class="owner-name"> <span>{{ownerName}}</span> </div>
+                    <div class="owner-email"> <span>{{ownerEmail}}</span></div>
+                </div>
+            </div>
+            <div class="geo-session-search">
+                <div class="geo-search-elements-container" >
+                    <!-- <select class="project" placeholder="Project" (change)="changeProject($event.target.value)"> -->
+                    <select class="project" placeholder="Project" [formControl]="projectSelect">
+                    <!-- <option>Project 01</option><option>Project 02</option> -->
+                        <option *ngFor="let project of projects" value="{{project.topicId}}">{{project.name}}</option>
+                    </select>
+                    <span>&gt;</span>
+                    <div class="input-select-container">
+                    <!-- <select class="select" placeholder="Place" (change)="placeInput.value = $event.target.value">
+                        <option></option><option>Tourist Spot</option><option>Gardening</option>
+                    </select> -->
+                    <select class="select" placeholder="Place" [formControl]="placeSelect">
+                        <option *ngFor="let place of places" value="{{place.topicId}}">{{place.name}}</option>
+                    </select>
+                    <!-- <input #placeInput type="text" placeholder="Place"> -->
+                    </div>
+                    <span>&gt;</span>
+                    <div class="input-select-container">
+                    <!-- <select class="select" placeholder="Topic" (change)="topicInput.value = $event.target.value">
+                        <option></option><option>Paris</option><option>Parla</option>
+                    </select> -->
+                    <select class="select" placeholder="Topic" [formControl]="topicSelect">
+                        <option *ngFor="let topic of topics" value="{{topic.topicId}}">{{topic.name}}</option>
+                    </select>
+                    <!-- <input #topicInput type="text" placeholder="Topic"> -->
+                    </div>
+                </div>
+            </div>
+            <div class="geo-session-data-container" >
+                <div class="bounding-box-container">
+                    <div class="bounding-box-name">
+                        <!-- Bounding Box -->
+                        Bounding Box (Map View Extent)
+                    </div>
+                    <div class="bounding-box-options">
+                        <select placeholder="Topic" #boundingBoxSelectCtrl  (change)="boundingBoxChanged($event)">
+                            <option *ngFor="let boxType of boundingBoxTypes" value = '{{boxType.value}}'>{{boxType.name}}</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="bounding-items-container" *ngFor="let item of currentBoundingBoxItems">
+                    <div class="bounding-item">
+                        <p>{{item.name}}</p>
+                        <input type="checkbox" [disabled]="( item.value=='geotower'&&!towerItemsDataCollected) || saveTypeSelectCtrl.value=='over-write'"
+                                (click)="getLatestData(item, $event)" [(ngModel)]="item.selected">
+                    </div>
+                    <!-- GEO PAD-->
+                    <div class="geopad-geotower-list-container" *ngIf="item.selected && item.value==='geopad'">
+                        <div class="geopad-geotower-item" *ngIf="geoPadItemsList.length===0">
+                            <p class="no-geopad">No geopad sites are present</p>
+                        </div> 
+                        <div class="geopad-geotower-item" *ngFor="let geopadItem of geoPadItemsList">
+                            <div class="item-details-container">
+                                <p>{{geopadItem.locationName}}</p>
+                            </div>
+                            <input class="item-selector" type="checkbox" [(ngModel)]="geopadItem.selected">
+                        </div>
+                    </div>
+
+                    <!-- GEO TOWER-->
+                    <div class="geopad-geotower-list-container" *ngIf="item.selected && item.value==='geotower'">
+                        <div class="geopad-geotower-item" *ngIf="geoTowerList.length===0">
+                            <p class="no-layer">No tower layers present</p>
+                        </div>
+                        <div class="geopad-geotower-item" *ngFor="let towerItem of geoTowerList">
+                            <div class="item-details-container">
+                                <p>{{towerItem.name}}</p>
+                            </div>
+                            <input class="item-selector" type="checkbox" [(ngModel)]="towerItem.selected">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="geo-session-save-share-btn-container">
+                <div *ngIf="errorMsg!==''" class="error-msg-container">
+                    <p class="error-msg">{{errorMsg}}</p>
+                    <img class="close-error" (click)="errorMsg=''" src="assets/svgs/geopad/session/close_icon.svg">
+                </div>
+                <div *ngIf="copyToClipboard!==''" class="copy-to-clipboard-msg-container">
+                    <p class="error-msg copy-clipboard-msg">{{copyToClipboard}}</p>
+                    <img class="close-error" (click)="copyToClipboard=''" src="assets/svgs/geopad/session/close_icon.svg">
+                </div>
+                <div [ngClass]="{'session-saved': sessionSaveCurrentState === sessionSaveStates.COMPLETED,
+                                'session-failed': sessionSaveCurrentState === sessionSaveStates.FAILED}"
+                    *ngIf="sessionSaveCurrentState === sessionSaveStates.COMPLETED || 
+                            sessionSaveCurrentState === sessionSaveStates.FAILED">
+                    <p class="success" *ngIf="sessionSaveCurrentState === sessionSaveStates.COMPLETED">Saving session success...</p>
+                    <p class="failed" *ngIf="sessionSaveCurrentState === sessionSaveStates.FAILED">Saving session failed...</p>
+                </div>
+                
+                <div [ngClass]="{'session-saved': sessionShareCurrentState === sessionSaveStates.COMPLETED,
+                                'session-failed': sessionShareCurrentState === sessionSaveStates.FAILED}"
+                    *ngIf="sessionShareCurrentState === sessionSaveStates.COMPLETED || 
+                    sessionShareCurrentState === sessionSaveStates.FAILED">
+                    <p class="success" *ngIf="sessionShareCurrentState === sessionSaveStates.COMPLETED">Sharing session success...</p>
+                    <p class="failed" *ngIf="sessionShareCurrentState === sessionSaveStates.FAILED">Sharing session failed...</p>
+                </div>
+
+                <div class="org-emails-container" *ngIf="orgUserEmailsToShow.length > 0">
+                    <p class="user-email" (click)="setSharingUserEmail(email)" *ngFor="let email of orgUserEmailsToShow">{{email}}</p>
+                </div>
+                <div class="share-users-btns-container">
+                    <input #emailIdsToShare class="user-email" (blur)="onRemoveFocusOfUserEmail($event)"
+                        (focus)="onUserEmailType($event)" (keyup)="onUserEmailType($event)"
+                        [formControl]='userEmail' placeholder="User email">
+                    <img class="search" src="assets/svgs/geopad/search-white-icon.svg">
+                    <select placeholder="Save Type" #saveTypeSelectCtrl (change)="saveTypeChanged($event)">
+                        <option value = 'over-write'>Over Write</option>
+                        <option value = 'create-new'>Create New</option>
+                    </select>
+                    <img matTooltip="Save" matTooltipClass="mat-custom-tooltip" class="save" src="assets/svgs/geopad/save-white-icon.svg"
+                        (click)="saveSession()">
+                    <!-- <img matTooltip="SaveAs" matTooltipClass="mat-custom-tooltip" class="save" src="assets/svgs/geopad/save-white-icon.svg"
+                        (click)="saveAsSession()"> -->
+                    <img class="share" src="assets/svgs/geopad/share-white-icon.svg" (click)="shareSession()">
+                </div>
+                <div class="session-link-container" matTooltip="Copy" matTooltipClass="mat-custom-tooltip">
+                    <input #urlLink class="session-link" placeholder="Session Link">
+                    <img class="link-img" (click)="copySessionLinkToClipboard()" src='assets/svgs/geopad/link-black-icon.svg'>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-loading-status" *ngIf="!sessionDataCollected">
+            <p class="msg">Loading session...</p>
+        </div>
+        <div class="saving-session-status" *ngIf="sessionSaveCurrentState === sessionSaveStates.STARTED">
+            <p class="msg" *ngIf="sessioSaveProgress < 100">Saving session ( {{sessioSaveProgress}}% )</p>
+            <p class="msg" *ngIf="sessioSaveProgress >= 100">Session Saved. Waiting for confirmation...</p>
+        </div>
+
+        <div class="saving-session-status" *ngIf="sessionShareCurrentState === sessionSaveStates.STARTED">
+            <p class="msg">Sharing session.</p>
+        </div>
+
+    </div>
+</div>

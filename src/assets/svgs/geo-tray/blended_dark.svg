@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil1 {fill:url(#id0);fill-opacity:0.741176}
+   ]]>
+  </style>
+  <radialGradient id="id0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(1 -0 -0 1 0 0)" cx="256" cy="251.38" r="231" fx="256" fy="251.38">
+   <stop offset="0" style="stop-opacity:1; stop-color:white"/>
+   <stop offset="0.470588" style="stop-opacity:1; stop-color:gray"/>
+   <stop offset="1" style="stop-opacity:1; stop-color:gray"/>
+  </radialGradient>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <path class="fil1" d="M256 25c127.576,0 231,103.424 231,231 0,127.576 -103.424,231 -231,231 -127.576,0 -231,-103.424 -231,-231 0,-127.576 103.424,-231 231,-231z"/>
+ </g>
+</svg>

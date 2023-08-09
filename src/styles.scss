@@ -1,0 +1,562 @@
+@import 'app/theme.scss';
+
+@import "~angular2-multiselect-dropdown/themes/default.theme.css";
+
+.selected-list .c-list .c-token .c-remove {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  color: black;
+}
+
+.c-btn{
+  font-size: 16px;
+}
+.selected-list .c-list .c-token {
+  color: white;
+  background: #4d4d4d; 
+}
+ 
+.selected-list .c-list .c-token .c-label {
+  color: white;
+}
+
+.pure-checkbox input[type="checkbox"] + label:before {
+  color: black;
+  border: 1px solid black;
+}
+.pure-checkbox input[type="checkbox"]:checked + label:before {
+  background: black;
+}
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@import '~@angular/material/theming';
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$fuse-earth-primary: mat-palette($mat-indigo);
+$fuse-earth-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$fuse-earth-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$fuse-earth-theme: mat-light-theme((
+  color: (
+    primary: $fuse-earth-primary,
+    accent: $fuse-earth-accent,
+    warn: $fuse-earth-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($fuse-earth-theme);
+
+/* You can add global styles to this file, and also import other style files */
+// @import '../src/assets/sprites/sprite';
+.ol-attribution {
+  display: none;
+}
+.ol-zoom {
+  z-index: 1000;
+  top: 0%;
+  left: 2.5%;
+}
+.ol-control {
+  background-color: transparent !important;
+}
+.ol-control button {
+  background-color: transparent !important;
+  color: black !important;
+  margin: 1px !important;
+  height: 0px !important;
+  width: 0px !important;
+  display: none !important;
+}
+.ol-zoom {
+  width: 0px !important;
+  height: 0px !important;
+}
+.ol-zoom .ol-zoom-in {
+  /* padding-left: 30px !important; */
+}
+.ol-zoom .ol-zoom-out {
+  /* padding-left: 30px !important; */
+  padding-top: 73px !important;
+}
+.map {
+  width: 100%;
+  height: 100vh;
+}
+
+ngb-tabset #connection {
+  background-color: #8c6b56 !important;
+}
+ngb-tabset #specification {
+  background-color: #bf2f66 !important;
+}
+ngb-tabset #function {
+  background-color: #00b0f0 !important;
+}
+ngb-tabset #depiction {
+  background-color: #cc9900 !important;
+}
+ngb-tabset #interation {
+  background-color: #7030a0 !important;
+}
+
+ngb-tabset ul > li > a {
+  // color:   white !important;
+  color: lightgray !important;
+  font-size: medium !important;
+  border-radius: 0px 0px 0 0 !important;
+  margin-right: 0px !important;
+  padding: 6px 10.5px !important;
+}
+ngb-tabset ul > li {
+  border-radius: 10px;
+}
+#connection-panel {
+  background-color: #8c6b56 !important;
+  height: 127px;
+}
+#specification-panel {
+  background-color: #bf2f66 !important;
+  height: 127px;
+}
+#function-panel {
+  background-color: #00b0f0 !important;
+  height: 127px;
+}
+#depiction-panel {
+  background-color: #cc9900 !important;
+  height: 127px;
+}
+#interation-panel {
+  background-color: #7030a0 !important;
+  height: 127px;
+}
+.tab-content {
+  width: 98%;
+  height: 127px;
+  padding-left: 10px;
+  overflow-y: auto;//scroll;
+}
+.drop-zone {
+  height: 100vh !important;
+  border: 0px !important;
+}
+
+/* .tooltip {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.tooltip-measure {
+  opacity: 1;
+  font-weight: bold;
+}
+.tooltip-static {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+.tooltip-measure:before,
+.tooltip-static:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.tooltip-static:before {
+  border-top-color: #ffcc33;
+}
+.ol-dragbox {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(100, 150, 0, 1);
+} */
+
+.tooltipGTB {
+  position: relative;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 4px;
+  color: white;
+  padding: 4px 8px;
+  opacity: 0.7;
+  white-space: nowrap;
+}
+.tooltip-measureGTB {
+  opacity: 1;
+  font-weight: bold;
+}
+.tooltip-staticGTB {
+  background-color: #ffcc33;
+  color: black;
+  border: 1px solid white;
+}
+.tooltip-measureGTB:before,
+.tooltip-staticGTB:before {
+  border-top: 6px solid rgba(0, 0, 0, 0.5);
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  margin-left: -7px;
+  left: 50%;
+}
+.tooltip-staticGTB:before {
+  border-top-color: #ffcc33;
+}
+.ol-dragbox {
+  background-color: rgba(255, 255, 255, 0.4);
+  border-color: rgba(100, 150, 0, 1);
+}
+
+.ol-scale-line {
+  display: none;
+  background: transparent;
+  border-radius: 4px;
+  position: absolute;
+  margin: 4px;
+  margin-left: 10px;
+  top: 14% !important;
+  left: 0px !important;
+}
+.ol-scale-line-inner {
+  color: black !important;
+  border: 1px solid black !important;
+  border-top: none !important;
+  // width: 75px !important;
+  font-weight: bold;
+  // display: none !important;
+  position: fixed;
+  height: 20px;
+  top: 15px;// 4px;
+  left: 24px;
+  transition: 1.5s width;
+  background: $button-color; // #017dc7;
+  color: #fff !important;
+  border: 1px solid !important;
+}
+.ol-scale-text {
+  display: none;
+  background: transparent;
+  border-radius: 4px;
+  position: absolute;
+  margin: 4px;
+  margin-left: 10px;
+  top: 14% !important;
+  left: 0px !important;
+}
+.ol-scale-text-inner {
+  color: black !important;
+  border: 1px solid black !important;
+  border-top: none !important;
+  // width: 75px !important;
+  font-weight: bold;
+  // display: none !important;
+  position: fixed;
+  height: 20px;
+  top: 15px;// 4px;
+  left: 24px;
+  transition: 1.5s width;
+  background: $button-color; // #017dc7;
+  color: #fff !important;
+  border: 1px solid !important;
+}
+// For print tool map scale css
+.ol-scale-text-mini {
+  display: none;
+  background: transparent;
+  border-radius: 4px;
+  position: absolute;
+  margin: 4px;
+  margin-left: 10px;
+  top: 14% !important;
+  left: 0px !important;
+}
+.ol-scale-text-mini-inner {
+  color: black !important;
+  border: 1px solid black !important;
+  border-top: none !important;
+  // width: 75px !important;
+  font-weight: bold;
+  // display: none !important;
+  position: fixed;
+  height: 20px;
+  top: 15px;// 4px;
+  left: 24px;
+  transition: 1.5s width;
+  background: $button-color; // #017dc7;
+  color: #fff !important;
+  border: 1px solid !important;
+}
+.alert {
+  padding: 1px !important;
+}
+.alert-dismissible {
+  padding-right: 1.5rem !important;
+}
+.alert-dismissible .close {
+  position: absolute !important;
+  top: -6px !important;
+  right: 2px !important;
+  padding: 0px !important;
+}
+
+
+.ol-viewport {
+  position: unset !important;
+}
+
+@media screen and (max-width: 400px) {
+  @-ms-viewport { width: 320px; }
+  /* CSS for 320px layout goes here */
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 2%;
+  }
+  .ol-scale-line {
+    top: 11% !important;
+  }
+}
+  
+@media screen and (min-width: 400px) and (max-width: 640px) {
+  @-ms-viewport { width: 400px; }
+  /* CSS for 400px layout goes here */
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 2%;
+  }
+  .ol-scale-line {
+    top: 11% !important;
+  }
+}
+
+@media screen and (min-width: 640px) and (max-width: 1024px) {
+  @-ms-viewport { width: 640px; }
+  /* CSS for 640px layout goes here */
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 5%;
+  }
+  .ol-scale-line {
+    top: 21% !important;
+  }
+}
+  
+@media screen and (min-width: 1024px) and (max-width: 1366px) {
+  @-ms-viewport { width: 1024px; }
+  /* CSS for 1024px layout goes here */
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 4%;
+  }
+  .ol-scale-line {
+    top: 17% !important;
+  }
+}
+
+@media screen and (min-width: 1366px) {
+  /* CSS for 1366px layout goes here */
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 3%;
+  }
+  .ol-scale-line {
+    top: 14% !important;
+  }
+}
+@media (min-width: 1600px) {
+  .ol-zoom {
+    z-index: 1000;
+    top: 0.5%;
+    left: 2.5%;
+  }
+  .ol-scale-line {
+    top: 11% !important;
+  }
+}
+
+.tooltip {
+  white-space: nowrap !important;
+}
+.tooltip-inner {
+  max-width: 220px !important;
+}
+.modal-content {
+  // width: 65% !important;
+  // margin-left: 17.5% !important;
+}
+
+*:focus{
+  outline: transparent;
+}
+/*
+*SCROLL STYLES
+*/
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 4px $scroll-bar-track-color; //#006dad; /*#afafaf; */ 
+  // border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: /*#afafaf; */ $scroll-bar-thumb-color; // #006dad;
+  // border-radius: 10px;
+}
+
+/* Handle on hover */
+// ::-webkit-scrollbar-thumb:hover {
+//     background: #d0d0d0; 
+// }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-custom-tooltip, .mat-tooltip{
+  background: #4d4d4d; // #b71c1c;
+  color: #ffffff !important;
+  // --color: #000000 !important;
+  font-size: 12px;
+  // text-align: center;
+}
+
+
+/**
+GEOREF STYLES START
+*/
+// .georef-opacity-tool-overlay{
+//   top: -30px;
+//   // background: #d0d0d0;
+//   padding: 5px;
+// }
+// .georef-layer-opacity-slider {
+//   -webkit-appearance: none;
+//   -moz-appearance: none;
+//   -o-appearance: none;
+//   appearance: none;
+//   width: 100%;
+//   height: 18px; // 10px; // 20px;//22px;
+//   background: none;
+//   outline: none;
+//   // padding-top: 5px;
+// }
+
+// .georef-layer-opacity-slider:hover {
+//   opacity: 1;
+// }
+
+// .georef-layer-opacity-slider::-webkit-slider-thumb {
+// 	-webkit-appearance: none;
+//   -moz-appearance: none;
+//   -o-appearance: none;
+// 	appearance: none;
+// 	width: 10px;
+//   height: 10px; // 20px;//22px;
+//   background-image: url("/assets/img/range-selector-icon.svg");
+//   background-repeat: no-repeat;
+// 	cursor: pointer;
+// 	background-size: auto 100%;
+// 	margin-top: -4px;
+// }
+
+// .georef-layer-opacity-slider::-moz-range-thumb {
+// 	width: 10px;
+//   height: 10px; // 20px;//22px;
+//   background-image: url("/assets/img/range-selector-icon.svg");
+//   background-repeat: no-repeat;
+// 	cursor: pointer;
+// 	margin-top: -4px;
+// 	background-size: auto 100%;
+// }
+// .georef-layer-opacity {
+//   // width: 100%;
+//   display: block; // none; 
+//   height: 12px; // 10px;
+//   background: rgba(255, 255, 255, 1);
+//   background: -moz-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+//   background: -webkit-gradient(
+//     left top,
+//     right top,
+//     color-stop(0%, rgba(255, 255, 255, 1)),
+//     color-stop(100%, rgba(0, 0, 0, 1))
+//   );
+//   background: -webkit-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+//   background: -o-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+//   background: -ms-linear-gradient(left, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+//   background: linear-gradient(to right, rgba(255, 255, 255, 1) 0%, rgba(0, 0, 0, 1) 100%);
+//   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#000000', GradientType=1 );
+// }
+
+// .georef-legend-overlay{
+//   top: 15px;
+// }
+// .georef-legend{
+//   display: none;
+//   background: #d0d0d0;
+//   padding: 1px 5px;
+//   .original-point, .resultant-point{
+//     margin: 5px 10px 5px 0px;
+//     font-size: 12px; // 14px;
+//     p{
+//       margin: 0;
+//       span:before {
+//         content: "";
+//         display: inline-block;
+//         width: 15px;
+//         height: 15px;
+//         margin-right: 5px;
+//       }
+//     }
+//   }
+//   .original-point{
+//     p{
+//       span::before{
+//         border-radius: 50%;
+//         border: 2px solid red;
+//       }
+//     }
+//   }
+//   .resultant-point{
+//     p{
+//       span::before{
+//         border: 2px solid green;
+//       }
+//     }
+//   }
+// }
+/**
+GEOREF STYLES END
+*/

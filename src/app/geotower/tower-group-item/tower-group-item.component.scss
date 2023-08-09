@@ -1,0 +1,226 @@
+@import "../tower-global.scss";
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none !important;
+}
+.layer-group .layer.opt {
+  z-index: 2 !important;
+}
+.layer-group .layer.name {
+  z-index: 1 !important;
+}
+.layer.opt {
+  background-image: url("/assets/img/c-color.png"), url("/assets/img/d-color.png"), url("/assets/img/f-color.png"),
+    url("/assets/img/i-color.png"), url("/assets/img/s-color.png");
+  background-position: 0 0, 25% 0, 50% 0, 75% 0, 100% 0;
+  background-size: 20% 100%;
+  background-repeat: no-repeat;
+}
+.layer.opt span {
+  width: 20%;
+  height: 25px;
+  margin: 0;
+  padding: 0;
+  float: left;
+  text-align: center;
+  color: $towerBackgroundWhite;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-top: 14px;
+}
+.layer.opt span:nth-child(2) {
+  margin-top: 21px;
+}
+.layer.opt span:nth-child(3) {
+  margin-top: 22px;
+}
+.layer.opt span:nth-child(4) {
+  margin-top: 21px;
+}
+.layer {
+  width: 100%;
+  background: $towerBackgroundWhite;
+  height: 40px;
+  font-size: 10px;
+  // border-radius: 0 0 50% 50% / 50%;
+  border-radius: 10px 10px 50% 50%;
+  margin-top: -20px;
+  position: relative;
+  float: left;
+  overflow: hidden;
+}
+
+.layer-text {
+  float: left;
+  color: #949697;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 4px;
+}
+.group {
+  width: 100%;
+  background: $towerBackgroundWhite url("/assets/img/group-bg.png");
+  background-size: 100% 100%;
+  font-size: 12px;
+  // border-radius: 0 0 50% 50% / 50%;
+  border-radius: 10px 10px 50% 50%;
+  margin-top: -20px !important;
+  position: relative;
+  float: left;
+  padding-top: 45px !important;
+  overflow-y: hidden;
+  cursor: pointer;
+  height: 0 !important;
+  overflow: visible;
+}
+.group .layer {
+  height: 0;
+}
+.group.active {
+  padding: 0 !important;
+  height: auto !important;
+  margin-left: 0;
+  margin-top: -5px !important;
+}
+.group.active .layer {
+  height: 45px;
+  width: 110%;
+  margin-left: -7px;
+  padding: 5px;
+  border: solid 2px $towerBackgroundWhite;
+  -webkit-box-shadow: 0 1px 3px #cac5c5;
+  -moz-box-shadow: 0 1px 3px #cac5c5;
+  -o-box-shadow: 0 1px 3px #cac5c5;
+  box-shadow: 0 1px 3px #cac5c5;
+}
+.group.active .layer.name,
+.group.active .layer.opt {
+  padding: 0 5px;
+}
+
+/*custom checkbox*/
+/* The container */
+.tower-checkbox {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  font-size: 22px;
+  float: left;
+  margin: 20px 5px 0 5px;
+  /*transform: rotate(10deg);*/
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.tower-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 7px;
+  width: 7px;
+  background-color: #eee;
+  border: solid 1px #919395;
+  z-index: 9;
+}
+
+/* On mouse-over, add a grey background color */
+.tower-checkbox:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.tower-checkbox input:checked ~ .checkmark {
+  background-color: $towerCheckboxCheckedBackground;
+  border: solid 1px $towerCheckboxCheckedBackground;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.tower-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.tower-checkbox .checkmark:after {
+  left: 2px;
+  top: -1px;
+  width: 2px;
+  height: 5px;
+  content: "";
+  border: solid #f9f9f9 1px;
+  border-width: 0 1px 1px 0;
+  -webkit-transform: rotate(45deg);
+  -moz-transform: rotate(45deg);
+  -o-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+/*custom checkbox*/
+
+.right-arrow {
+  position: absolute;
+  right: 0;
+  bottom: 12px;
+  width: 8px;
+  background: $towerBackgroundColor;
+  height: 29px;
+  text-align: center;
+  cursor: pointer;
+  display: none;
+  border-radius: 50px 0;
+}
+.right-arrow img {
+  width: 4px;
+  margin-top: 11px;
+}
+li:hover .right-arrow {
+  display: block;
+}
+.right-arrow.active {
+  background: $towerBackgroundColorActive;
+}
+.right-arrow.active img {
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -moz-transform: rotate(180deg);
+  -o-transform: rotate(180deg);
+  transform: rotate(180deg);
+}
+.layer-group {
+  position: relative;
+  width: 100%;
+  float: left;
+}
+
+.move {
+  width: 12px;
+  height: 12px;
+  float: left;
+  background: url("/assets/img/move-icon.svg");
+  background-size: 100% auto;
+  margin: 12px 0 0 3px;
+  cursor: move;
+  overflow: hidden;
+  text-indent: 500px;
+}

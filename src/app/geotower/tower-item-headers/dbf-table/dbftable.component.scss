@@ -1,0 +1,29 @@
+@import "../../tower-global.scss";
+
+
+.interaction-info-container{
+  background: #fff !important;
+  color: #000000 !important;
+  padding: 0px;
+  z-index: 5;
+  .interaction-info-close{
+    top: 0px !important;
+    right: 0px !important;
+    cursor: pointer;
+  }
+  .interaction-info-title{
+    text-align: center;
+    font-weight: bold;
+    background: #703a96;
+    color: #fff;
+    padding: 10px 5px;
+  }
+  .interaction-info-body-container{
+    max-height: 350px;
+    overflow: auto;  
+    .interaction-info-table{
+      width: 100%;
+      background: $towerLayerPopupBgColor;
+    }
+  }
+}

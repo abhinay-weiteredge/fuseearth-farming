@@ -1,0 +1,78 @@
+<div #container ngDraggable id="popup" class="ol-popup loc-pop-up-container" [style.min-width.px]="minWidth" >
+  <!-- <div  cdkDrag [cdkDragFreeDragPosition]="dragPosition" #container id="popup" class="ol-popup loc-pop-up-container" [style.min-width.px]="minWidth" > -->
+  <!-- <a #closer id="popup-closer" class="ol-popup-closer loc-pop-up-close"></a> -->
+  <div id="popup-content" style="/*display: table-cell;*/">
+      <div class="loc-popup-container">
+        <div class="loc-popup-header">
+          <span class="header-title">{{headerTitle}}</span>
+          <a #closer id="popup-closer" class="ol-popup-closer loc-pop-up-close"></a>
+        </div>
+        <div #content class="loc-popup-body" style="display: block;">
+          
+        </div>
+      </div>
+  </div>
+</div>
+<div #multiLayerContent class="multi-layer-content-cls">
+  <ngb-tabset type="pills" [orientation]="vertical" class="tabset-cls">
+    <ngb-tab *ngFor="let content of multiLayerContentList" class="tab-cls">
+      <ng-template ngbTabTitle class="tab-title-cls">{{content.title}}</ng-template>
+      <ng-template ngbTabContent class="tab-content-cls">
+        <!-- <p [innerHTML]="getLayerContent(content.content, content.length, content.title, content.isCovidPage)"></p> -->
+        <p [innerHTML]="content.tabContent"></p>
+        <!-- <table class="table table-striped" [innerHTML]="getLayerContent(content.content, content.length)"> -->
+            <!-- <tbody [innerHTML]="getLayerContent(content.content, content.length)"></tbody> -->
+          <!-- </table> -->
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
+<div #featureContent>
+  <table class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <tr *ngFor="let feature of featureInfoContentList; index as i">
+        <td>
+          {{ feature.title }}
+        </td>
+        <td>: {{ feature.content }} <br> {{ feature.contentNextLine }} </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div #radiusContent style="display: flex; width: 100px;">
+  <input placeholder="{{units}}" (keyup.enter)="getRadiusValue($event, inputRadiusVal.value)" #inputRadiusVal type="text" 
+    style="color: black; width: 65px; border-radius: 10px; border: 1px solid #757575; padding-left: 5px;" />
+  <img (click)="getRadiusValue($event, inputRadiusVal.value)" 
+        style="cursor: pointer; height: 25px; padding-left: 5px;" 
+        src="/assets/images/rotate-radius-icon.png">
+</div>
+<div #rotateContent>
+  <input placeholder="deg" (keyup.enter)="getRotateValue($event, inputRotateVal.value)" #inputRotateVal type="text" 
+    style="color: black; width: 50px;" />
+  <img (click)="getRotateValue($event, inputRotateVal.value)" 
+  style="cursor: pointer; padding-left: 5px;" 
+  src="/assets/images/rotate-radius-icon.png">
+</div>
+
+<div #geopadSiteContent>
+  <table class="table table-striped">
+    <thead>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Name
+        </td>
+        <td>: {{geopadSiteData.name}} </td>
+      </tr>
+      <!-- //   geopadSiteData.name: data.site.locationName,
+      //   desc: data.site.description,
+      //   location: data.site.latitudeLongitude,
+      //   projectName: data.project.name,
+      //   placeName: data.place.name,
+      //   topicName: data.topic.name -->
+    </tbody>
+  </table>
+</div>

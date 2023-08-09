@@ -1,0 +1,264 @@
+@import '../../theme.scss';
+
+.org-creation-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    font-size: 14px;
+    .org-creation-steps-container{
+        width: 40%;
+        color: $black-color;
+        padding: 16px 0px;
+        background: rgba(255, 255, 255, 0.5);
+        .page-title{
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+        .org-creation-steps{
+            display: block;
+
+            .org-creation-step{
+                display: flex;
+                
+                padding: 8px 36px;
+                .step-index-container{
+                    width: 40px;
+                    height: 40px;
+                    background: rgba(42, 46, 52, 0.8);
+                    border-radius: 20px;
+                    color: #fff;
+                    span{
+                        margin: 0;
+                        line-height: 40px;
+                    }
+                }
+                .step-name-container{
+                    margin-left: 5px;
+                    cursor: pointer;
+                    font-weight: 500;
+                    p{
+                        margin-left: 15px;
+                        line-height: 40px;
+                    }
+                }
+            }
+            .active-row{
+                background: rgba(42, 46, 52, 0.8);
+                color: #fff;
+                .step-index-container{
+                    border: 2px solid;
+                }
+            }
+            
+        }
+        .seleted-org-creation-step{
+            display: none;
+        }
+    }
+    .org-creation-data-container{
+        width: 60%;
+        background: rgba(42, 46, 52, 0.8);
+        padding: 16px 10px;
+        .org-creation-header{
+            height: 90px;
+            img{
+                height: 80%;
+                width: auto;
+            }
+        }
+        .org-creation-body{
+            height: calc(100% - 160px);
+            overflow: auto;
+        }
+        .org-creation-footer{
+            height: 70px;
+            .wizard-ops{
+                display: flex;
+                height: 100%;
+                .org-logo-container{
+                    width: 40%;
+                    img{
+                        height: 100%;
+                        width: auto;
+                    }
+                }
+                .next-button-container, .back-button-container{
+                    width: 30%;
+                    button{
+                        height: 30px;
+                        padding: 5px 15px;
+                        margin-top: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+// @media screen and (max-width: 650px) {
+//     .org-creation-container{
+//         display: block;
+//         .org-creation-steps-container{
+//             width: 100%;
+//             height: 150px;
+//             .page-title{
+//                 margin-bottom: 0rem;
+//                 overflow: hidden;
+//                 font-size: 18px;
+//             }
+//             .org-creation-steps{
+//                 display: inline-flex;
+//                 flex-wrap: wrap;
+//                 .org-creation-step{
+//                     padding: 5px;
+//                     .step-index-container{
+//                         margin: 0;
+//                     }
+//                     .step-name-container{
+//                         display: none;
+//                     }
+//                 }
+//                 .active-row{
+//                     border-radius: 25px;
+//                 }
+//             }
+//             .seleted-org-creation-step{
+//                 display: block;
+//                 width: 100%;
+//                 text-align: center;
+//                 padding: 5px 0px;
+//                 font-weight: bold;
+//                 p{
+//                     margin: 0;
+//                 }
+//             }
+//         }
+//         .org-creation-data-container{
+//             width: 100%;
+//             height: calc(100% - 160px);
+//             .org-creation-header{
+//                 height: 90px;
+//             }
+//             .org-creation-body{
+//                 height: calc(100% - 160px);
+//             }
+//             // .org-creation-footer{
+//             //     height: 70px;
+//             // }
+//         }
+    
+//     }   
+// }
+
+
+.fields-row-container{
+    width: 100%;
+    display: flex;
+    padding: 0;
+    margin: 16px 0px;
+    .fields-container{
+        margin: 0;
+        width: 100%;
+        padding: 0 5px;
+        input[type=text], input[type=password], select{
+            margin: 0;
+            padding: 0px 5px;
+            line-height: 30px;
+            border: unset;
+            border-radius: 5px;
+            color: #757575;
+        }
+        .op-button{
+            background: $primary-dark-color;
+            color: $white-color;
+            border: 2px solid $white-color;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .error{
+            display: block;
+            color: $error-msg-color; // red;
+            font-size: 12px;
+            font-weight: normal;
+            text-align: left;
+        }
+        .forgot-pwd{
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .hint{
+            font-size: 10px;
+            text-align: justify;
+            margin: 0;
+        }
+    }
+    .desclamair{
+        font-size: 11px;
+        span{
+            font-weight: 500;
+        }
+        .links{
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    }
+    .err-msg{
+        color: $error-msg-color; // red;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+    }
+}
+
+.full-width{
+    width: 100%;
+}
+
+.field-status-msg{
+    margin: 0;
+    font-size: 11px;
+    font-weight: normal;
+}
+.invalid{
+    color: $error-msg-color; // red;
+}
+.valid{
+    color: #0af713;
+}
+.err-msg{
+    color: $error-msg-color; // red;
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    // text-align: left;
+}
+.sub-drop{
+    margin-top: 8px;
+     width:95%;
+     height: 62%;
+    border-radius: 4px;
+    border-color: #BCBCBC;
+    color: #636262;
+    text-align: center;
+    font-size: 14px;
+    option:hover {
+        background: #1b1a1a !important;
+        color: #357b1d !important;
+    }
+    
+}
+.subscplan{
+    width: 30%; height:100%; background-color:white; margin-right: 30px; margin-left: 15px; border-radius: 10px; position: relative;
+}
+
+
+// option :hover{
+//     background-color: #636262;
+//   }
+// .subscplan :hover{
+//       border:20px solid black;
+//       border-radius: 10px
+// }
+

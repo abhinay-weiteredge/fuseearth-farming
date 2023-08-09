@@ -1,0 +1,68 @@
+
+<div class="pwd-change">
+    <div class="pwd-change-fields-container">
+        <div class="fields-container-div">
+            <form [formGroup]="pwdChangForm">
+                <!-- <div class="fields-row-container col-md-12"> -->
+                    <div class="fields-container">
+                        <input class="full-width" type="text" formControlName="firstName" placeholder="First Name">
+                        <span *ngIf="!pwdChangForm.get('firstName').valid && pwdChangForm.get('firstName').touched" class="error">
+                            {{getErrorMsg(pwdChangForm.get('firstName'), 'First Name')}}
+                        </span>
+                    </div>
+                    <div class="fields-container">
+                        <input class="full-width" type="text" formControlName="lastName" placeholder="Last Name">
+                        <span *ngIf="!pwdChangForm.get('lastName').valid && pwdChangForm.get('lastName').touched" class="error">
+                            {{getErrorMsg(pwdChangForm.get('lastName'), 'Last Name')}}
+                        </span>
+                    </div>
+                <!-- </div>
+                <div class="fields-row-container col-md-12"> -->
+                    <div class="fields-container" *ngIf="loggedInMethod === 'password'">
+                        <input class="full-width" type="password" formControlName="password" placeholder="Password">
+                        <span *ngIf="!pwdChangForm.get('password').valid && pwdChangForm.get('password').touched" class="error">
+                            {{getErrorMsg(pwdChangForm.get('password'), 'Password')}}
+                        </span>
+                    </div>
+                    <div class="fields-container" *ngIf="loggedInMethod === 'password'">
+                        <input class="full-width" type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+                        <span *ngIf="!pwdChangForm.get('confirmPassword').valid && pwdChangForm.get('confirmPassword').touched" class="error">
+                            {{getErrorMsg(pwdChangForm.get('confirmPassword'), 'Password to confirm')}}
+                        </span>
+                    </div>
+                <!-- </div> -->
+            </form>
+        </div>
+    </div>
+    <div class="profile-pic-and-info-container">
+        <!-- Profile pic comes here.. -->
+        <div class="profile-info-container">
+            <div class="profile-pic-container">
+                <img src="{{imageSrc}}">
+            </div>
+            <div class="fields-container">
+                <input disabled style="color: #fff;" class="full-width" type="text" [(ngModel)]="email" placeholder="Email">
+                <span class="description">
+                    If you want to change email id, please contact FE Support
+                </span>
+            </div>
+            <div class="fields-container" *ngIf="orgType !== 'INDEPENDENT'">
+                <input disabled style="color: #fff;" class="full-width" type="text" [(ngModel)]="orgName" placeholder="Organization Name">
+                <span class="description">
+                    If you want to change organization Name, please contact FE Support
+                </span>
+            </div>
+            <div class="op-btn-container">
+                <p *ngIf="errMsg!==''" class="error-msg">{{errMsg}}</p>
+                <p class="success-msg" *ngIf="showUpdateSuccessMsg">
+                    Profile updated successfully!!!
+                </p>
+                <button (click)="updatePassword()">Update</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="saving-status" *ngIf="showSavingStatus">
+        <p>Updating profile...</p>
+    </div>
+</div>

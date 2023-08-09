@@ -1,0 +1,545 @@
+
+<div [ngStyle]="{'display': globalObject.pageType !== 'COVID19' ? 'inherit' : 'none'}">
+  <app-compass [showCompass]="showCompassCtrl" [hideCompass]="closeCompassCtrl" (compassClosed)="compassClosedEventFun()"></app-compass>
+  
+  <ng-template #geoSoleRotationContent>
+      <!-- Orientation -->
+      Orientation! Click and rotate, Dbl-click to reset
+  </ng-template>
+  <ng-template #geoSoleToggleImgContent>GeoMocus Configuration</ng-template>
+  <ng-template #geoSoleSettingsContent>Settings</ng-template>
+  <ng-template #geoSoleSourcesContent>Sources</ng-template>
+  <ng-template #geoSoleFrameWorksContent>
+      <!-- Frameworks -->
+      Frameworks! Click to change coordinate systems
+  </ng-template>
+  <ng-template #geoSoleMeasuresContent>Measures</ng-template>
+  <ng-template #geoSoleDefaultLayersContent>Default Layers</ng-template>
+  <ng-template #geoSoleReferencesContent>References</ng-template>
+  <ng-template #geoSoleProduceContent>Produce</ng-template>
+  <ng-template #geoSoleManageContent>Manage</ng-template>
+  <ng-template #geoSoleAnalyzeContent>Analyze</ng-template>
+  <ng-template #geoSolePresentContent>Present</ng-template>
+  
+  <ng-template #geoSoleLeftOptionsToggle>Geosol Left Options</ng-template>
+  <ng-template #geoSoleCenterToggle>Geosol Options Toggle</ng-template>
+  <ng-template #geoSoleRightOptionsToggle>Geosol Right Options</ng-template>
+  
+  <!-- Unit measure change modal -->
+  <ng-template #measureChangeContent let-c="close" let-d="dismiss" style="width: 100px;">
+      <div class="modal-header modalHeader">
+        <h4 class="modal-title modalTitle" id="modal-basic-title">Units change</h4>
+        <button type="button" class="close modalCloseButton" aria-label="Close" (click)="d('Cross click')">
+          <span aria-hidden="true" class="modalCloseSpan">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modalBody">
+        <div class="units-change-container">
+              <form [formGroup]="form" (ngSubmit)="submit()">
+                  <div class="select-submit-container">
+                      <div class="select-container">
+                          <label for="orders">Units</label>
+                          <select formControlName="unitCtrl" id="orders">
+                              <option *ngFor="let unit of unitsList" [value]="unit.value">
+                                  {{unit.view}}
+                              </option>
+                          </select>
+                      </div>
+                      <div class="submit-container">
+                          <button>Update</button>
+                      </div>
+                  </div>
+              </form>
+        </div>
+      </div>
+  </ng-template>
+  
+  <ng-template #appInfoContent let-c="close" let-d="dismiss">
+      <div class="modal-header modalHeader">
+        <h4 class="modal-title modalTitle" id="modal-basic-title">App Information</h4>
+        <button type="button" class="close modalCloseButton" aria-label="Close" (click)="d('Cross click') ; tcAndPrivacyActivePage='tc';">
+          <span aria-hidden="true" class="modalCloseSpan">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body modalBody" style="height: 400px;">
+        <div class="tc-privacy-head-container">
+              <div [ngClass]="{'tc-head':true,'active': tcAndPrivacyActivePage=='tc' }" (click)="tcAndPrivacyActivePage='tc'">
+                  Terms & Conditions
+              </div>
+              <div [ngClass]="{'privacy-head':true,'active': tcAndPrivacyActivePage=='privacy' }" (click)="tcAndPrivacyActivePage='privacy'">
+                  Privacy Policy
+              </div>
+        </div>
+        <div class="tc-privacy-body-container">
+              <div class="tc-data" *ngIf="tcAndPrivacyActivePage=='tc'">
+                  <!-- <div slimScroll [options]="opts" [scrollEvents]="scrollEvents"> -->
+                  <div>
+                  <p>Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdf Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      Terms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdfTerms and conditions.fdsfsdfsdf
+                      
+                  </p>
+                  </div>
+              </div>
+              <div class="privacy-data" *ngIf="tcAndPrivacyActivePage=='privacy'">
+                  <!-- <div slimScroll [options]="opts" [scrollEvents]="scrollEvents"> -->
+                  <div>
+                  <p>
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                      Privacy policy.dfdsfd Privacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfdPrivacy policy.dfdsfd
+                  </p>
+                  </div>
+              </div>
+        </div>
+      </div>
+      
+  </ng-template>
+  
+  <!-- SUB OPTIONS CONTAINER-->
+  <div class="geosol-left-sub-options-container" 
+      *ngIf="selectedOption=='frameworks'||selectedOption=='observations'">
+      <div class="observations-container" *ngIf="selectedOption=='observations'">
+          <!-- <p>OBSERVATIONS</p> -->
+          <app-geosol-option matTooltipPosition='above' matTooltip="Windy" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/windy.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Geotracker" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/geotracker.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Covid" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/covid.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Weather" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/weather.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Riverside County" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/riverside_county.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Traffic" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/traffic.png"/>
+          </app-geosol-option>disabled
+          <app-geosol-option matTooltipPosition='above' matTooltip="Elevation" matTooltipClass="mat-custom-tooltip"   [width]="'50'"
+              [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }">
+              <img class="icon-img" src="assets/svgs/geosol/observations/elevation.png"/>
+          </app-geosol-option>
+      </div>
+      <div class="observations-container" *ngIf="selectedOption=='frameworks'" style="position: relative;">
+          <app-geosol-option matTooltipPosition='above' matTooltip="Satellite (Mapbox)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('satellite', 'Satellite (Mapbox)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/satellite-mapbox.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Satellite (Bing)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('bingsatellite', 'Satellite (Bing)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/satellite-bing.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Street (Bing)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('bingstreet', 'Street (Bing)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/street-bing.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Street (Google)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('googlestreet', 'Street (Google)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/street-google.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Satellite (Google)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('googlesatellite', 'Satellite (Google)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/satellite-google.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Toner (Stamen)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('toner', 'Toner (Stamen)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/toner-stamen.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Terrain (Stamen)" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('terrain', 'Terrain (Stamen)')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 11px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/terrain-stamen.png"/>
+          </app-geosol-option>
+          <app-geosol-option matTooltipPosition='above' matTooltip="Open Street" matTooltipClass="mat-custom-tooltip" [width]="'50'"
+          (click) = "filterMapTypes('openstreet', 'Open Street')"    
+          [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }" style="margin-right: 15px;">
+              <img class="icon-img" src="assets/svgs/geosol/geosole-framework/map-icons/open-street.png"/>
+          </app-geosol-option>
+          <div style="position:fixed; transform:translateX(300px)">
+              <div style="width: 30px; height: 40px; top: -14px; position: relative; margin: 3px 17px; border-radius: 50%; background: transparent; cursor: pointer;">
+                  <div style="border-radius: 50%; height: 90%; padding: 2px;">
+                  <div style="border-radius: 50%; height: 100%;">
+                      <img (click)="openFrameworkForm()" style="width: 100%; height: 40%;" src="assets/svgs/geosol/geosole-framework/drop-up-icon.svg" />
+                  </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+  <div class="geosol-left-sub-options-container" style="max-width: 232px; right:0; bottom: 175px; left: calc( 50% - 300px );" *ngIf="showFrameworkForm">
+      <div class="frameworks-container">
+          <form [formGroup]="frameworkForm">
+              <div [ngClass]="{'framework-option': true, 'selected-option': frameworkForm.get('framework').value=='rectangular'}">
+                  <input [disabled]="false" type="radio" id="rectangular" formControlName="framework" name="framework" value="rectangular">
+                  <label for="rectangular">
+                      <!-- Rectangular -->
+                      <div class="framework-option-data-container">
+                          <div class="framework-option-name">
+                              <p class="primary-name">Rectangular</p>
+                              <p class="secondary-name">(Easting & Northing)</p>
+                          </div>
+                          <div class="framework-option-select-container">
+                              <select [disabled]="frameworkForm.get('framework').value!='rectangular'"
+                                  (change)="projectionChangeEvent($event.target.value)">
+                                  <option value="2100">EPSG:2100</option>
+                                  <option value="27700">EPSG:27700</option>
+                                  <option value="23032">EPSG:23032</option>
+                                  <option value="5479">EPSG:5479</option>
+                                  <option value="21781">EPSG:21781</option>
+                                  <option value="3413">EPSG:3413</option>
+                                  <option value="2163">EPSG:2163</option>
+                                  <option value="54009">ESRI:54009</option>
+                                  <option value="2229">EPSG:2229</option>
+                                  <option value="3857">EPSG:3857</option>
+                                  <option value="4326">EPSG:4326</option>
+                              </select>
+                          </div>
+                      </div>
+                  </label>
+              </div>
+              <div [ngClass]="{'framework-option': true, 'selected-option': frameworkForm.get('framework').value=='angular'}">
+                  <input [disabled]="false" type="radio" id="angular" formControlName="framework" name="framework" value="angular">
+                  <label for="angular">
+                      <div class="framework-option-data-container">
+                          <div class="framework-option-name">
+                              <p class="primary-name">Angular</p>
+                              <p class="secondary-name">(Longitude & Latitude)</p>
+                          </div>
+                          <div class="framework-option-select-container">
+                              <!-- [disabled]="frameworkForm.get('framework').value!='angular'" -->
+                              <select [disabled]="frameworkForm.get('framework').value!='angular'"
+                                  (change)="projectionChangeEvent($event.target.value)">
+                                  <option value="2100">EPSG:2100</option>
+                                  <option value="27700">EPSG:27700</option>
+                                  <option value="23032">EPSG:23032</option>
+                                  <option value="5479">EPSG:5479</option>
+                                  <option value="21781">EPSG:21781</option>
+                                  <option value="3413">EPSG:3413</option>
+                                  <option value="2163">EPSG:2163</option>
+                                  <option value="54009">ESRI:54009</option>
+                                  <option value="2229">EPSG:2229</option> 
+                                  <option value="4326" >EPSG:4326</option>
+                                  <option value="3857">EPSG:3857</option>
+                                  <!-- <option value="{{refSys.value}}" [selected]="refSys.value == selectedReferenceSystem.value"
+                                      *ngFor="let refSys of referenceSystemTypes">
+                                      {{refSys.name}}
+                                  </option> -->
+                              </select>
+                          </div>
+                      </div>
+                      
+                  </label>
+              </div>
+          </form>
+      </div>
+  </div>
+  
+  
+  <!-- Geosol all bottom options -->
+  <div class="geosol-options-container">
+      <!-- Geosol left options container -->
+      <div class="geosol-left-options-container" [ngStyle]="{'width': leftWingContainerWidth}">
+          <div class="geosol-left-options" [ngStyle]="{ width: innerWidth > 930 ? ( isLeftWingExpanded ? ( (iconWidth*5)+45 )+'px' : '0px' ) : (iconWidth+10)+'px',
+                                                      height: innerWidth > 930 ? 'inherit' : ( isLeftWingExpanded ? ( (iconWidth*5)+20 )+'px' : '0px' ),
+                                                      padding: !isLeftWingExpanded ? '0px' :'' }" >
+              
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}" 
+                      matTooltip="Frameworks! Click to change coordinate systems" matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #006dad 65%)' }"
+                      cssClass="option-c"
+                      [isActive]="selectedOption=='frameworks'"
+                      (click)="selectGeosolOption('frameworks')">
+                  <!-- <img class="icon-img" src="assets/svgs/geosol/top-right-icon-3.svg"/> -->
+                  <img class="icon-img" src="assets/svgs/new-logos/framework_svg.svg"/>
+              </app-geosol-option>
+              <!-- <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}" matTooltip="Concepts"
+                  (click)="openMeasureUnitsChangePopup($event, measureChangeContent); selectGeosolOption('concepts')" -->
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}"
+                      matTooltip="Concepts! Click to learn more about fuse™" matTooltipClass="mat-custom-tooltip"
+                      (click)="showBlog()"
+                      [isActive]="selectedOption=='concepts'"
+                      cssClass="option-d"
+                      [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #39943c 65%)' }">
+                      <!-- <img class="icon-img" src="assets/svgs/geosol/top-right-icon-4.svg"/> -->
+                      <img class="icon-img" src="assets/svgs/new-logos/concept_svg.svg"/>
+              </app-geosol-option>
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}"
+                      matTooltip="Observations! Click to open precompiled data services" matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #f48e38 65%)' }"
+                      [isActive]="selectedOption=='observations'"
+                      cssClass="option-s"
+                      (click)="selectGeosolOption('observations')">
+                  <img class="icon-img" src="assets/svgs/new-logos/observation.svg"/>
+              </app-geosol-option>
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}"
+                      matTooltip="Applications! Click to change the application mode" matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #5f6066 65%)' }"
+                      [isActive]="selectedOption=='applications'"
+                      cssClass="option-f"
+                      (click)="selectGeosolOption('applications')">
+                  <img class="icon-img" src="assets/svgs/new-logos/application.svg"/>
+              </app-geosol-option>
+              
+              <!-- <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}" matTooltip="Awareness"
+                      (click)="showAppInfo($event, appInfoContent); selectGeosolOption('awareness')" 
+                      [isActive]="selectedOption=='awareness'"
+                      cssClass="awareness"
+                      [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #6b2f87 65%)' }">
+                  <img class="icon-img" src="assets/svgs/geosol/awareness.svg"/>
+              </app-geosol-option> -->
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'right'}}"
+                      matTooltip="Awareness! Click to browse public or shared data" matTooltipClass="mat-custom-tooltip"
+                      (click)="selectGeosolOption('awareness')" 
+                      [isActive]="selectedOption=='awareness'"
+                      cssClass="option-i"
+                      [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #6b2f87 65%)' }">
+                  <img class="icon-img" src="assets/svgs/new-logos/awareness.svg"/>
+              </app-geosol-option>
+          </div>
+          <!-- Custom Tooltip -->
+          <div class="custom-tooltip-container" *ngIf="showTooltip && isLeftWingExpanded">
+              <div class="msg-container">
+              <p class="msg">Click here to learn more about fuse! </p>
+              <span class="close-icon" (click)="showTooltip=false;">&#10006;</span>
+              </div>
+              <div class="tooltip-arrow"></div>
+          </div>
+      </div>
+  
+      <!-- Geosol Orientation rotation container -->
+      <div class="display-units-scale-container">
+          <div class="units-container">
+              <form [formGroup]="form">
+              <select formControlName="unitCtrl" id="orders">
+                  <option *ngFor="let unit of unitsList" [value]="unit.value">
+                      {{unit.view}}
+                  </option>
+              </select>
+              </form>
+          </div>
+          <div class="scale-container" [ngStyle]="{'width': scaleLineWidth+'px'}">
+          <!-- <div class="scale-container"> -->
+              <span>{{mapProjectionUnits}}</span>
+          </div>
+      </div>
+      <div [ngClass]="{'geosol-orientation-globe-container-outer':true, 'active': orientationActive}" >
+          <div id="rotationImgID" (dblclick)="setDefaultPosition($event)" class="geosol-orientation-globe-container"
+              matTooltip="Orientation! Click and rotate, Dbl-click to reset" matTooltipClass="mat-custom-tooltip" matTooltipPosition="above">
+              <span class="north">N</span>
+              <!-- <span class="east">E</span> -->
+              
+              <!-- <span class="west">W</span> -->
+          </div>
+          <span class="rotation-angle-container">
+              <input matTooltip="Orientation! Type in an angle of rotation" matTooltipClass="mat-custom-tooltip"
+                  matTooltipPosition="above" [formControl]='rotationAngle' placeholder="Angle">
+          </span>
+      </div>
+  
+      <!-- Geosol center toggle button container -->
+      <div class="geosol-options-controller-container">
+          <!-- Toggle buttons -->
+          <div class="controller-container">
+              <div class="controller-btn-card-container">
+                  <div class="controller-btn-inner-left-container" matTooltip="Geosol Left Options" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left"
+                      (click)="toggleOptions('left')">
+                  </div>
+                  <div class="controller-btn-inner-right-container" matTooltip="Geosol Right Options" matTooltipClass="mat-custom-tooltip" matTooltipPosition="right"
+                      (click)="toggleOptions('right')">
+                  </div>
+              </div>
+              <!-- <div class="controller-btn-img-ouline-container" matTooltip="Geosol Options Toggle" matTooltipClass="mat-custom-tooltip" matTooltipPosition="above" (click)="toggleOptions('all')">
+                  <div class="controller-btn-img-bg">
+                    <img class="icon-img" src="assets/svgs/geosol/logo.svg"/>
+                  </div>
+              </div> -->
+              <div class="geohub-outline-container" >
+                  <div class="geohub-options-container">
+                      <div class="geohub-zoomin-container">
+                          <div class="previous-extent" matTooltip="Goto Previous Extent" matTooltipClass="mat-custom-tooltip">
+                              <img src="assets/svgs/geosol/backward_arrow_white.svg">
+                          </div>
+                          <div class="zoomin" (click)="zoomIn()" matTooltip="Zoom In" matTooltipClass="mat-custom-tooltip">
+                              <img src="assets/svgs/geosol/plus_white.svg">
+                          </div>
+                      </div>
+                      <div class="geohub-zoomout-container" matTooltip="Zoom Out" matTooltipClass="mat-custom-tooltip">
+                          <div class="zoomout" (click)="zoomOut()">
+                              <img src="assets/svgs/geosol/minus_white.svg">
+                          </div>
+                          <div class="next-extent" matTooltip="Goto Next Extent" matTooltipClass="mat-custom-tooltip">
+                              <img src="assets/svgs/geosol/forward_arrow_white.svg">
+                          </div>
+                      </div>
+                  </div>
+  
+                  <!-- GLOBE CONTAINER-->
+                  <div class="globe-compass-ouline-container" >
+                      <div class="globe-btn-img-bg">
+                          <img class="compass" (click)="showCompass()"
+                          [ngStyle]="{'background': compassOpenState ? '#4d4d4d' : ''}"
+                          src="assets/svgs/geosol/compass_rect.svg"
+                          matTooltip="Compass! True North with Magnetic Declination" matTooltipClass="mat-custom-tooltip"/>
+                          <img class="globe" (click)="displayFullMap()" src="assets/svgs/geosol/globe.svg"
+                          matTooltip="Display Full Map" matTooltipClass="mat-custom-tooltip"/>
+                      </div>
+                  </div>
+              </div>
+          </div>
+  
+          <!-- Map Projection units, ZoomIn, Zoomout -->
+          <!-- <span class="geo-units">{{mapProjectionUnits}}</span> -->
+          <!-- <i class="material-icons geosol-zoomin-control" [style.left.px]="25+scaleLineWidth" (click)="zoomIn()"> add </i> -->
+          <!-- <i class="material-icons geosol-zoomin-control" (click)="zoomIn()"> add </i> -->
+          <!-- <i class="material-icons geosol-zoomout-control" (click)="zoomOut()"> remove </i> -->
+          <!-- <select class='map-types' (change)="filterMapTypes($event.target.value)">
+              <option value="satellite">Satellite</option>
+              <option value="terrain" selected>Terrain</option>
+              <option value="openstreet">Open Street</option>
+          </select> -->
+          <!-- <select class='projection-types' (change)="projectionChangeEvent($event.target.value)">
+              <option value="4326" selected>EPSG:4326</option>
+              *** <option value="3857">EPSG:3857</option> ***
+              <option value="2100">EPSG:2100</option>
+              <option value="27700">EPSG:27700</option>
+              <option value="23032">EPSG:23032</option>
+              <option value="5479">EPSG:5479</option>
+              <option value="21781">EPSG:21781</option>
+              <option value="3413">EPSG:3413</option>
+              <option value="2163">EPSG:2163</option>
+              <option value="54009">ESRI:54009</option>
+              <option value="2229">EPSG:2229</option>
+          </select> -->
+      </div>
+  
+      <!-- Geosol right options container -->
+      <div class="geosol-right-options-container" [ngStyle]="{'width': rightWingContainerWidth}">
+          <div class="geosol-right-options" [ngStyle]="{ width: innerWidth > 930 ? ( isRightWingExpanded ? ( (iconWidth*5)+45 )+'px' : '0px' ) : (iconWidth+10)+'px',
+                                                          height: innerWidth > 930 ? 'inherit' : ( isRightWingExpanded ? ( (iconWidth*5)+45 )+'px' : '0px' ),
+                                                          padding: !isRightWingExpanded ? '0px' :'' }" >
+  
+  
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'left'}}"
+                      matTooltip="Presentation"
+                      matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #672b84 65%)' }"
+                      [isActive]="selectedOption=='presentation'"
+                      cssClass="option-i"
+                      (click)="selectGeosolOption('presentation')">
+                  <img class="icon-img" src="assets/svgs/new-logos/presentation_svg.svg"/>
+              </app-geosol-option>
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'left'}}"
+                  matTooltip="Analysis"
+                  matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                  [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #595b60 65%)' }"
+                  [isActive]="selectedOption=='analysis'"
+                  cssClass="option-f"
+                  (click)="selectGeosolOption('analysis')">
+                  <img class="icon-img" src="assets/svgs/new-logos/analysis_svg.svg"/>
+              </app-geosol-option>            
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'left'}}"
+                      matTooltip="Management"
+                      matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                      [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #f08534 65%)' }"
+                      [isActive]="selectedOption=='management'"
+                      cssClass="option-s"
+                      (click)="selectGeosolOption('management')">
+                  <img class="icon-img" src="assets/svgs/new-logos/management_svg.svg"/>
+              </app-geosol-option>
+  
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'left'}}"
+                  matTooltip="Production"
+                  matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                  [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #3a983e 65%)' }"
+                  [isActive]="selectedOption=='production'"
+                  cssClass="option-d"
+                  (click)="selectGeosolOption('production')">
+                  <img class="icon-img" src="assets/svgs/new-logos/production_svg.svg"/>
+              </app-geosol-option>
+              <app-geosol-option matTooltipPosition="{{ innerWidth > 930 ? 'above' : 'left'}}"
+                  matTooltip="Georeferencing" matTooltipClass="mat-custom-tooltip" [width]="iconWidth"
+                  [backgroundStyle]="{ gradientBorder:'radial-gradient(white 35%, #0068a6 65%)' }"
+                  [isActive]="selectedOption=='referencing'"
+                  cssClass="option-c"
+                  (click)="selectGeosolOption('referencing'); ">
+                  <img class="icon-img" src="assets/svgs/new-logos/referencing_svg.svg"/>
+              </app-geosol-option>
+          </div>
+      </div>
+      
+  </div>
+  <app-print-tool *ngIf="selectedOption=='presentation'"></app-print-tool>
+  </div>
+  
+  

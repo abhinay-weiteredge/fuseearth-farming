@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:none}
+    .fil1 {fill:#1A1A1A}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g id="_2193334369952">
+   <g>
+    <g>
+     <circle class="fil1" cx="91" cy="138" r="7"/>
+     <circle class="fil1" cx="138" cy="138" r="7"/>
+     <circle class="fil1" cx="115" cy="115" r="7"/>
+     <circle class="fil1" cx="185" cy="138" r="7"/>
+     <circle class="fil1" cx="91" cy="91" r="7"/>
+     <circle class="fil1" cx="138" cy="91" r="7"/>
+     <circle class="fil1" cx="185" cy="91" r="7"/>
+     <circle class="fil1" cx="162" cy="115" r="7"/>
+     <circle class="fil1" cx="91" cy="185" r="7"/>
+     <circle class="fil1" cx="138" cy="185" r="7"/>
+     <circle class="fil1" cx="115" cy="162" r="7"/>
+     <circle class="fil1" cx="185" cy="185" r="7"/>
+     <circle class="fil1" cx="162" cy="162" r="7"/>
+     <circle class="fil1" cx="209" cy="115" r="7"/>
+     <circle class="fil1" cx="209" cy="162" r="7"/>
+     <circle class="fil1" cx="209" cy="209" r="7"/>
+     <circle class="fil1" cx="91" cy="232" r="7"/>
+     <circle class="fil1" cx="138" cy="232" r="7"/>
+     <circle class="fil1" cx="115" cy="209" r="7"/>
+     <circle class="fil1" cx="185" cy="232" r="7"/>
+     <circle class="fil1" cx="232" cy="138" r="7"/>
+     <circle class="fil1" cx="232" cy="91" r="7"/>
+     <circle class="fil1" cx="232" cy="185" r="7"/>
+     <circle class="fil1" cx="256" cy="115" r="7"/>
+     <circle class="fil1" cx="256" cy="162" r="7"/>
+     <circle class="fil1" cx="256" cy="209" r="7"/>
+     <circle class="fil1" cx="232" cy="232" r="7"/>
+     <circle class="fil1" cx="280" cy="138" r="7"/>
+     <circle class="fil1" cx="280" cy="91" r="7"/>
+     <circle class="fil1" cx="280" cy="185" r="7"/>
+     <circle class="fil1" cx="280" cy="232" r="7"/>
+     <circle class="fil1" cx="162" cy="209" r="7"/>
+     <circle class="fil1" cx="209" cy="256" r="7"/>
+     <circle class="fil1" cx="91" cy="280" r="7"/>
+     <circle class="fil1" cx="138" cy="280" r="7"/>
+     <circle class="fil1" cx="115" cy="256" r="7"/>
+     <circle class="fil1" cx="185" cy="280" r="7"/>
+     <circle class="fil1" cx="256" cy="256" r="7"/>
+     <circle class="fil1" cx="232" cy="280" r="7"/>
+     <circle class="fil1" cx="280" cy="280" r="7"/>
+     <circle class="fil1" cx="162" cy="256" r="7"/>
+     <path class="fil1" d="M491 226l0 -64 -63 0 0 23 -101 0 0 -101 23 0 0 -63 -64 0 0 23 -202 0 0 -23 -63 0 0 63 23 0 0 206 -23 0 0 64 63 0 0 -27 101 0 0 101 -23 0 0 63 64 0 0 -23 205 0 0 23 60 0 0 -63 -23 0 0 -202 23 0zm-407 84l0 -24 -23 0 0 -202 23 0 0 -23 206 0 0 23 23 0 0 101 0 101 -27 0 0 24 -101 0 -101 0zm367 118l-23 0 0 23 -202 0 0 -23 -24 0 0 -101 88 0 0 23 64 0 0 -64 -27 0 0 -84 101 0 0 24 23 0 0 202z"/>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

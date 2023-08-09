@@ -1,0 +1,49 @@
+@import "../../tower-global.scss";
+@import "../../../theme.scss";
+
+.interaction-info-container{
+  background: #fff !important;
+  color: #000000 !important;
+  padding: 0px;
+  z-index: 5;
+  .interaction-info-close{
+    // top: 15px !important;
+    // right: 15px !important;
+    // cursor: pointer;
+    top: 0px !important;
+    right: 0px !important;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    background: transparent;
+    border: unset;
+    img{
+      width: 75%;
+    }
+  }
+  .interaction-info-title{
+    text-align: center;
+    font-weight: bold;
+    background: $tower-option-i-color; // #7030a0; // linear-gradient(to right, #9057a2 0%, #6e3186 100%);//#703a96;
+    color: #fff;
+    padding: 10px 5px;
+  }
+  .interaction-info-body-container{
+    max-height: 350px;
+    overflow: auto;
+    .interaction-info-table{
+      width: 100%;
+      background: $towerLayerPopupBgColor;
+      thead th{
+        text-transform: uppercase;
+      }
+	  thead th:nth-child(2){
+        width:35%;
+      }
+	   thead th:nth-child(3){
+        width:55%;
+      }
+    }
+  }
+}

@@ -1,0 +1,315 @@
+<div class="d-flex" style="padding: 10px; justify-content:center ;">
+    <div class="project-menu" (click)="showprojects()"  [ngClass]="{'active' : showproject, 'notActive': !showproject}">Project</div>
+    <div class="project-menu" (click)="showtopics()" [ngClass]="{'active' : showtopic, 'notActive': !showtopic}">Topic</div>
+    <div class="project-menu" (click)="showplaces()" [ngClass]="{'active' : showplace, 'notActive': !showplace}">Places</div>
+
+</div>
+
+<!-- PROJECTS================== -->
+<div  class="user-table-container" style="padding-right:12px;" [hidden]="!showproject">
+    <div class="d-flex" >
+        <div class="d-flex justify-content-center align-items-center" style="margin-left: 8px;" >
+            <img src="../assets/images/adduser.png" alt="" width="25px" height="25px" (click)="addProject()" style="background-color:white; border-radius: 50%; margin-right: 12px;">
+            <img src="../assets/images/edit.png" alt="" width="25px" height="25px" (click)="editProject()" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../assets/images/delete.png" (click)="Removeprojectpopup()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+    
+        </div>
+        <div class="col" style="padding-left: 65%;padding-right:20px; z-index: 1;">
+            <div class="input-box" style="height: 50%;">
+              <input type="text"  placeholder="Search" (keyup)="searchprojectfilter($event.target.value)" style="background: transparent; color:white ; border: 1px solid white ;" class="form-control">
+              <i class="fa fa-search" style="color:white"></i>                    
+            </div>
+        </div>
+    </div>
+   
+    <table class="user-table table table-bordered table-condensed table-striped table-hover">
+        <thead  class="user-table-head">
+            <tr>
+                <th class="text-center">
+                    <input type="checkbox" name="all" [checked]="isAllProjectsChecked()" (change)="checkAllProjects($event)"/>
+                </th>
+                <th class="name head">Project Name</th>
+                <th class="name head">User Assigned</th>
+                <th class="name head">Sites</th>
+                <th class="name head">Approval</th>
+                
+                
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="user-data-container" *ngFor="let size of projects ; let i = index">
+                <td class="name">
+                    <input type="checkbox" name="sizecb[]" id={{i}} value="{{size.id}}" [(ngModel)]="size.state" (click)="checkidproject($event)"  />
+                </td>
+                <td class="name">{{size.projectname}}</td>
+                <td class="name">{{size.userassigned}}</td>
+                <td class="name">{{size.sites}}</td>
+                <td class="name"><img src={{size.approval}} alt=""></td>
+                
+                
+            </tr>
+        </tbody>
+      </table>
+      
+    
+</div>
+
+<!-- Add Project -->
+<div [hidden]="!showAddProject" class="sub-user-table-container"> 
+
+    <div class="sub-user-table-container-header"> 
+        <div class="title">
+            Add Project
+        </div>
+        <button class="close-btn" (click)="showAddProject=!showAddProject">
+            &#10006;
+        </button>    
+    
+    </div>
+   
+    <div class="sub-user-table-container-body" style="margin-top: 16px; margin-left: 33px; margin-right: 5px;" >
+        <form #userName="ngForm" [formGroup]="addProjectForm" (ngSubmit)="saveAddProject()" > 
+        <div class="row align-items-center" style="height: 56px;">
+            <div  class="col-8">
+            <input  type="text" placeholder="Project Name" style="border: 1px solid black; width: 100%; height: 70%;  border-radius: 5px; " class="form-control" name="projectName"  [ngModelOptions]="{standalone: true}" [(ngModel)]="projectName">
+            <div [hidden]="!showProjectNameError" style="color: red; font-size: 10px;">*Project name already used. Please enter another name</div>
+        </div>
+            <div class="col-4 d-flex justify-content-around align-items-center">
+            <div style="margin-top: 4px; margin-right: 4px; font-size: 16px; ">Project Approval</div>
+            <div>
+                <div class="main" (click)="dropdownOpen()">
+                <img style="width: 18px; height:18px;" src="{{activeApproveOption}}" alt="{{altactiveApproveOption}}"> 
+                </div>
+                <div class="content" *ngIf="contentdropdown">
+                <ul>
+                <li *ngFor="let i of editProjectApproveOptions; index as x" [class.active]="i === colorVariable" (click)="activeOptionSelected(i)">
+                <img style="width: 18px; height:18px;" src={{i.src}} alt="{{i.alt}}"> 
+                </li>
+               
+                </ul>
+                </div>
+                </div>
+                </div>
+            
+        </div>
+
+        <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;position: absolute;    width: 90%; top: 60%;">
+            <button class=" userdeletecon" type="submit" style=" margin-right: 60px; left:10px ">Save</button>
+            <button class="userdeletecon" (click)="showAddProject = !showAddProject" >Cancel</button>
+            
+        </div>
+        
+        </form>
+
+
+        <div class="row">
+        <angular2-multiselect class="col-8" style="padding: 0px; border:1px solid black; border-radius:5px; margin-left: 15px;   margin-top: 15px;"  [data]="assignUsersList" [(ngModel)]="selectedItems" 
+    [settings]="assignUsersSettings" 
+    (onSelect)="onItemSelect($event)" 
+    (onDeSelect)="OnItemDeSelect($event)"
+    (onSelectAll)="onSelectAll($event)"
+    (onDeSelectAll)="onDeSelectAll($event)"></angular2-multiselect>
+    </div>
+        
+        
+        
+
+    </div>
+</div>
+<!-- Edit Project -->
+<div [hidden]="!showEditProject"  class="sub-user-table-container"> 
+
+    <div class="sub-user-table-container-header"> 
+        <div class="title">
+            Edit Project
+        </div>
+        <button class="close-btn" (click)="showEditProject=!showEditProject">
+            &#10006;
+        </button>    
+    
+    </div>
+   
+    <div class="sub-user-table-container-body" style="margin-top: 16px; margin-left: 33px; margin-right: 5px;" >
+
+
+        <form #userName="ngForm" [formGroup]="addProjectForm" (ngSubmit)="saveEditProject()" > 
+            <div class="row align-items-center" style="height: 56px;">
+                <div  class="col-8">
+                
+            <input  type="text"   id="{{editprojectname}}" value="{{editprojectname}}" placeholder="Project Name" style="border: 1px solid black; width: 100%; height: 70%;  border-radius: 5px; " class="form-control" name="projectName"  [ngModelOptions]="{standalone: true}" [(ngModel)]="projectName" #editProjectName1>
+               
+            </div>
+                <div class="col-4 d-flex justify-content-around align-items-center">
+                <div style="margin-top: 4px; margin-right: 4px; font-size: 16px; ">Project Approval</div>
+                <div>
+                    <div class="main" (click)="dropdownOpen()">
+                    <img style="width: 18px; height:18px;" id="{{editApproval}}" src="{{editApproval}}" > 
+                    </div>
+                    <div class="content" *ngIf="contentdropdown">
+                    <ul>
+                    <li *ngFor="let i of editProjectApproveOptions; index as x" [class.active]="i === colorVariable" (click)="activeEditOptionSelected(i)">
+                    <img style="width: 18px; height:18px;" src={{i.src}} alt="{{i.alt}}"> 
+                    </li>
+                   
+                    </ul>
+                    </div>
+                    </div>
+                    </div>
+                
+            </div>
+    
+            <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;position: absolute;    width: 90%; top: 60%;">
+                <button class=" userdeletecon" type="submit" style=" margin-right: 60px; left:10px ">Save</button>
+                <button class="userdeletecon" (click)="showAddProject = !showAddProject" >Cancel</button>
+                
+            </div>
+            
+            </form>
+    
+    
+            <div class="row">
+            <angular2-multiselect class="col-8" style="padding: 0px; border:1px solid black; border-radius:5px; margin-left: 15px;   margin-top: 15px;" id="{{selectedItems}}" [data]="assignUsersList" [(ngModel)]="selectedItems" 
+        [settings]="assignUsersSettings" 
+        (onSelect)="onItemSelect($event)" 
+        (onDeSelect)="OnItemDeSelect($event)"
+        (onSelectAll)="onSelectAll($event)"
+        (onDeSelectAll)="onDeSelectAll($event)" ></angular2-multiselect>
+        </div>
+       
+    </div>
+</div>
+<!-- TOPIC================================================= -->
+<div  class="user-table-container" style="padding-right:12px;" [hidden]="!showtopic">
+    <div class="d-flex" >
+        <div class="d-flex justify-content-center align-items-center" style="margin-left: 8px;" >
+            <img src="../assets/images/adduser.png"  (click)="addtopicpopup=!addtopicpopup" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%; margin-right: 12px;">
+            <img src="../assets/images/edit.png" (click)="edittopic()"alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../assets/images/delete.png"   (click)="Removetopicpopup()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../../assets/images/save_button.png"  (click)="Savetopic()" [hidden]="!showsavetopicbutton" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+        </div>
+        <div class="col" style="padding-left: 65%;padding-right:20px; z-index: 1;">
+            <div class="input-box" style="height: 50%;">
+              <input type="text"  placeholder="Search" (keyup)="searchtopicfilter($event.target.value)"style="background: transparent; color:white ; border: 1px solid white ;" class="form-control">
+              <i class="fa fa-search" style="color:white"></i>                    
+            </div>
+        </div>
+    </div>
+    
+
+    <table class="user-table table table-bordered table-condensed table-striped table-hover">
+        <thead  class="user-table-head">
+            <tr>
+                <th class="text-center">
+                    <input type="checkbox" name="all" [checked]="isAllTopicsChecked()" (change)="checkAllTopics($event)"/>
+                </th>
+                 <th class="name head" contenteditable='true'>Topic Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="user-data-container" *ngFor="let size of topics ; let i = index">
+                <td class="name">
+                    <input type="checkbox" name="sizecb[]" id ={{i}} value="{{size.id}}" [(ngModel)]="size.state" (click)="checkidtopic($event)" #topicchecked/>
+                </td>
+                <td class="name" ><input type="text" value="{{size.topicname}}"
+                    name="{{size.topicname}}" class="topicname1 " id="{{size.value}}" disabled style="background: transparent; border:none ; text-align: center;" #topicname1></td>
+                
+            </tr>
+            <tr class="user-data-container" [hidden]="!addtopicpopup">
+                <td class="name">
+                    <input type="checkbox"/>
+                </td>
+                <td class="name" style="align-items: center;">
+                <input type="text" id="newtopicname" name="newtopicname"  placeholder="Enter Topic Name"  style="width: 9%; margin-right: 8px;"/>
+                <img src="../../assets/images/save_button.png" (click)="addtopicname()" width="20px" height="20px" alt="">
+                </td>
+            </tr>
+        </tbody>
+      </table>
+</div>
+
+
+
+<!-- PLACES============================================= -->
+
+<div  class="user-table-container" style="padding-right:12px;" [hidden]="!showplace">
+    <div class="d-flex" >
+        <div class="d-flex justify-content-center align-items-center" style="margin-left: 8px;" >
+            <img src="../assets/images/adduser.png" (click)="addplacefield=!addplacefield" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%; margin-right: 12px;">
+            <img src="../assets/images/edit.png"  (click)="editplace()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../assets/images/delete.png"  (click)="Removeplacepopup()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+            <img src="../../assets/images/save_button.png" [hidden]="!showsavebutton" (click)="Saveplace()" alt="" width="25px" height="25px" style="background-color:white; border-radius: 50%;  margin-right: 12px;">
+        </div>
+        <div class="col" style="padding-left: 65%;padding-right:20px; z-index: 1;">
+            <div class="input-box" style="height: 50%;">
+              <input type="text"  placeholder="Search" (keyup)="searchplacefilter($event.target.value)" style="background: transparent; color:white ; border: 1px solid white ;" class="form-control">
+              <i class="fa fa-search" style="color:white"></i>                    
+            </div>
+        </div>
+    </div>
+    <table class="user-table table table-bordered table-condensed table-striped table-hover">
+        <thead  class="user-table-head">
+            <tr>
+                <th class="text-center">
+                    <input type="checkbox" name="all" [checked]="isAllPlacesChecked()" (change)="checkAllPlaces($event)"/>
+                </th>
+                <th class="name head">Place Name</th> 
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="user-data-container" *ngFor="let size of places ; let i = index">
+                <td class="name">
+                    <input type="checkbox" name="sizecb[]" value="{{size.id}}"  id ={{i}} [(ngModel)]="size.state" (click)="checkidplace($event)"/>
+                </td>
+                <td class="name" ><input type="text" value="{{size.placename}}"
+                    name="{{size.placename}}" class="placename1 " id="{{size.value}}" disabled style="background: transparent; border:none;text-align: center;" #placename1></td>
+            </tr>
+            <tr class="user-data-container" [hidden]="!addplacefield">
+                <td class="name">
+                    <input type="checkbox"/>
+                </td>
+                <td class="name" style="align-items: center;">
+                <input type="text" id="newplacename" name="newplacename"  placeholder="Enter Place Name"  style="width: 9%; margin-right: 8px;"/>
+                <img src="../../assets/images/save_button.png" (click)="addplace()" width="20px" height="20px" alt="">
+                </td>
+            </tr>
+        </tbody>
+      </table>
+</div>
+<!--####################DELETE PROJECT POP-UP##############################-->
+<div class="" style=" position:absolute;width:50%; height:20%; background-color:white;z-index: 1;top:35%; left:24%; border-radius: 5px; box-shadow: 5px 10px 18px #888888;" [hidden]=!Removeprojectconfirm>
+    <div style="width: 100%;height:15%;background-color:#2B2E34;  border-radius: 5px 5px 0px 0px;">
+        <img src="../assets/images/crossbutton.png" (click)="Removeprojectconfirm=false" alt="" width="30px" height="30px" style="float:right ;padding-right: 2px; padding-top: 1px;" >
+    </div>
+    <h3 style="padding-top:20px;text-align:center">Are you sure you want to delete the Project ?</h3>
+    <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;">
+        <div class="userdeletecon" style=" margin-right: 60px; left:10px " (click)="removeSelectedProject()" >Yes</div>
+        <div class="userdeletecon" (click)="Removeprojectconfirm=false">No</div>
+        
+    </div>
+    </div>
+
+<!--####################DELETE TOPIC POP-UP##############################-->
+<div class="" style=" position:absolute;width:50%; height:20%; background-color:white;z-index: 1;top:35%; left:24%; border-radius: 5px; box-shadow: 5px 10px 18px #888888;" [hidden]=!Removetopicconfirm>
+    <div style="width: 100%;height:15%;background-color:#2B2E34;  border-radius: 5px 5px 0px 0px;">
+        <img src="../assets/images/crossbutton.png" (click)="Removetopicconfirm=false" alt="" width="30px" height="30px" style="float:right ;padding-right: 2px; padding-top: 1px;" >
+    </div>
+    <h3 style="padding-top:20px;text-align:center">Are you sure you want to delete the Topic ?</h3>
+    <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;">
+        <div class="userdeletecon" style=" margin-right: 60px; left:10px " (click)=" removeSelectedTopic()" >Yes</div>
+        <div class="userdeletecon" (click)="Removetopicconfirm=false">No</div>
+        
+    </div>
+    </div>
+    
+<!--####################DELETE PLACES POP-UP##############################-->
+<div class="" style=" position:absolute;width:50%; height:20%; background-color:white;z-index: 1;top:35%; left:24%; border-radius: 5px; box-shadow: 5px 10px 18px #888888;" [hidden]=!Removeplaceconfirm>
+    <div style="width: 100%;height:15%;background-color:#2B2E34;  border-radius: 5px 5px 0px 0px;">
+        <img src="../assets/images/crossbutton.png" (click)="Removeplaceconfirm=false" alt="" width="30px" height="30px" style="float:right ;padding-right: 2px; padding-top: 1px;" >
+    </div>
+    <h3 style="padding-top:20px;text-align:center">Are you sure you want to delete the Place ?</h3>
+    <div style="display:flex ;left:40px ;margin-top:40px; justify-content: center;">
+        <div class="userdeletecon" style=" margin-right: 60px; left:10px " (click)=" removeSelectedPlace()" >Yes</div>
+        <div class="userdeletecon" (click)="Removeplaceconfirm=false">No</div>
+        
+    </div>
+    </div>    

@@ -1,0 +1,94 @@
+
+$notification-bar-height: 25;
+$primary-dark-color: #2B2E34; // #373435;
+$secondry-dark-color: #6e7075; // #6F7175; // #888485;
+$secondry-selected-color: #ececec; // #efefef;
+$lite-color: #ffffff;
+
+/*
+* Slide windows
+*/
+$title-bar-color: #47494f; // #0b1e5a
+$secondary-header-color: #6F7175;
+$content-area-color : rgba(43, 46, 52, 0.8);
+$footer-bar-color: #6F7175;
+
+/*
+* POPUP
+*/
+$popup-header-bg-color: $title-bar-color; // #9A9B9F;
+$popup-no-color: #666666;
+
+/*
+* LIST ITEM
+*/
+$list-item-head-footer-color: #6F7175;
+$camera-color: #EF4A19;
+$video-color: #5E207B;
+$audio-color: #317332;
+$doc-color: #7E4C1E;
+$descriptor-color: #757575;
+
+/*
+* Geo tray highlight colors
+*/
+$tray-highlight-color: #2B2E34;
+
+
+/*
+* Geo bar 
+*/
+$geobar-placeholder-color: #C3C4C4;
+$geobar-border-color: #E6E6E6;
+$geobar-button-color: #4D4D4D;
+
+
+/*
+* Geo Tower
+*/
+$tower-top-cover-color: #CCCCCC;
+$tower-fixed-layer-name-bg-color: #8C6B56;
+$tower-fixed-layer-map-option-bg-color : rgba(43, 46, 52, 0.15);
+$tower-fixed-layer-map-option-hover-color : #2B2E34;
+$tower-fixed-layer-csfdi-bg-color: #EBEBEB;
+$tower-layer-name-bg-color: #E6E6E6;
+$tower-layer-cfi-bg-color: #2B2E34;
+$tower-layer-sd-color: #4D4D4D;
+
+$tower-option-c-color: #8c6b56;
+$tower-option-d-color: #bf2f66;
+$tower-option-s-color: #cc9900;
+$tower-option-f-color: #00b0f0;
+$tower-option-i-color: #7030a0;
+
+
+/*
+* Common
+*/
+$button-color: #4D4D4D;
+$button-hover-color: #6F7175;
+
+$border-color: #BABABD;
+$close-btn-red-color: #DD2A1B;
+$error-msg-color: #FFE862; //#FFFF00
+$thumbnail-border: #EBEBEB;
+$thumbnail-content-placeholder-border: #C3C4C4;
+$white-color: #FFF;
+$black-color: #2B2E34;
+
+$confirm-yes-bg-color: #FFE862;
+$confirm-no-bg-color: #BABABD;
+
+/*
+* Scroll bar
+*/
+$scroll-bar-track-color: #6f6f6f; // #BABABD;
+$scroll-bar-thumb-color: #b7b7b7; // #dddddd; // #6F7175;
+
+
+@keyframes blinker {
+    50% {
+        //   background-color: blue;
+        opacity: 0;
+    }
+}

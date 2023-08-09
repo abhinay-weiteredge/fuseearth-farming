@@ -1,0 +1,211 @@
+<div [hidden]="!onAEDSClicked">
+  <div class="geotray-suboptions-popup-container">
+    <!-- <div class="input-btn-container" ngbDropdown #dropDown="ngbDropdown"> -->
+    <div class="subpopup-btn-container">
+      <div class="container">
+        <div class="submenue-popupclsmin">
+          <img
+            src="../../assets/svgs/geo-tray/cancel-black.svg"
+            width="18px"
+            height="18px"
+            alt=""
+            style="
+              background-color: #bcbcbc;
+              cursor: pointer;
+              border-radius: 50%;
+            "
+            (click)="onAEDSClicked = false"
+          />
+        </div>
+
+        <div
+          class="d-lg-flex justify-content-center align-items-center"
+          style="z-index: -1"
+        >
+          <div class="input-box">
+            <select
+              style="width: 94%"
+              class="submenu-popup-options"
+              name="attribute"
+              id="attribute"
+              placeholder="Select Column Z-Axis Data"
+            >
+              <option style="font-size: 9px" value="Z-Axis">
+                Select Column Z-Axis Data
+              </option>
+            </select>
+          </div>
+
+          <div class="input-box">
+            <input
+              placeholder="Enter Slope"
+              type="number"
+              id="slope-input"
+              [(ngModel)]="slopePercentage"
+              style="font-size: 14px"
+              (keydown.enter)="
+                calculateAngleAndRatioFromSlope(); slopefindertool()
+              "
+            />
+            <div
+              class="perimg"
+              style="
+                position: absolute;
+                right: 22px;
+                top: 8px;
+                width: 30px;
+                height: 20px;
+                border-radius: 0 3px 3px 0;
+              "
+            >
+              <img
+                src="../../../assets/svgs/Farming/percentage.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 8px;
+                  top: 0px;
+                  width: 15px;
+                  height: 15px;
+                "
+              />
+            </div>
+            <div
+              class="enterimg"
+              (click)="calculateAngleAndRatioFromSlope(); slopefindertool()"
+              style="
+                position: absolute;
+                right: 15px;
+                top: 8px;
+                width: 30px;
+                height: 17px;
+              "
+            >
+              <img
+                src="../../../assets/svgs/Farming/enter.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: -6px;
+                  top: 2px;
+                  width: 15px;
+                  height: 14px;
+                "
+              />
+            </div>
+          </div>
+
+          <div class="input-box">
+            <input
+              type="number"
+              placeholder="Enter Angle"
+              id="angle-input"
+              [(ngModel)]="angle"
+              style="font-size: 14px"
+              (keydown.enter)="calculateSlopeAndRatioFromAngle()"
+            />
+            <div
+              class="angimg"
+              style="
+                position: absolute;
+                right: 22px;
+                top: 10px;
+                width: 30px;
+                height: 19px;
+                border-radius: 0 3px 3px 0;
+              "
+            >
+              <img
+                src="../../../assets/svgs/Farming/rotating-knob.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 8px;
+                  top: 0px;
+                  width: 15px;
+                  height: 15px;
+                "
+              />
+            </div>
+            <div
+              class="enterimg"
+              (click)="calculateSlopeAndRatioFromAngle()"
+              style="
+                position: absolute;
+                right: 13px;
+                top: 8px;
+                width: 30px;
+                height: 17px;
+              "
+            >
+              <img
+                src="../../../assets/svgs/Farming/enter.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: -2px;
+                  top: 2px;
+                  width: 15px;
+                  height: 14px;
+                "
+              />
+            </div>
+          </div>
+
+          <div class="input-box">
+            <div class="d-lg-flex">
+              <div
+                class="rationame"
+                style="
+                  width: 25%;
+                  position: relative;
+                  top: 7px;
+                  font-size: small;
+                "
+              >
+                Ratio
+              </div>
+              <div class="ratioinput" style="width: 75%">
+                <input
+                  type="text"
+                  placeholder="Enter Ratio"
+                  id="ratio-input"
+                  [(ngModel)]="slopeRatio"
+                  style="font-size: 14px"
+                  (keydown.enter)="calculateSlopeAndAngleFromRatio()"
+                />
+                <div
+                  class="enterimg"
+                  (click)="calculateSlopeAndAngleFromRatio()"
+                  style="
+                    position: absolute;
+                    right: 15px;
+                    top: 8px;
+                    width: 30px;
+                    height: 17px;
+                  "
+                >
+                  <img
+                    src="../../../assets/svgs/Farming/enter.svg"
+                    alt=""
+                    style="
+                      position: absolute;
+                      right: -6px;
+                      top: 2px;
+                      width: 15px;
+                      height: 14px;
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Your template HTML -->
+<div *ngIf="showError" class="error-message">
+  You have chosen upward slope direction..!!
+</div>

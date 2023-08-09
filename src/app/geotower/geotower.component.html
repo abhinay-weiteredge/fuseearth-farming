@@ -1,0 +1,275 @@
+<div class="tower-outer" (mouseleave)="mouseLeave()">
+<!-- <div class="tower-outer"> -->
+  <div [class]="geotowerDocker" (click)="activateGeotower()">
+    <div class="inner-circle">
+      <div class="image-bg">
+        <img *ngIf="!isGeotowerActive" src="/assets/img/tower-open-icon.svg" class="open"
+          matTooltipPosition="right" matTooltipClass="mat-custom-tooltip" matTooltip="Geotower™! Click to manage data layers or change the base canvas">
+        <img *ngIf="isGeotowerActive" src="/assets/img/tower-close-icon.svg" class="close">
+      </div>
+    </div>
+  </div>
+  <!-- <div *ngIf='isGeotowerActive'> -->
+  <!-- <div [ngStyle]="{'display': isGeotowerActive ? 'block' : 'none'}" (mouseleave)="mouseLeave()"> -->
+  <div [ngStyle]="{'display': isGeotowerActive ? 'block' : 'none'}">
+      <app-tower-scroller class="scrollbar" *ngIf="scrollerIsActive" [towerOrderEle]="towerOrderEle" [towerEle]="towerEle"
+      [refreshTowerScroll]="refreshTowerScroll"
+        (towerEleEmit)="towerEleEmit($event)" [towerOrderEleEmit]="towerOrderEleEmit">
+      </app-tower-scroller>
+      <!-- <div *ngIf="!scrollerIsActive" class="tower-before"></div> -->
+      <div class="tower-container" style=" position: relative; bottom: 75px; bottom: 100px; margin-left: -10px;" 
+        >
+        <div [ngStyle]="{'width': towerWidth+'px', height: layerOptionsHeight+'px' }" *ngIf="scrollerIsActive" class="tower-before-noscroll tower-cap"></div>
+        
+        <!-- <div style="display: flex;"> -->
+        <!-- <div #tower class="tower" id="tower" 
+          [ngStyle]="{
+                      'width': !layerOptionsSelected ? (paddingForScrollSpace+towerWidth)+'px' : (paddingForScrollSpace+towerWidth+towerOptionsWidth+trailingSpace)+'px'
+                    }" 
+          [ngDraggable]="draggable" [handle]="draggingTower">
+          
+          <div #draggingTower [ngStyle]="{
+              'width': towerWidth+'px', 
+              'height': layerOptionsHeight+'px',
+              'margin-top': scrollerIsActive ? '-20px' : '0px' 
+            }" 
+            class="tower-before-noscroll"></div>
+          <ul #towerOrder class="tower-order" id="tower-order" style="width:165px">
+            <li [ngClass]="{'hide-layer': layer.previewLayer}" class="layer-main" id="{{layer.name}}"
+            *ngFor="let layer of layersList; let i = index;" [ngStyle]="{'z-index': layersList.length-i }">
+              <app-tower-item [ngStyle]="{'height':getHeight()}" 
+                (isAnyLayerOptionsActive)="layerItemOptActive($event)" 
+                (saveTowerLayer)="saveTowerLayerFun($event)"
+                (towerReloaded)="refreshTowerScrollFun()"
+                (layersCount)="layersCount($event)"
+                [refresh]="refreshTowerData"
+                [towerWidth]="towerWidth"
+                [towerOptionsWidth]="towerOptionsWidth"
+                [layerOptionsHeight]="layerOptionsHeight"
+                [isGroup]="false" 
+                [isGuest]="isGuest" 
+                [sessionId]="sessionId"
+                [towerId]="towerId"
+                [layer]="layer"
+                [isDeleteDisable]="isDeleteDisable"
+                [globalObject]="globalObject"
+                [geoRefOrPreviewClosed]="geoRefOrPreviewClosed"
+                [isGeotowerActive]="isGeotowerActive"
+                [geoRefLayerDataToShow]="geoRefLayerDataToShow"
+                (showPreview)="showPreviewFun($event)"
+                #towerItems>
+              </app-tower-item>
+            </li> 
+          </ul>
+        </div> -->
+        <div cdkDropList (cdkDropListDropped)="drop($event)">
+        
+          <div  cdkDrag [cdkDragDisabled]="!dragfeature" *ngFor="let layer of layersList; let i = index;"  [ngStyle]="{'z-index': (layersList.length-i)*2, 'direction': 'ltr', 'margin-left': '20px' }"  id="dragenable">
+           <div class="d-flex">
+            <app-mini-tower-item
+            
+                [ngStyle]="{'height':getHeight()}" 
+                (isAnyLayerOptionsActive)="layerItemOptActive($event)" 
+                (saveTowerLayer)="saveTowerLayerFun($event)"
+                (towerReloaded)="refreshTowerScrollFun()"
+                (layersCount)="layersCount($event)"
+                [refresh]="refreshTowerData"
+                [towerWidth]="towerWidth"
+                [towerOptionsWidth]="towerOptionsWidth"
+                [layerOptionsHeight]="layerOptionsHeight"
+                [isGroup]="false" 
+                [isGuest]="isGuest" 
+                [sessionId]="sessionId"
+                [towerId]="towerId"
+                [layersList]="layersList"
+                [layerOrder]="(layersList.length-i)"
+                [layerIndex]="i"
+                [isDeleteDisable]="isDeleteDisable"
+                [globalObject]="globalObject"
+                [geoRefOrPreviewClosed]="geoRefOrPreviewClosed"
+                [isGeotowerActive]="isGeotowerActive"
+                [geoRefLayerDataToShow]="geoRefLayerDataToShow"
+                (showPreview)="showPreviewFun($event)"
+                (isMaximized)="checkIsLayerMaximized($event)"
+                (DragvalueChanged2)="barclicked($event)"
+                #towerItems>
+              </app-mini-tower-item>
+              <ng-template #geotowerItemDepictionContent>Depiction</ng-template>
+          </div>
+        </div>
+          
+        </div>
+
+        
+        
+        <!-- </div> -->
+        <!-- OPEN STREET MAP -->
+        <!-- 'margin-top': scrollerIsActive ? '-20px' : '0px', -->
+        <div #draggingTower [ngStyle]="{
+          'width': towerWidth+'px', 
+          'height': layerOptionsHeight+'px',
+          
+          'z-index': 1,
+          'position' : 'absolute'
+        }" 
+        class="tower-before-noscroll" style="display: none;"></div>
+        <div style="padding-left: 45px; display: none;">
+          <div [ngStyle]="{'height':'40px', 'z-index': '0'}" 
+            [towerWidth]="towerWidth"
+            [towerOptionsWidth]="towerOptionsWidth"
+            [layerOptionsHeight]="layerOptionsHeight"  class="layer-main" id="openStreet">
+              <div [ngStyle]="{'width': towerWidth+'px' }" >
+                <div class="layer opt" [ngStyle]="{'height': layerOptionsHeight+'px', 'margin-top': '-'+(layerOptionsHeight/2)+'px' }">
+                  <span [ngStyle]="{'height': layerOptionsHeight+'px' }" matTooltip="Connection" matTooltipClass="mat-custom-tooltip" container="body" style="cursor: pointer;">c</span>
+                  <span [ngStyle]="{'height': layerOptionsHeight+'px' }" matTooltip="Specification" matTooltipClass="mat-custom-tooltip" container="body" style="cursor: pointer;">s</span>
+                  <span [ngStyle]="{'height': layerOptionsHeight+'px' }" matTooltip="Function" matTooltipClass="mat-custom-tooltip" container="body" style="cursor: pointer;">f</span>
+                  <span [ngStyle]="{'height': layerOptionsHeight+'px' }" matTooltip="Depiction" matTooltipClass="mat-custom-tooltip" container="body" style="cursor: pointer;">d</span>
+                  <span [ngStyle]="{'height': layerOptionsHeight+'px' }" matTooltip="Interaction" matTooltipClass="mat-custom-tooltip" container="body" style="cursor: pointer;">i</span>
+                </div>
+                <div class="layer name" [ngStyle]="{'height': layerOptionsHeight+'px', 'margin-top': '-'+(layerOptionsHeight/2)+'px' }"
+                  style="display: inline-flex;">                    
+                  <span style="margin-left: calc(50% - 60px); width: 120px; font-weight: 500; font-size: 11px;" class="layer-text"
+                    matTooltip="{{selecteMapType.name}}" matTooltipClass="mat-custom-tooltip">{{selecteMapType.name}}</span>
+                  <span (click)="selectMapOption()" id="toner" class="right-arrow"><img src="/assets/img/right-arrow.svg"></span>                    
+                </div>
+              </div>
+          </div>            
+            <app-connection style="display:none"></app-connection>
+            
+            <app-function style="display:none"></app-function>
+            <app-interaction style="display:none"></app-interaction>
+            <app-specification style="display:none"></app-specification>
+            <ng-template #geotowerItemConnectionContent>Connection</ng-template>
+            <ng-template #geotowerItemSpecificationContent>Specification</ng-template>
+            <ng-template #geotowerItemFunctionContent>Function</ng-template>
+            
+            <ng-template #geotowerItemInteractionContent>Interaction</ng-template>
+        </div>
+
+        <!-- <div [ngStyle]="{'width': towerWidth+'px', height: layerOptionsHeight+'px' }" *ngIf="scrollerIsActive" class="tower-before-noscroll tower-bottom"></div> -->
+
+        <!-- Custom Tooltip -->
+        <!-- <div class="custom-tooltip-container" *ngIf="showTooltip">
+          <div class="msg-container">
+            <p class="msg">Click here to change basemap</p>
+            <span class="close-icon1" (click)="showTooltip=false;">&#10006;</span>
+          </div>
+          <div class="tooltip-arrow"></div>
+        </div>
+      </div> -->
+      <!-- <select [ngStyle]="{'left': towerWidth+45+'px', 'bottom': '95px'}"
+            [towerWidth]="towerWidth"
+            [towerOptionsWidth]="towerOptionsWidth" *ngIf='isBaseMapOptActive' class='map-types' 
+            (change)="filterMapTypes($event.target.value)">
+            <option value="no map">Map Type</option>
+            <option value="satellite">Satellite</option>
+            <option value="terrain">Terrain</option>
+            <option value="openstreet">Open Street</option>
+            <option value="toner">Toner</option>
+            <option value="Bing Satellite">Bing Satellite</option>
+      </select> -->
+      <div [ngStyle]="{'left': towerWidth+45+'px', 'bottom': '78px'}"
+        *ngIf='isBaseMapOptActive' class='default-layers-container' >
+        <p [ngClass]="{'selected' : selecteMapType.value===mapType.value}" *ngFor="let mapType of mapTypesList"
+            (click)="filterMapTypes(mapType)" >
+            {{mapType.name}} <img *ngIf="selecteMapType.value===mapType.value" src="/assets/svgs/geobar/success_icon.svg"/>
+        </p>
+        <!--
+        <p (click)="filterMapTypes('satellite')">Satellite</p>
+        <p (click)="filterMapTypes('terrain')">Terrain</p>
+        <p (click)="filterMapTypes('openstreet')">Open Street</p>
+        <p (click)="filterMapTypes('toner')">Toner</p>
+        <p (click)="filterMapTypes('Bing Satellite')">Bing Satellite</p> -->
+
+      </div>
+    </div>
+</div>
+
+<ng-template #geoTowerToggleContent>
+  <!-- Data Layers -->
+  Geotower™! Click to manage data layers or change the base canvas
+</ng-template>
+
+<app-geobar-alert></app-geobar-alert>
+
+
+
+
+<!-- IMAGE PREVIEW -->
+<!-- LOGIN PROMPT SCREEN START -->
+<div class="login-prompt-container" *ngIf="showSelectedImgPreview">
+  <div class="login-prompt-area">
+
+    <!-- LOGIN PAGE -->
+    <div class="screens-btns-container">
+      <button class="close-btn" (click)="closePreview()">
+        &#10006;
+      </button>
+      <div style="height: 100%; width: 100%;">
+        <app-georef
+          [viewMode]="'preview'"
+          [layerInfo]="selectedLayerToPreview">
+        </app-georef>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- GEO REFERENCING -->
+<div [ngStyle]="{ 'left': minimizedGeoRefWindow ? '-400px' : '0px' }" 
+    class="georef-data-container" *ngIf="showGeoReferencingScreen" #geoRefWindow>
+    <div class="georef-data-header">
+        <div class="georef-data-title-container">
+          <img class="georef-data-logo" src="assets/svgs/geosol/referencing.svg">
+          <span class="georef-data-title" style="font-size: 14px;">
+            Georeferencing
+          </span>
+        <!-- </div>
+        <div class="georef-data-head-ops-container"> -->
+          <button class="georef-data-minimize" *ngIf="!minimizedGeoRefWindow" matTooltip="Minimize Geo Referencing"
+            matTooltipClass="mat-custom-tooltip" (click)="minimizeGeoRefPanel()">
+              <span class="material-icons"> keyboard_arrow_left </span>
+          </button>
+          <button class="georef-data-minimize" style="right: -35px; top: 40px;"
+              cdkDragLockAxis="y" cdkDrag
+              *ngIf="minimizedGeoRefWindow" [ngStyle]="{'opacity': minimizedGeoRefWindow ? '0.7' : '1'}"
+              matTooltip="Maximize Geo Referencing" matTooltipClass="mat-custom-tooltip" (click)="maximizeGeoRefPanel()">
+              <span class="material-icons"> keyboard_arrow_right </span>
+          </button>
+          <button class="georef-data-close" matTooltip="Close" matTooltipClass="mat-custom-tooltip" (click)="closeGeoRefPanel(true)">
+              <i class="material-icons">close</i>
+          </button>
+        </div>
+    </div>
+    <div class="georef-data-body">
+        <app-georef
+          [layerInfo]="selectedLayerToPreview"
+          (markedPoints)="markedGeoRefPoints=$event"
+          (saveGeorefInfo)="saveGeorefInfo($event)">
+
+        </app-georef>
+    </div>
+    <div class="confirm-delete-container" *ngIf="showGeorefConfirmClose">
+      <div class="confirm-delete" *ngIf="showGeorefConfirmClose">
+          <div class="header">
+            <i class="fa fa-times" (click)="showGeorefConfirmClose=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">
+              <!-- Do you want to turn-off georeferencing mode without saving ? -->
+              Are you sure you stop creating georeference for the <b>{{selectedLayerToPreview.name}}</b> image
+            </p>
+            <div class="btns-container">
+              <div class="yes-btn-container">
+                  <button (click)="closeGeoRefPanelFun()">Yes</button>
+              </div>
+              <div class="no-btn-container">
+                <button (click)="showGeorefConfirmClose=false">No</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+    
+</div>

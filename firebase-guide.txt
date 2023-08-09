@@ -1,0 +1,25 @@
+firebase login
+    To Login to firebase account.
+firebase init
+    1.It'll initialize project details that needed for deployment
+    2. Select Project name
+    3. Select Hosting
+firbase list OR firebase projects:list
+    Shows list of all projects added.
+firebase use --add
+    It'll provide an option to add project.
+firebase deploy
+    It'll deploy build to default project
+firebase deploy -P <projectNickName>
+    It'll deploy the project to specified name
+firebase logout
+    To logout from current firebase account.
+
+firebase serve 
+    To serve bundles locally
+
+
+If we want to use another firebase account. 
+    1. run FIREBASE LOGOUT
+    2. Please delete (.firebasesrc file) 
+    3. run FIREBASE INIT command.

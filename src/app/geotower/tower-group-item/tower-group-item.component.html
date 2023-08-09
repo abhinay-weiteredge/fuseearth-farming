@@ -1,0 +1,40 @@
+<li class="layer-group" id="{{layerGroup.name}}" *ngFor="let layerGroup of groupList; let i = index;"
+  [ngStyle]="{'z-index': groupList.length-i - 1  }">
+  <ul #group class="group layer" id="{{layerGroup.name}}">
+    <li class="group-opt" id="{{layerGroup.name}}">
+      <div class="group-name">
+        <span class="layer-text">{{layerGroup.name}}</span>
+      </div>
+      <app-tower-item-options [groupLayerItemOptActive]="groupLayerItemOptActive" [isGroup]="true"
+        [layerData]="groupLayer" (previewIsActiveEmit)="previewIsActiveEmit($event)"
+        (groupButtonActiveEmit)="groupButtonActiveEmit($event)">
+      </app-tower-item-options>
+      <span id="{{layerGroup.name}}" (click)="groupActiveEvent($event, layerGroup)"
+        [ngClass]="{'active':groupLayerActive}" class="right-arrow"><img src="/assets/img/right-arrow.svg"></span>
+    </li>
+    <li [ngClass]="{'hide': groupLayer.previewLayer}" class="layer-group" id="{{groupLayer.name}}"
+      *ngFor="let groupLayer of groupLayersList; let i = index;" [ngStyle]="{'z-index': groupLayersList.length-i }">
+      <app-tower-item-options [groupLayerItemOptActive]="groupLayerItemOptActive" [isGroup]="false"
+        [layerData]="groupLayer" (previewIsActiveEmit)="previewIsActiveEmit($event)">
+      </app-tower-item-options>
+      <div class="layer opt">
+        <span>c</span>
+        <span>s</span>
+        <span>f</span>
+        <span>d</span>
+        <span>i</span>
+      </div>
+      <div class="layer name">
+        <span class="move">Move</span>
+        <label class="tower-checkbox">
+          <input type="checkbox">
+          <span class="checkmark"></span>
+        </label>
+        <span class="layer-text">{{groupLayer.name}}</span>
+        <span (click)="groupOptActiveEvent($event, groupLayer)" class="right-arrow" id="{{groupLayer.name}}"
+          [ngClass]="{'active':groupLayer.selected}">
+          <img src="/assets/img/right-arrow.svg"></span>
+      </div>
+    </li>
+  </ul>
+</li>

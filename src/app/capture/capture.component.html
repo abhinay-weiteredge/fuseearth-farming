@@ -1,0 +1,554 @@
+
+<!-- 'display':  (viewMode.from=='annotate' && viewMode.op=='save') ? 'block' : 
+(viewMode.from!='annotate') ? 'block' : 'none' }" -->
+<div [ngStyle]="{ 'right': minimizedWindow ? '-450px' : '0px'}"
+  [ngClass]="{'geo-capture-container': true, 'minimized-geo-capture-container': minimizedWindow}" *ngIf="showCapture" #captureWindow>
+    <div class="geo-capture-header">
+      <div class="geo-capture-head-ops-container">
+        <button class="geo-capture-minimize" *ngIf="!minimizedWindow" matTooltip="Minimize Geopad" matTooltipClass="mat-custom-tooltip" (click)="minimizeNotePage()">
+          <span class="material-icons" style="font-size:28px"> keyboard_arrow_right </span>
+        </button>
+        <button class="geo-capture-minimize" cdkDragLockAxis="y" cdkDrag style="left: -35px;"
+          *ngIf="minimizedWindow" [ngStyle]="{'opacity': minimizedWindow ? '0.7' : '1'}"
+          matTooltip="Maximize Geopad" matTooltipClass="mat-custom-tooltip" (mousedown)="mouseDownOnSession()" (mouseup)="mouseUpOnSession()">
+          <!-- matTooltip="Maximize Geopad" matTooltipClass="mat-custom-tooltip" (click)="maximizeNotePage()"> -->
+          <span class="material-icons"> keyboard_arrow_left </span>
+        </button>
+        <button class="geo-capture-close" matTooltip="Close" matTooltipClass="mat-custom-tooltip"
+            *ngIf="globalObject.pageType !== 'COVID19'" (click)="checkAndcloseNotePage()">
+            <i class="material-icons">close</i>
+        </button>
+      </div>
+      <div class="geo-capture-owner-div">
+        <div class="owner-name"> <span>{{ownerName}}</span> </div>
+        <div class="owner-email"> <span>{{ownerEmail}}</span></div>
+      </div>
+      <div class="geo-capture-title-container">
+        <img *ngIf="viewMode.mode==captureModes.CAPTURE" class="geo-pad-logo" src="assets/right-white-svg/GPTB.svg">
+        <img *ngIf="viewMode.mode==captureModes.AWARENESS" class="geo-pad-logo" src="assets/right-white-svg/GPTB.svg">
+        <span *ngIf="viewMode.mode==captureModes.CAPTURE" class="geo-capture-title">
+          Geopad
+        </span>
+        <span *ngIf="viewMode.mode==captureModes.AWARENESS" class="geo-capture-title">
+          Awareness
+        </span>
+      </div>
+    </div>
+    <div class="geo-capture-body" *ngIf='!isGuest && isValidSession'>
+        <div class="geo-capture-search-notes-container">
+            <div class="geo-capture-search">
+                <div class="geo-search-elements-container" >
+                    <div class="input-select-container">
+                      <select id="siteProject" class="select" placeholder="Project" [formControl]="projectSelect">
+                        <option *ngFor="let project of projects" value="{{project.topicId}}">{{project.name}}</option>
+                      </select>
+                    </div>
+                    <span [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">&gt;</span>
+                    <div class="input-select-container" [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">
+                      <select id="sitePlace" class="select" placeholder="Place" [formControl]="placeSelect">
+                          <option *ngFor="let place of places" value="{{place.topicId}}">{{place.name}}</option>
+                      </select>
+                    </div>
+                    <span>&gt;</span>
+                    <div class="input-select-container">
+                      <select id="siteTopic" class="select" placeholder="Topic" [formControl]="topicSelect">
+                          <option *ngFor="let topic of topics" value="{{topic.topicId}}">{{topic.name}}</option>
+                      </select>
+                    </div>
+                  
+                    <img class="search-btn" (click)="showSearchbar = !showSearchbar" src="assets/svgs/geopad/search-icon.svg">
+                    <div class="site-marker-container" style="position: relative;" tabindex="1"
+                        (blur)="showSiteMarkerMenu = false" (click)="showSiteMarkerMenu = !showSiteMarkerMenu">
+                      <img class="site-marker-select" src="assets/svgs/geopad/new/geometry_icon.svg">
+                      <ul *ngIf="showSiteMarkerMenu" class="site-marker-menu">
+                        <li matTooltip="Click to mark points and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'marker':true, 'selected': showNotesPicker}" (click)="showHideNotesPickes()">
+                          <div class="point"></div>
+                        </li>
+                        <li matTooltip="Click to draw lines and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'save':true, 'selected': showNotesPickerForLine}" (click)="showHideNotesPickesForLine()">
+                          <div class="line"></div>
+                        </li>
+                        <li matTooltip="Click to draw polygons and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'save':true, 'selected': showNotesPickerForPolygon}" (click)="showHideNotesPickesForPolygon()">
+                          <div class="polygon"></div>
+                        </li>
+                      </ul>
+                    </div>
+                    <!-- <input type="checkbox" class="select-all-sites-trigger" (click)="toggleAllSitesSelection($event)"> -->
+                    <div class="check-box-container" *ngIf="viewMode.mode==captureModes.CAPTURE">
+                      <mat-checkbox color="primary" #selectAllSitesCheckbox class="checkbox" (change)="toggleAllSitesSelection($event)"></mat-checkbox>
+                    </div>
+                    <div style="margin-left: 5px;" class="input-select-container" *ngIf="globalObject.pageType === 'COVID19'">
+                      <label for="siteDataRange" class="select-title">Data Range</label>
+                      <select id="siteDataRange" class="select" placeholder="Last No.Of Days" [formControl]="oldDataRangeSelect">
+                          <option *ngFor="let range of oldDataRanges" value="{{range.value}}">{{range.name}}</option>
+                      </select>
+                    </div>
+                </div>
+                <div class="search-container" *ngIf="showSearchbar">
+                  <input #siteSearchInput class="search-input" placeholder="Search" (keyup)="onSiteSearchChanged($event);">
+                  <!-- <img class="search-btn" src="assets/svgs/geopad/search-white-icon.svg"> -->
+                  <div class="site-marker-container" style="position: relative; margin: 0;" tabindex="2"
+                      (blur)="showSearchOptions = false" (click)="showSearchOptions = !showSearchOptions">
+                    <img class="site-marker-select" style="margin-top: -5px; background: #47494f;
+                      border-top-left-radius: 0; border-bottom-left-radius: 0"
+                      [src]="searchSiteType===siteTypeEnum.POINT ? '/assets/svgs/geopad/lat-long-marker-white-icon.svg' :
+                              searchSiteType===siteTypeEnum.LINE ? '/assets/svgs/geopad/new/line_white_icon.svg' :
+                              searchSiteType===siteTypeEnum.POLYGON ? '/assets/svgs/geopad/new/polygon_white_icon.svg' :
+                              'assets/svgs/geopad/new/all_geometry_white_icon.svg'">
+                    <ul *ngIf="showSearchOptions" class="site-marker-menu">
+                      <li [ngClass]="{'selected': searchSiteType===siteTypeEnum.POINT}" (click)="setSelectedSiteType(siteTypeEnum.POINT)">
+                        <div class="point"></div>
+                      </li>
+                      <li [ngClass]="{'selected': searchSiteType===siteTypeEnum.LINE}" (click)="setSelectedSiteType(siteTypeEnum.LINE)">
+                        <div class="line"></div>
+                      </li>
+                      <li [ngClass]="{'selected': searchSiteType===siteTypeEnum.POLYGON}" (click)="setSelectedSiteType(siteTypeEnum.POLYGON)">
+                        <div class="polygon"></div>
+                      </li>
+                      <li [ngClass]="{'selected': searchSiteType===siteTypeEnum.ALL}" (click)="setSelectedSiteType(siteTypeEnum.ALL)">
+                        <div class="all"></div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+            </div>
+            
+            <div class="geo-notes-container" [ngStyle]="{'padding-top': showSearchbar ? '20px' : ''}">
+
+                <p class="geo-no-notes" *ngIf="!sitesDataCollected">
+                    <span *ngIf="!commonService.isValid(searchName)">
+                      Fetching sites data for <span>{{selectedProject.name}} </span> 
+                      <span *ngIf="globalObject.pageType !== 'COVID19'">{{selectedPlace.name}}</span>
+                      <span>of {{selectedTopic.name}}</span>
+                    </span>
+                    <span *ngIf="commonService.isValid(searchName)">
+                      Fetching sites matched with <b>`{{searchName}}`</b>
+                    </span>
+                </p>
+                <p class="geo-no-notes" *ngIf="savedNotes.length==0 && sitesDataCollected">
+                  <span *ngIf="!commonService.isValid(searchName)">
+                    No sites data found for <span>{{selectedProject.name}} </span>
+                    <span *ngIf="globalObject.pageType !== 'COVID19'">{{selectedPlace.name}}</span>
+                    <span> of {{selectedTopic.name}}</span>
+                  </span>
+                  <span *ngIf="commonService.isValid(searchName)">
+                    No sites found matched with <b>`{{searchName}}`</b>
+                  </span>
+                </p>
+                <!-- Geopad site card -->
+                <!-- <div [ngClass]="{'geo-notes-div':true, 'geo-note-selected': note.selected}" -->
+                <div [ngClass]="{'geo-notes-div':true, 'geo-note-visible': note.visible}"
+                    *ngFor="let note of savedNotes; let i=index" matTooltip="{{note.project !== undefined ? note.project.name : ''}}" matTooltipClass="mat-custom-tooltip">
+                    <!-- Site card header -->
+                    <div class="geo-notes-header" (dblclick)="viewSiteDetails(note);" tabindex="3"
+                        (blur)="note.showMoreOptions ?  note.showMoreOptions = false : ''">
+                      <!-- Site type, name container -->
+                      <div class="geo-notes-location-container">
+                          <div [ngClass]="{'site-type-icon': true, 'site-point': note.siteType === siteType.POINT,
+                            'site-polygon': note.siteType === siteType.POLYGON, 'site-line': note.siteType === siteType.LINE_STRING}"
+                            matTooltip="Click to go to the location of this site" matTooltipClass="mat-custom-tooltip"
+                            (click)="showOrCloseLocationOnMap(note);">
+                          </div>
+                          <p>{{note.locationName}}</p>
+                          <div class="data-right" *ngIf="!note.isExpanded"> </div>
+                      </div>
+
+                      <!-- Site timestamp in collapse mode -->
+                      <div *ngIf="!note.isExpanded" class="geo-notes-date-share-container"
+                        [ngStyle]="{'right': note.showMoreOptions ? '85px' : '65px'}">
+                        <span>{{note.uiTimestamp | date:'yyyy/MM/dd h:mm:ss a'}}</span>
+                      </div>
+
+                      <!-- Site options to modify it's content -->
+                      <div class="header-left-element notes-edit-delete-container" *ngIf="note.showMoreOptions && viewMode.mode==captureModes.CAPTURE">
+                        <div class="edit-img" matTooltip="Edit site" matTooltipClass="mat-custom-tooltip" (click)="editNotes(note); $event.stopPropagation()">
+                        </div>
+                        <div class="delete-img" matTooltip="Delete site" matTooltipClass="mat-custom-tooltip" (click)="confirmDelete(note); $event.stopPropagation()">
+                        </div>
+                      </div>
+
+                      <!-- Btn to trigger site options -->
+                      <div class="header-left-element notes-more-option-trigger-container" *ngIf="viewMode.mode==captureModes.CAPTURE">
+                        <div matRipple matTooltip="Site Options" matTooltipClass="mat-custom-tooltip"
+                          (click)="note.showMoreOptions = !note.showMoreOptions; $event.stopPropagation();">
+                        </div>
+                      </div>
+
+                      <!-- Site expand/ collapse triggers -->
+                      <div class="header-left-element notes-expand-collapse-container">
+                        <div [ngClass]="{'note-collapse': note.isExpanded, 'note-expand': !note.isExpanded}"
+                          [matTooltip]="note.isExpanded ? 'Collapse' : 'Expand'" matTooltipClass="mat-custom-tooltip"
+                          (click)="note.isExpanded = !note.isExpanded; $event.stopPropagation();">
+                        </div>
+                      </div>
+
+                      <!-- Site select trigger -->
+                      <div class="header-left-element notes-checkbox-container" *ngIf="viewMode.mode==captureModes.CAPTURE">
+                        <!-- <input type="checkbox" [(ngModel)]="note.selected" (click)="checkIsAllSitesSelected(note, $event); $event.stopPropagation()"> -->
+                        <div class="check-box-container" style="width: 10px;">
+                            <mat-checkbox color="primary" [(ngModel)]="note.selected" (change)="checkIsAllSitesSelected(note, $event);" (click)="$event.stopPropagation()">
+                            </mat-checkbox>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Site card body -->
+                    <div class="geo-notes-body" *ngIf="note.isExpanded">
+                        <!-- <img src="assets/svgs/geopad/description-white-icon.svg"> -->
+                        {{note.description}}
+                    </div>
+
+                    <!-- Site card footer -->
+                    <div class="geo-notes-footer" *ngIf="note.isExpanded">
+                      <div class="geo-notes-tag-container" matTooltip="{{note.tags}}" matTooltipClass="mat-custom-tooltip">
+                        <div class="note-tag"> </div>
+                        <span>{{note.tags ? note.tags.length : ''}}</span>
+                      </div>
+                      <div class="geo-notes-owner-permission-container">
+                        <div class="owner-permission"> </div>
+                      </div>
+                      <div class="geo-notes-date-share-container">
+                        <span>{{note.uiTimestamp | date:'yyyy/MM/dd h:mm:ss a'}}</span>
+                      </div>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <!-- <div class="geo-notes-create-trigger-container" *ngIf="viewMode.mode==captureModes.CAPTURE">
+              <div class="geo-notes-marker-save-container">
+                <div matTooltip="Click to mark points and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'marker':true, 'selected': showNotesPicker}" (click)="showHideNotesPickes()">
+                    <img [src]="showNotesPicker ? 'assets/svgs/geopad/lat-long-marker-icon.svg' : 'assets/svgs/geopad/lat-long-marker-white-icon.svg'">
+                  </div>
+                  <div matTooltip="Click to draw lines and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'save':true, 'selected': showNotesPickerForLine}" (click)="showHideNotesPickesForLine()">
+                    <img [src]="showNotesPickerForLine ? 'assets/svgs/geopad/timeline.svg' : 'assets/svgs/geopad/timeline-white.svg'">
+                  </div>
+                  <div matTooltip="Click to draw polygons and create sites" matTooltipClass="mat-custom-tooltip" [ngClass]="{'save':true, 'selected': showNotesPickerForPolygon}" (click)="showHideNotesPickesForPolygon()">
+                    <img [src]="showNotesPickerForPolygon ? 'assets/svgs/geopad/polygon.png' : 'assets/svgs/geopad/polygon.png'">
+                  </div>
+              </div>
+            </div> -->
+        </div>
+
+    </div>
+    <div class="geo-capture-body" style="height: calc(100% - 40px);" *ngIf='isGuest || !isValidSession'>
+      <p style="padding-top: 100px; text-align: center; color: #fff;">Please login to load session...</p>
+    </div>
+
+    <!-- GEO TOWER LAYERS -->
+    <div class="tower-container" *ngIf='!isGuest && isValidSession'>
+      <div class="tower-header">
+        <span>Geotower</span>
+        <!-- <input type="checkbox" class="select-all-tower-layer-trigger" (click)="toggleAllLayersSelection($event)"> -->
+        <div class="select-all-tower-layer-trigger">
+          <mat-checkbox color="primary" #selectAllLayersCheckbox (change)="toggleAllLayersSelection($event)">
+          </mat-checkbox>
+        </div>
+      </div>
+      <div class="tower-body">
+        <div class="geopad-geotower-item" *ngIf="geoTowerList.length===0">
+          <p class="no-layer">No tower layers present</p>
+        </div>
+        <!-- <div [ngClass]="{'geopad-geotower-item': true, 'geopad-geotower-item-selected': towerItem.selected}" -->
+        <div [ngClass]="{'geopad-geotower-item': true}"
+              *ngFor="let towerItem of geoTowerList">
+            <div class="item-details-container">
+                <p>{{towerItem.name}}</p>
+            </div>
+            <!-- <input class="item-selector" type="checkbox" [(ngModel)]="towerItem.selected"> -->
+            <div class="item-selector">
+              <mat-checkbox color="primary" [(ngModel)]="towerItem.selected" (change)="checkIsAllLayersSelected(towerItem, $event);">
+              </mat-checkbox>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SESSION -->
+    <div class="session-container" *ngIf='!isGuest && isValidSession'>
+      <div class="session-header">
+        <span>Session</span> 
+        <!-- <span class="curr-session-name">( {{currentSession.name}} )</span> -->
+      </div>
+
+      <!-- SESSION BODY CONTAINER -->
+      <div class="session-bounding-box" *ngIf="!copySelected" style="position: relative;">
+
+        <!-- SESSION SELECTOR -->
+        <div class="session-bounding-box-elements">
+          <div class="bounding-box-select-container">
+            <select class="project" placeholder="Default (Current Extent)">
+              <option *ngFor="let boxType of boundingBoxTypes" value = '{{boxType.value}}'>{{boxType.name}}</option>
+            </select>
+          </div>
+          <!-- <span [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">&gt;</span> -->
+          <div class="session-input-select-container" [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}"
+            matTooltip="{{sessionCategories[sessionCategoryCtrl.value]}}" matTooltipClass="mat-custom-tooltip">
+            <select id="sessionCategory" class="session-select" placeholder="Session Category"
+              [formControl]="sessionCategoryCtrl" (change) = "getGeobaseListByFilter($event.target.value)">
+              <option value="mySession">My Sessions</option>
+              <option value="shareWithMe">Shared Sessions with Me</option>
+              <!-- <option value="shareByMe">My Shared Sessions</option> -->
+              <option value="public" disabled>Public Sessions</option>
+            </select>
+          </div>
+          <!-- <span>&gt;</span> -->
+          <div class="session-input-select-container"  [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">
+            <div style="width: auto; height: 100%;" [ngStyle]="{'background-color': sessionCtrl.value === 'running' ? '#FAC28E' : ''}"
+              matTooltip="{{currSessionsObj[sessionCtrl.value]}}" matTooltipClass="mat-custom-tooltip">
+            <select id="sessionName" class="session-select" placeholder="Session Name"
+              [formControl]="sessionCtrl" (change)="sessionCategorySelect($event.target.value, false, true)">
+              <!-- <option class="running-session" *ngIf="showRunningSession" value="runnning" selected >Running</option> -->
+              <option [ngClass]="{'running-session': session.id === 'running'}"
+                *ngFor="let session of geoSessionsList" value="{{session.id}}">
+                {{session.name}}
+              </option>
+            </select>
+            </div>
+          </div>
+          <!-- <span>&gt;</span> -->
+          <img class="session-copy-icon" src="assets/svgs/geopad/session/copy_icon.svg" (click)="makeCopyOfSession()">
+          <!-- <span>&gt;</span> -->
+          <!-- <img class="session-copy-icon" src="assets/svgs/geopad/new/geometry_icon.svg"> -->
+          <div class="session-share-container" tabindex="1"
+                        (blur)="showSessionShareMenu = false" (click)="showSessionShareMenu = !showSessionShareMenu">
+            <img class="session-copy-icon" src="assets/svgs/geopad/session/sharing_options_icon.svg">
+            <ul *ngIf="showSessionShareMenu" class="session-share-menu">
+              <!-- <li matTooltip="Click to share session with people" matTooltipClass="mat-custom-tooltip" (click)="showEmailShare()"> -->
+              <li matTooltip="Click to share session with people" matTooltipClass="mat-custom-tooltip" (click)="selectSharingOption(sessionShareOptionEnum.EMAIL)">
+                <div class="share"></div>
+              </li>
+              <!-- <li matTooltip="Click to copy session url" matTooltipClass="mat-custom-tooltip" (click)="showSessionUrl()"> -->
+              <li matTooltip="Click to copy session url" matTooltipClass="mat-custom-tooltip" (click)="selectSharingOption(sessionShareOptionEnum.URL)">
+                <div class="copy"></div>
+              </li>
+              <!-- <li matTooltip="Click to download session" matTooltipClass="mat-custom-tooltip" (click)="downloadSession()"> -->
+              <li matTooltip="Click to download session" matTooltipClass="mat-custom-tooltip" (click)="selectSharingOption(sessionShareOptionEnum.DOWNLOAD)">
+                <div class="download"></div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+
+        <!-- SESSION EMAIL SHARING START -->
+        <!-- <div *ngIf="errorMsg!=='' || copyToClipboard!==''" class="error-msg-container"> -->
+        <div class="session-bounding-box-elements" *ngIf="selectedSessionSharingOption === sessionShareOptionEnum.EMAIL">
+            <div class="session-email-input-select-container" style="overflow-wrap: break-word;">
+              <div class="org-emails-container">
+                <p class="user-email" (click)="setSharingUserEmail(email)" *ngFor="let email of orgUserEmailsToShow">{{email}}</p>
+              </div>
+              <input type="email" multiple #emailIdsToShare class="session-select" (blur)="onRemoveFocusOfUserEmail($event)"
+                          (focus)="onUserEmailType($event)" (keyup)="onUserEmailType($event)"
+                          [formControl]='userEmail' placeholder="Add or Select Email ID to Share">
+            </div>
+            <div class="session-share-to-email-container">
+              <img class="session-email-share" src="assets/svgs/geopad/session/share_icon.svg" (click)="shareSession()"> 
+            </div>
+            <div class="session-share-to-email-container">
+              <img class="session-email-share" src="assets/svgs/geopad/close-black-icon.svg" (click)="closeSessionEmailShare()">
+            </div>
+        </div>
+        <div class="session-bounding-box-elements" style="padding-top: 0; margin-top: -12px;" *ngIf="selectedSessionSharingOption === sessionShareOptionEnum.EMAIL">
+          <p style="font-size: 10px; margin: 10px 10px 10px 0px;">*Commas can be used to seperate multiple recipients</p>
+        </div>
+        <!-- <div class="session-bounding-box-elements" style="padding-top: 0; margin-top: -12px;" *ngIf="selectedSessionSharingOption === sessionShareOptionEnum.EMAIL && errorMsg !== ''">
+          <p style="font-size: 12px; margin: 0;">{{errorMsg}}</p>
+        </div> -->
+        <!-- SESSION EMAIL SHARING END -->
+
+
+        <!-- SESSION URL COPY START -->
+        <div class="session-bounding-box-elements" *ngIf="selectedSessionSharingOption === sessionShareOptionEnum.URL">
+          <div class="session-url-container">
+            <input #urlLink class="session-copy-input" placeholder="Session Link" readonly>
+          </div>
+          <div class="session-share-to-email-container">
+            <img class="session-email-share" src="assets/svgs/geopad/session/copy_clipboard_icon.svg" (click)="copySessionLinkToClipboard()"> 
+          </div>
+          <div class="session-share-to-email-container">
+            <img class="session-email-share" src="assets/svgs/geopad/close-black-icon.svg" (click)="closeSessionUrl()">
+          </div>
+        </div>
+        <div class="copy-msg-clipborad" *ngIf="urlCopiedToClipboard"> 
+          <p>{{copyToClipboard}}</p>
+          <img src="assets/svgs/geopad/close-black-icon.svg" (click)="urlCopiedToClipboard=''">
+        </div>
+        <!-- SESSION URL COPY END -->
+        
+      </div>
+
+      <!-- SESSION COPY -->
+      <div class="session-bounding-box" *ngIf="copySelected">
+        <!-- <div class="session-name-header">
+          <p>Enter a session name</p>
+        </div> -->
+        <div class="session-name-header" style=" display: flex; padding: 20px 5px 0px 10px;">
+          <div class="session-name"> 
+            <p class="session-name-label">Enter a session name</p>
+            <input #sessionName type="text" class="session-name-container" [formControl]="sessionNameInput">
+          </div>
+          <div class="session-name-box-done-container"> 
+            <button class="session-name-box-close" matTooltip="Done" matTooltipClass="mat-custom-tooltip"
+              *ngIf="globalObject.pageType !== 'COVID19'" (click)="saveSession()">
+              <i class="material-icons">done</i>
+            </button>
+          </div>
+          <div class="session-name-box-close-container">
+            <button class="session-name-box-close" matTooltip="Close" matTooltipClass="mat-custom-tooltip"
+              *ngIf="globalObject.pageType !== 'COVID19'" (click)="close()">
+              <i class="material-icons">close</i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SESSION ERROR MSGS -->
+      <div class="session-bounding-box">
+        <div class="notes-error-msg-container" *ngIf="errorMsg!=''">
+          <p class="notes-error-msg">{{errorMsg}}</p>
+          <img src="assets/svgs/geopad/close-black-icon.svg" (click)="errorMsg=''">
+        </div>
+        <div [ngClass]="{'session-saved': sessionShareCurrentState === sessionSaveStates.COMPLETED,
+                        'session-failed': sessionShareCurrentState === sessionSaveStates.FAILED}"
+            *ngIf="sessionShareCurrentState === sessionSaveStates.COMPLETED || 
+            sessionShareCurrentState === sessionSaveStates.FAILED">
+            <p class="success" *ngIf="sessionShareCurrentState === sessionSaveStates.COMPLETED">Sharing session success...</p>
+            <p class="failed" *ngIf="sessionShareCurrentState === sessionSaveStates.FAILED">Sharing session failed...</p>
+            <img src="assets/svgs/geopad/close-black-icon.svg" (click)="sessionShareCurrentState=sessionSaveStates.UNKNOWN">
+        </div>
+      </div>
+
+    </div>
+    <div class="saving-session-status" *ngIf="sessionShareCurrentState === sessionSaveStates.STARTED">
+      <p class="msg">Sharing session.</p>
+    </div>
+
+    <!-- CONFIRM BOX -->
+    <div class="confirm-delete-container" *ngIf="showSessionOverrideAlert">
+      <div class="confirm-delete" *ngIf="showSessionOverrideAlert">
+          <div class="header">
+            <i class="fa fa-times" (click)="showSessionOverrideAlert=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">Session already exist! Please select a different session name.</p>
+            <div class="btns-container">
+              <!-- <div class="yes-btn-container">
+                  <button (click)="overrideSession()">Yes</button>
+              </div>
+              <div class="no-btn-container">
+                <button (click)="showSessionOverrideAlert=false">No</button>
+              </div> -->
+              <div class="ok-btn-container">
+                <button (click)="showSessionOverrideAlert=false">Okay</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="confirm-delete-container" *ngIf="showSessionShareAlert">
+      <div class="confirm-delete" *ngIf="showSessionShareAlert">
+          <div class="header">
+            <i class="fa fa-times" (click)="showSessionShareAlert=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">You are sharing a session without selecting any site or layer, only the bounding box will be shared.</p>
+            <div class="btns-container">
+              <div class="yes-btn-container">
+                  <button (click)="saveSessionWithBoundingBox()">Okay</button>
+              </div>
+              <div class="no-btn-container">
+                <button (click)="showSessionShareAlert=false">Cancel</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="confirm-delete-container" *ngIf="showSessionSaveAlert">
+      <div class="confirm-delete" *ngIf="showSessionSaveAlert">
+          <div class="header">
+            <i class="fa fa-times" (click)="showSessionSaveAlert=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">You are saving a session without selecting any site or layer, only the bounding box will be saved.</p>
+            <div class="btns-container">
+              <div class="yes-btn-container">
+                  <button (click)="showSessionNameInput()">Okay</button>
+              </div>
+              <div class="no-btn-container">
+                <button (click)="showSessionSaveAlert=false">Cancel</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+    <div class="confirm-delete-container" *ngIf="showSessionShareSiteEditAlert">
+      <div class="confirm-delete" *ngIf="showSessionShareSiteEditAlert">
+          <div class="header">
+            <i class="fa fa-times" (click)="showSessionShareSiteEditAlert=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">You do not have edit rights for this session.</p>
+            <div class="btns-container">
+              <div class="ok-btn-container">
+                  <button (click)="showSessionShareSiteEditAlert=false">Okay</button>
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+
+
+
+    <!-- OVERLAY TO ADD MEDIA FILES -->
+    <div class="geo-notes-picker-container" *ngIf="showNotesAndFilePicker">
+      <app-capture-notes
+        [userInfo]="userInfo"
+        [operation]="operation"
+        [selectedNote]="selectedNote"
+        [currentContextInfo]="currentContextInfo"
+        [type] ="data"
+        [isGuest]="isGuest"
+        [currentSession]="currentSession" [globalObject]="globalObject"
+        [locationData]="locationData"
+        [tempCreateSiteId]="tempCreateSiteId"
+        [confirmCurrentNotesClosing]='confirmCurrentNotesClosing'
+        (responseOfCurrentNoteCloseRequest)="responseOfCurrentNoteCloseRequestFun($event)"
+        (closeNotesPicker)="closeNotes($event)"
+        (capturedData)="getAllNewSites($event, 'refresh')"
+        (savingNotes)='showSavingStatusFun($event)'
+        [userProfileData]='userProfileData'
+        [viewMode]="viewMode">
+
+      </app-capture-notes>
+    </div>
+
+    <!-- DELETE CONFIRMATION START -->
+    <div class="confirm-delete-container" *ngIf="showConfirmDelete || showSavingStatus || showDeletingStatus">
+      <div class="confirm-delete" *ngIf="showConfirmDelete">
+          <div class="header">
+            <i class="fa fa-times" (click)="showConfirmDelete=false"></i>
+          </div>
+          <div class="confirm-body">
+            <p class="confirm-text">Are you sure you want to delete the site <b>{{selectedNote.locationName}}</b> ?</p>
+            <div class="btns-container">
+              <div class="yes-btn-container">
+                  <button (click)="deleteNote()">Yes</button>
+              </div>
+              <div class="no-btn-container">
+                <button (click)="showConfirmDelete=false">No</button>
+              </div>
+            </div>
+          </div>
+      </div>
+      <div *ngIf='showSavingStatus' class="show-saving-status">
+        <p class="saving-msg">Saving notes...</p>
+      </div>
+      <div *ngIf='showDeletingStatus' class="show-saving-status">
+        <p class="saving-msg">Deleting site...</p>
+      </div>
+    </div>
+    <!-- DELETE CONFIRMATION END -->
+</div>
+<app-geopopup style="display:none"></app-geopopup>

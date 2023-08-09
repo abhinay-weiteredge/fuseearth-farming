@@ -1,0 +1,479 @@
+.geotray-suboptions-popup-container {
+  // float: right;
+  // width: 100%;
+  position: fixed;
+  top: 58px;
+  left: 30%;
+  width: 40%;
+ 
+  z-index: 1;
+  
+  .subpopup-btn-container{
+    background: #dddddd;
+    border-radius: 8px 8px 0px 0px;
+    
+    .container{
+      padding-left: 15px;
+    }
+  }
+  .submenue-popupclsmin{
+    
+      width: 52px;
+      float: right;
+      margin: -0.5rem -3.5rem;
+  
+
+  }
+  
+    
+  }
+  .input-box{
+    position: relative;
+    height: 10px;
+    top: 1px;
+   
+    
+    input{
+      height: 22px;
+      margin-top: 20px;
+      margin-bottom: 16px;
+      width: 157px;
+      border-radius: 4px ;
+      border:1px solid #BCBCBC;
+    }
+   
+    i {
+      position: absolute;
+      right: 13px;
+      color:#ced4da;
+      width:10px; 
+      height: 10px; 
+      top:22px;
+    }
+    ::placeholder{
+      color:#636262;
+      font-size: 14px;
+    }
+
+    @media screen and (max-width: 990px){
+      input{
+        height: 22px;
+        margin-top: 10px;
+        margin-bottom: 16px;
+        width: 100%;
+        border-radius: 4px ;
+        border:1px solid #BCBCBC;
+      }
+  
+
+      i {
+        position: absolute;
+        right: 13px;
+        color:#ced4da;
+        width:10px; 
+        height: 10px; 
+        top:13px;
+      }
+    }
+  }
+  .submenu-popup-labels{
+    color:#636262 ;
+    top:25px; 
+    height: 0px;
+    font-size: 14px;
+  }
+
+  @media screen and (min-width: 1750px){
+    .submenu-popup-options{
+      margin-top: 8px;
+       width:150%;
+       height: 62%;
+      border-radius: 4px;
+      border-color: #BCBCBC;
+      color: #636262;
+      text-align: center;
+      font-size: 14px;
+    }
+  }
+ 
+  @media screen and (max-width: 1749px) and (min-width: 1575px){
+    .submenu-popup-options{
+      margin-top: 8px;
+       width:130%;
+       height: 62%;
+      border-radius: 4px;
+      border-color: #BCBCBC;
+      color: #636262;
+      text-align: center;
+      font-size: 14px;
+    }
+
+  }
+
+  @media screen and (max-width: 1574px) and (min-width: 1350px){
+    .submenu-popup-options{
+      margin-top: 8px;
+       width:100%;
+       height: 62%;
+      border-radius: 4px;
+      border-color: #BCBCBC;
+      color: #636262;
+      text-align: center;
+      font-size: 14px;
+    }
+
+  }
+  @media screen and (max-width: 1349px) and (min-width: 990px){
+    .submenu-popup-options{
+      margin-top: 8px;
+       width:95%;
+       height: 62%;
+      border-radius: 4px;
+      border-color: #BCBCBC;
+      color: #636262;
+      text-align: center;
+      font-size: 14px;
+    }
+
+  }
+
+  @media screen and (max-width: 990px){
+    .submenu-popup-options{
+      margin-top: 8px;
+       width:100%;
+       height: 62%;
+      border-radius: 4px;
+      border-color: #BCBCBC;
+      color: #636262;
+      text-align: center;
+      font-size: 14px;
+    }
+
+  }
+
+  #wgtmsr option{
+  width:170px;   
+}
+  .image-title{
+    display: flex;
+    position: relative;
+    bottom: -49px;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+    color: white;
+    line-height: 1px;
+    left:-20px;
+    width: 200px;
+    height: 33px;
+    text-align: center;
+    
+
+    .down_arrow{
+      width: 20px;
+      height:20px;
+      cursor: pointer;
+      float: right;
+      background-color:#BCBCBC;
+      border-radius: 50%;
+      fill: white;
+      color: white;
+    }
+   
+    
+  }
+  .showImage{
+   position: relative;
+  top: -18px;//-1%;
+  left: 35%;
+   width: 500px;
+   height: 300px;
+    padding: 0;
+    overflow: visible;
+    transition: transform 0.2s;
+    transform: translateY(-500px);
+    .Big-image-title{
+      display: flex;
+    position: absolute;
+    bottom: 0px;
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0, 0.6); /* Black w/opacity/see-through */
+    color: white;
+    line-height: 1px;
+    left:0px;
+    width: 500px;
+    height: 16%;
+    text-align: center;
+  
+  }
+  .showImage_img{
+      width: 500px;
+      height: 300px;
+      position: relative;
+  }
+  .showImage_Address_area{
+  height: 100px;
+  width: 500px;
+  background: black;
+  color: white;
+  z-index: 1;
+  
+  padding: 10px;
+  }
+  .showImage_college_name{
+      text-align: center;
+  }
+  .social_icon{
+      height: 40px;
+      width: 40px;
+  }
+  .showImage_close{
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      cursor: pointer;
+      background-color: #636262;
+      border-radius: 50%;
+  }
+    }
+
+  .allimgcards{
+    display: flex;
+    margin: 0px;
+    padding: 13px;
+
+    padding-left: 0px;
+    
+    overflow: auto;
+    // background-color: rgba(255, 255, 255, 0.801); /* Black w/opacity/see-through */
+
+  }
+  .imagecards{
+    margin-right: 15px;
+    border: 5px;
+    transition: all 0.1s ease-in-out;
+    width: 200px; 
+    height: 100px; 
+    position:relative;
+    z-index: 500;
+    
+  }
+  .imagecards:hover { transform: scale(1.1);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    
+}
+  
+  .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+  }
+  .dot{
+    height: 20px;
+    width: 100%;
+    
+    
+    display: inline-block;
+    margin-right: 10px;
+  
+  }
+  .dotpredefined{
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background-color: blue;
+    display: inline-block;
+    margin-right: 10px;
+  
+  }
+  .barclassified{
+    height: 20px;
+    width: 100%;
+    
+    
+    display: inline-block;
+    margin-right: 10px;
+  
+  }
+  .mat-expansion-panel {
+    display: flex !important;
+    flex-direction: column;
+  }
+  .mat-expansion-panel-header {
+    order: 2;
+    font-size: 12px;
+  }
+  ::-webkit-scrollbar {
+    margin-top: 10px;
+    width: 2px;
+    height: 10px;
+}
+.mat-expansion-panel-body {
+  padding: 0 0px 0px;
+}
+.dot{
+  height: 20px;
+  width: 100%;
+  
+  
+  display: inline-block;
+  margin-right: 10px;
+
+}
+.dotpredefined{
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background-color: blue;
+  display: inline-block;
+  margin-right: 10px;
+
+}
+.dotC{
+  top: 10px;
+  border-radius: 50%;
+  background-color: red;
+  display: inline-block;
+  margin-right: 20px;
+
+}
+.dotExtended{
+  top: 10px;
+  border-radius: 50%;
+  
+  display: inline-block;
+  margin-right: 20px;
+
+}
+.barclassified{
+  height: 20px;
+  width: 100%;
+  
+  
+  display: inline-block;
+  margin-right: 10px;
+
+}
+
+.popup-content-stats {
+  position: absolute;
+  top: 25%;
+  left: 6%;
+  width: 25%;
+  height: 50%;
+  background-color: rgba(77, 77, 77, 1);
+}
+/* #content{
+  position: absolute;
+  top: 235px;
+  left: 860px;
+  background-color: rgba(77, 77, 77, 1);
+} */
+.popup-content {
+  // position: absolute;
+  // top: 235px;
+  // left: 860px;
+  background-color: rgba(77, 77, 77, 1);
+}
+.popup-bubble {
+  transform: translate(-50%, -100%);
+  /* Style the bubble. */
+  background-color: rgba(77, 77, 77, 1);
+  position: fixed;
+    top: 0px;
+    left: 0px;
+  border-radius: 5px;
+  font-family: sans-serif;
+  
+  width: 250px;
+  height: 140px;
+  box-shadow: 0px 2px 10px 1px rgba(0, 0, 0, 0.5);
+}
+.datapoint-popup {
+  position: relative;
+  font-size: 12px;
+  bottom: 14px;
+  padding-left: 5px;
+  left: 0px;
+  color: white;
+  margin: 0px;
+  text-align: left;
+  background-color: rgba(77, 77, 77, 0.3);
+  
+}
+.datapoint-popup-address{
+  color: white;
+  margin-top: -10px;
+  font-size: 9px;
+  padding-left: 5px;
+
+}
+.datapoint-popup-down{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+/* The parent of the bubble. A zero-height div at the top of the tip. */
+.popup-bubble-anchor {
+  /* Position the div a fixed distance above the tip. */
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 50%;
+}
+
+/* This element draws the tip. */
+.popup-bubble-anchor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* Center the tip horizontally. */
+  transform: translate(-50%, 0);
+  /* The tip is a https://css-tricks.com/snippets/css/css-triangle/ */
+  width: 0;
+  height: 0;
+  /* The tip is 8px high, and 12px wide. */
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 20px solid rgba(77, 77, 77, 1);
+}
+
+/* JavaScript will position this div at the bottom of the popup tip. */
+.popup-container {
+  cursor: auto;
+  height: 0;
+  position: absolute;
+  /* The max width of the info window. */
+  width: 200px;
+}
+
+.datapoint-popup-social_icon{
+  width: 20px;
+  height: 20px;
+}
+.showPopup_close{
+  width: 20px;
+      height: 20px;
+     position: absolute;
+      top: -10px;
+      right: -10px;
+      cursor: pointer;
+      background-color:#bcbcbc;
+       border-radius: 50%;
+}
+
+
+
+.PredefinedClzMin{
+  position: absolute;
+  top: 52px;
+  left: 69%;
+  z-index: 1;
+}
+.mat-expansion-panel-header-title, .mat-expansion-panel-header-description {
+  display: flex;
+  flex-grow: 1;
+  margin-right: 16px;
+  margin-top: 6px;
+}
+

@@ -1,0 +1,302 @@
+
+<div class="org-creation-container">
+    <div class="org-creation-steps-container">
+        <p class="page-title">Organization Registration Process</p>
+        <div class="org-creation-steps">
+            <div [ngClass]="{'org-creation-step': true, 'active-row': item.active}" *ngFor="let item of menus ; let i=index">
+                <div class="step-index-container">
+                    <span *ngIf='!item.valid'>{{item.index}}</span>
+                    <span *ngIf="item.valid" class="material-icons"> done </span>
+                </div>
+                <div class="step-name-container">
+                    <p id={{i+1}} (click)="process($event.target.id)">{{item.name}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="seleted-org-creation-step">
+            <p>{{activeWizard.name}}</p>
+        </div>
+    </div>
+    <div class="org-creation-data-container">
+        <div class="org-creation-header"> 
+            <img src="assets/images/login/fuse-earth-white.png">
+        </div>
+        <div class="org-creation-body">
+            <div *ngIf="activeWizard.id=='ORG_DETAILS'" >
+                <form [formGroup]="orgDetailsForm" id="orgDetailsForm"  [hidden]="true">
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container">
+                            <input class="full-width" type="text" formControlName="orgName" placeholder="Organization Name*"
+                                    (change)="getOrganizationsWithStr($event.target.value)">
+                            <p class="field-status-msg invalid" *ngIf="validOrg === orgStatus.INVALID">Organization present with this name. Choose another.</p>
+                            <p class="field-status-msg valid" *ngIf="validOrg === orgStatus.VALID">Organization available</p>
+                            <p class="field-status-msg" *ngIf="validOrg === orgStatus.INPROGRESS">Checking organization existence...</p>
+                            <span *ngIf="!orgDetailsForm.get('orgName').valid && orgDetailsForm.get('orgName').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgName'), 'Organization Name')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container">
+                            <input class="full-width" type="text" formControlName="orgAddress" placeholder="Organization Address*">
+                            <span *ngIf="!orgDetailsForm.get('orgAddress').valid && orgDetailsForm.get('orgAddress').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgAddress'), 'Organization Address')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <!-- <input class="full-width" type="text" formControlName="orgType" placeholder="Organization Type*"> -->
+                            <select style="width: 100%; height: 100%; max-height: 30px;" formControlName="orgType">
+                                <option value="" selected>Select Org Type*</option>
+                                <option *ngFor="let type of orgTypesList" value="{{type.value}}">{{type.name}}</option>
+                            </select>
+                            <span *ngIf="!orgDetailsForm.get('orgType').valid && orgDetailsForm.get('orgType').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgType'), 'Organization Type', 'SELECT')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="city" placeholder="City*">
+                            <span *ngIf="!orgDetailsForm.get('city').valid && orgDetailsForm.get('city').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('city'), 'City')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <!-- <input class="full-width" type="text" formControlName="country" placeholder="Country*"> -->
+                            <select style="width: 100%; height: 100%; max-height: 30px;" placeholder="Country*" formControlName="country">
+                                <option value="" selected>Select Country*</option>
+                                <option *ngFor="let cntry of countryList" value="{{cntry}}">{{cntry}}</option>
+                            </select>
+                            <span *ngIf="!orgDetailsForm.get('country').valid && orgDetailsForm.get('country').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('country'), 'Country', 'SELECT')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="postalCode" placeholder="Postal Code*">
+                            <span *ngIf="!orgDetailsForm.get('postalCode').valid && orgDetailsForm.get('postalCode').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('postalCode'), 'Postal Code')}}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <br>
+                </form>
+     <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+                <form [formGroup]="orgDetailsForm" id="orgDetailsForm"  [hidden]="false">
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container">
+                            <input class="full-width" type="text" formControlName="orgName" placeholder="Organization Name*"
+                                    (change)="getOrganizationsWithStr($event.target.value)">
+                            <p class="field-status-msg invalid" *ngIf="validOrg === orgStatus.INVALID">Organization present with this name. Choose another.</p>
+                            <p class="field-status-msg valid" *ngIf="validOrg === orgStatus.VALID">Organization available</p>
+                            <p class="field-status-msg" *ngIf="validOrg === orgStatus.INPROGRESS">Checking organization existence...</p>
+                            <span *ngIf="!orgDetailsForm.get('orgName').valid && orgDetailsForm.get('orgName').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgName'), 'Organization Name')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container">
+                            <input class="full-width" type="text" formControlName="orgAddress" placeholder="Organization Address*">
+                            <span *ngIf="!orgDetailsForm.get('orgAddress').valid && orgDetailsForm.get('orgAddress').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgAddress'), 'Organization Address')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <!-- <input class="full-width" type="text" formControlName="orgType" placeholder="Organization Type*"> -->
+                            <select style="width: 100%; height: 100%; max-height: 30px;" formControlName="orgType">
+                                <option value="" selected>Select Org Type*</option>
+                                <option *ngFor="let type of orgTypesList" value="{{type.value}}">{{type.name}}</option>
+                            </select>
+                            <span *ngIf="!orgDetailsForm.get('orgType').valid && orgDetailsForm.get('orgType').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('orgType'), 'Organization Type', 'SELECT')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="city" placeholder="City*">
+                            <span *ngIf="!orgDetailsForm.get('city').valid && orgDetailsForm.get('city').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('city'), 'City')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <!-- <input class="full-width" type="text" formControlName="country" placeholder="Country*"> -->
+                            <select style="width: 100%; height: 100%; max-height: 30px;" placeholder="Country*" formControlName="country">
+                                <option value="" selected>Select Country*</option>
+                                <option *ngFor="let cntry of countryList" value="{{cntry}}">{{cntry}}</option>
+                            </select>
+                            <span *ngIf="!orgDetailsForm.get('country').valid && orgDetailsForm.get('country').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('country'), 'Country', 'SELECT')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="postalCode" placeholder="Postal Code*">
+                            <span *ngIf="!orgDetailsForm.get('postalCode').valid && orgDetailsForm.get('postalCode').touched" class="error">
+                                {{getErrorMsg(orgDetailsForm.get('postalCode'), 'Postal Code')}}
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <br>
+                </form>
+
+
+                <!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+            </div>
+        
+        
+        
+            <div *ngIf="activeWizard.id=='ADMIN_DETAILS'">
+                <form [formGroup]="adminDetailsForm" id="adminDetailsForm">
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="firstName" placeholder="First Name*">
+                            <span *ngIf="!adminDetailsForm.get('firstName').valid && adminDetailsForm.get('firstName').touched" class="error">
+                                {{getErrorMsg(adminDetailsForm.get('firstName'), 'First Name')}}
+                            </span>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="text" formControlName="lastName" placeholder="Last Name*">
+                            <span *ngIf="!adminDetailsForm.get('lastName').valid && adminDetailsForm.get('lastName').touched" class="error">
+                                {{getErrorMsg(adminDetailsForm.get('lastName'), 'Last Name')}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container">
+                            <input class="full-width" type="text" formControlName="email" placeholder="Email Id*">
+                            <span *ngIf="!adminDetailsForm.get('email').valid && adminDetailsForm.get('email').touched" class="error">
+                                {{getErrorMsg(adminDetailsForm.get('email'), 'Email Id')}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="fields-row-container col-md-12">
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="password" formControlName="password" placeholder="Password*">
+                            <span *ngIf="!adminDetailsForm.get('password').valid && adminDetailsForm.get('password').touched" class="error">
+                                {{getErrorMsg(adminDetailsForm.get('password'), 'Password')}}
+                            </span>
+                            <p class="hint">Password should be combination of alpha numeric & special characters, minimum of 8 characters.</p>
+                        </div>
+                        <div class="fields-container col-md-6">
+                            <input class="full-width" type="password" formControlName="confirmPassword" placeholder="Confirm Password*">
+                            <span *ngIf="!adminDetailsForm.get('confirmPassword').valid && adminDetailsForm.get('confirmPassword').touched" class="error">
+                                {{getErrorMsg(adminDetailsForm.get('confirmPassword'), 'Confirm Password')}}
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="fields-row-container col-md-12">
+                        <p class="desclamair">By clicking Sign Up, you agree to our
+                            <span class="links" (click)="openPage('terms')">Terms & Conditions</span> and that you have read all our
+                            <span class="links" (click)="openPage('policy')">Policies,</span> including our <span>Cookie Use.</span></p>
+                    </div>
+
+                    <br>
+                </form>
+            </div>
+        
+        
+            <div *ngIf="activeWizard.id=='EMAIL_VER'">
+                <p *ngIf="operationStatus === ''">Creating account...</p>
+                <p *ngIf="operationStatus === 'success'">Organization creation success. Verification mail has been sent. Please verfiy and continue for login.</p>
+            </div>
+            <div *ngIf="activeWizard.id=='SUBSC_PLAN'">
+                
+                <div class="d-flex" style="margin-top: 5%;">
+                <div  class="subscplan" (click)="selectstarterpack($event)">
+                    <div>
+                        <img [hidden]="!showstartertick" src="../../../assets/images/tick.png" alt="" width="30px" height="30px" style="position: absolute; top: -11px; right: -9px; background-color:  white; border-radius: 50%;">
+                    </div>
+                
+                    <div style="background-color:#32373D;color:white;margin-bottom: 20px;margin-top: 20px;  font-size: 24px;">Starter</div>
+                <div style="color: black; font-size: 28px;"><b> FREE</b></div>
+                <div style="color: black;">10 User</div>
+                <div style="margin-bottom: 10px;">
+              
+  
+                    <select class="sub-drop" name="attribute" id="attribute" placeholder="none"   >
+                        
+                      <option  *ngFor="let item of months; let i=index"  >{{item}}</option>
+                       
+                    </select>
+                  </div>
+                 
+                </div>
+                <div class="subscplan" (click)="selectexplorepack()">
+                    <div>
+                        <img  [hidden]="!showexploretick" src="../../../assets/images/tick.png" alt="" width="30px" height="30px" style="position: absolute; top: -11px; right: -9px; background-color: white;border-radius: 50%;">
+                    </div>
+                    <div style="background-color:#32373D;color:white;margin-bottom: 20px;margin-top: 20px;  font-size: 24px;">Explore</div>
+                    <div style="color: black; font-size: 28px;"><b>{{selectedexpplanprice}}</b></div>
+                    <div style="color: black;">50 User</div>
+                    <div style="margin-bottom: 10px;">
+              
+  
+                        <select class="sub-drop" name="attribute" id="attribute" placeholder="none"  (change)="Selectexploremonth($event.target.value)" >
+                        
+                            <option value="attribute" [value]="item" *ngFor="let item of months; let i=index" id="{{i}}"  >{{item}}</option>
+                             
+                          </select>
+                      </div>
+                    </div>
+                    
+                    <div class="subscplan" (click)="selectengagepack()">
+                        <div>
+                            <img  [hidden]="!showengagetick" src="../../../assets/images/tick.png" alt="" width="30px" height="30px" style="position: absolute; top: -11px; right: -9px; background-color:  white;border-radius: 50%;">
+                        </div>
+                        <div style="background-color:#32373D;color:white;margin-bottom: 20px;margin-top: 20px;  font-size: 24px;">Engage</div>
+                        <div style="color: black; font-size: 28px;"><b>{{selectedengageprice}}</b></div>
+                        <div style="color: black;">100 User</div>
+                        <div style="margin-bottom: 10px;">
+              
+  
+                            <select class="sub-drop" name="attribute" id="attribute" placeholder="none"  (change)="Selectengagemonth($event.target.value)" >
+                        
+                                <option value="attribute" [value]="item" *ngFor="let item of months; let i=index" id="{{i}}"  >{{item}}</option>
+                                 
+                              </select>
+                          </div>
+                         
+                        </div>
+                </div>
+            </div>
+            <div *ngIf="activeWizard.id=='PAYMENT_DETAILS'">
+                <div>PLAN DETAILS YET TO BE DONE</div>
+                
+            </div>
+        </div>
+        <div class="org-creation-footer">
+            <div class="col-md-12" style="margin: 0; font-size: 12px;" *ngIf="errMsg!==''">
+                <p style="margin: 0; text-align: center;" class="err-msg">{{errMsg}}</p>
+            </div>
+            <div class="wizard-ops">
+                <div class="back-button-container">
+                    <button type="button" class="btn btn-outline-secondary" *ngIf="!activeWizard.first"
+                        [disabled]="activeWizard.disabled"
+                        (click)="showPreviousPage()">Back</button>
+                </div>
+                <div class="org-logo-container">
+                    <img src="assets/images/login/mapsol-white.png">
+                </div>
+                <div class="next-button-container">
+                    <button type="button" class="btn btn-outline-secondary" *ngIf="!activeWizard.last"
+                        (click)="onSubmit(activeWizard.form)"
+                        [disabled]="!activeWizard.form.valid || activeWizard.disabled">Next</button>
+                    <button type="button" class="btn btn-outline-secondary" *ngIf="activeWizard.last"
+                        [disabled]="activeWizard.disabled"
+                        (click)="closeWindow()">
+                        <!-- Submit -->
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+{
+    "geoserver" : {
+        "url" : "http://localhost:8282/geoserver/rest/imports",
+        "workspaceName" : "geomocus-test",
+        "workspaceLocation" : "/opt/geoserver/data_dir/workspaces/geomocus-test",
+        "fileLocation" : "D:/shapeFiles/"
+    },
+    "postgis" : {
+        "url" : "http://localhost:8282/geoserver/rest/imports",
+        "workspace" : "geomocus-test",
+        "Datastore" : "geomocus-test"
+    },
+    "layers" : {
+        "url" : "http://localhost:8282/geoserver/rest/workspaces/"
+    },
+    "layerGroup" : {
+        "url" : "http://localhost:8282/geoserver/rest/workspaces/geomocus-test/layergroups"
+    },
+    "authorization" : "Basic YWRtaW46Z2Vvc2VydmVy",
+    "baseURL" : "http://localhost:8282/geoserver/",
+    "geomocusServer" : {
+      "url" : "http://localhost:7001/api/workspaces/",
+      "save" : "http://localhost:7001/api/workspace/save",
+      "layersave" : "http://localhost:7001/api/layer/save",
+      "layerList" : "http://localhost:7001/api/layers/"
+    },
+    "createWorkspace" : "http://localhost:8282/geoserver/rest/workspaces/",
+    "localhost" : "http://localhost:80/",
+    "appurl" : "http://localhost:80/",
+    "bookmarkurl" : "http://localhost:80/workspace/",
+    "connectionParameters": {
+        "entry": [
+          {"@key":"host","$":"localhost"},
+          {"@key":"port","$":"5432"},
+          {"@key":"database","$":"postgres"},
+          {"@key":"user","$":"postgres"},
+          {"@key":"passwd","$":"postgres"},
+          {"@key":"dbtype","$":"postgis"}
+        ]
+    },
+    "google-api" : "AIzaSyCqf1u0ydxU4jeqq3M7tEGgWBg5z6RgPOM"
+  }

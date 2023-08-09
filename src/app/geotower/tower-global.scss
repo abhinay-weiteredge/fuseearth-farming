@@ -1,0 +1,53 @@
+@import '../theme.scss';
+/* Generic CSS  */
+
+$towerBackgroundColor: $primary-dark-color; // #667cbd;
+$towerBackgroundColorActive: #4c4d4d; // #d84756;
+$towerBackgroundWhite: #fff;
+$towerCheckboxCheckedBackground: #3a3a3a;
+$towerLayerPopupBgColor: #babbbb;
+
+.popup {
+  width: 400px;
+  color: #fff;
+  font-size: 12px;
+  margin: 10px;
+  -webkit-box-shadow: 0 0px 5px #929292;
+  -moz-box-shadow: 0 0px 5px #929292;
+  -o-box-shadow: 0 0px 5px #929292;
+  box-shadow: 0 0px 5px #929292;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -o-border-radius: 10px;
+  -khtml-border-radius: 10px;
+  border-radius: 10px;
+  float: left;
+  position: fixed;
+  left: 17%;
+  bottom: 15%;
+}
+.popup h3 {
+  text-align: center;
+  font-size: 13px;
+  margin: 0 0 0px;
+}
+.close-icon {
+  width: 10px;
+  height: 10px;
+  background-image: url("/assets/img/close-icon.svg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.table {
+  margin-bottom: 0px !important;
+}
+.table td, .table th {
+  padding: .5rem !important;
+}
+
+.table th:nth-child(1){
+	text-align:center;
+}

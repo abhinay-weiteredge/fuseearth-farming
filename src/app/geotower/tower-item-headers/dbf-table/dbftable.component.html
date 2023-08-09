@@ -1,0 +1,17 @@
+<div #container class="popup interaction-info-container" ngDraggable>
+  <i  #closer class="close-icon interaction-info-close"></i>
+  <h3 class="interaction-info-title">DBF Data Table</h3>
+  <div class="interaction-info-body-container">
+    <!-- <table class="table table-striped specification-info-table"> -->
+    <table class="table interaction-info-table">
+      <thead>  
+      <th *ngFor="let column of tableColumns;" scope="col">{{column}}</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let data of tableData;">
+        <th *ngFor="let dataVal of data">{{dataVal}}</th>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

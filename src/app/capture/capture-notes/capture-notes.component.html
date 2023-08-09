@@ -1,0 +1,827 @@
+
+<div class="capture-notes-container">
+
+  <div class="location-picker-container">
+    
+    <div class="notes-error-msg-container" *ngIf="notesValidationError!=''">
+      <p class="notes-error-msg">{{notesValidationError}}</p>
+      <img src="assets/svgs/geopad/close-black-icon.svg" (click)="notesValidationError=''">
+    </div>
+    <div class="site-name-co-ords-container">
+      <div class="site-container">
+        <input *ngIf="operation=='add' || operation=='update'" class="location-name" #siteNameInput [formControl]="siteNameCtrl" type="text" placeholder="Site Name">
+      </div>
+      <div class="note-location-container">
+        <!-- <img matTooltip="{{currentSite.latitudeLongitudeToShow}}" matTooltipClass="mat-custom-tooltip" [ngClass]="{'note-location':true,'location-selected':showLatLongContainer}" (click)="showLatLongContainer=!showLatLongContainer" src="assets/svgs/geopad/lat-long-white-icon.svg"> -->
+        <p matTooltip="{{currentSite.latitudeLongitudeToShow}}" matTooltipClass="mat-custom-tooltip" [ngStyle]="{'visibility': showLatLongContainer ? 'visible' : 'hidden'}" class="location-details ellipsis">
+          {{currentSite.latitudeLongitudeToShow}}
+        </p>  
+      </div>
+    </div>
+    <div class="geo-search-elements-container" >
+        <div class="input-select-container">
+          <!-- <label for="siteProject" class="select-title">Project</label> -->
+          <select id="siteProject" class="select" placeholder="Project" [formControl]="projectSelect" (change)="setValueForInputFromSelect($event, 'project', projects)">
+            <option *ngFor="let project of projects" value="{{project.topicId}}">{{project.name}}</option>
+          </select>
+          <!-- <input *ngIf="userInfo.type !== 'INDEPENDENT'" [disabled]="operation == 'view'" #projectInput type="text" placeholder="Project"> -->
+          <input *ngIf="userInfo.type === 'INDEPENDENT' || (userInfo.type !== 'INDEPENDENT' && userRole === 'USER_ADMIN')"
+            [disabled]="operation == 'view' || globalObject.pageType === 'COVID19'" #projectInput type="text" placeholder="Project">
+        </div>
+        
+        <span [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">&gt;</span>
+        <div class="input-select-container" [ngStyle]="{'display': globalObject.pageType === 'COVID19' ? 'none': 'block'}">
+          <!-- <label for="sitePlace" class="select-title">Place</label> -->
+          <select id="sitePlace" class="select" placeholder="Place" [formControl]="placeSelect" (change)="setValueForInputFromSelect($event, 'place', places)">
+              <option *ngFor="let place of places" value="{{place.topicId}}">{{place.name}}</option>
+          </select>
+          <input *ngIf="userInfo.type === 'INDEPENDENT' || (userInfo.type !== 'INDEPENDENT' && userRole === 'USER_ADMIN')"
+            [disabled]="operation == 'view'" #placeInput type="text" placeholder="Place">
+        </div>
+
+        <span>&gt;</span>
+        
+        <div class="input-select-container">
+          <!-- <label for="siteTopic" class="select-title">Topic</label> -->
+          <select id="siteTopic" class="select" placeholder="Topic" [formControl]="topicSelect" (change)="setValueForInputFromSelect($event, 'topic', topics)">
+              <option *ngFor="let topic of topics" value="{{topic.topicId}}">{{topic.name}}</option>
+          </select>
+          <input *ngIf="userInfo.type === 'INDEPENDENT' || (userInfo.type !== 'INDEPENDENT' && userRole === 'USER_ADMIN')"
+            [disabled]="operation == 'view'" #topicInput type="text" placeholder="Topic">
+        </div>
+    </div>
+
+    <div *ngIf="operation!='view'">
+      <!-- <p style="line-height: 40px; text-align: center;"> &lt;&lt;&lt;&lt;Site type container&gt;&gt;&gt;&gt;</p> -->
+      <div class="site-type-container" *ngIf="currentSite.siteType==siteTypeEnum.POINT">
+        <div class="site-type-components-container">
+          <p class="title">Symbology</p>
+          <!-- GENERAL POINT SITE ICONS  -->
+          <div class="dropdown-menu-container" tabindex="1"
+            (blur)="showGeneralSiteIconsMenu = false" (click)="showGeneralSiteIconsMenu = !showGeneralSiteIconsMenu">
+            <div class="dropdown-menu-icon-container">
+              <img class="dropdown-menu-icon" style="filter: invert(1);" src="{{generalSiteSelectedIcon.imgUrl}}">
+            </div>
+            <span class="dropdown-menu-label">General</span>
+            <ul *ngIf="showGeneralSiteIconsMenu" class="dropdown-menu-loc general-menu">
+              <li *ngFor="let siteIcon of generalSiteIconsList" (click)="selectSiteIcon('general', siteTypeEnum.POINT, siteIcon)"
+                matTooltip="{{siteIcon.name}}" matTooltipClass="mat-custom-tooltip">
+                <img style="filter: invert(1);" src="{{siteIcon.imgUrl}}">
+              </li>
+            </ul>
+          </div>
+
+          <!-- SPECIAL POINT SITE ICONS  -->
+          <div class="dropdown-menu-container" tabindex="1"
+            (blur)="showSpecialSiteIconsMenu = false" (click)="showSpecialSiteIconsMenu = !showSpecialSiteIconsMenu">
+            <div class="dropdown-menu-icon-container">
+              <img class="dropdown-menu-icon" src="{{specialSiteSelectedIcon.imgUrl}}">
+            </div>
+            <span class="dropdown-menu-label">Special</span>
+            <ul *ngIf="showSpecialSiteIconsMenu" class="dropdown-menu-loc">
+              <li *ngFor="let siteIcon of specialSiteIconsList" (click)="selectSiteIcon('special', siteTypeEnum.POINT, siteIcon)"
+                matTooltip="{{siteIcon.name}}" matTooltipClass="mat-custom-tooltip">
+                <img src="{{siteIcon.imgUrl}}">
+              </li>
+            </ul>
+          </div>
+
+          <!-- CUSTOM POINT SITE ICONS  -->
+          <div class="dropdown-menu-container" tabindex="1"
+            (blur)="showCustomSiteIconsMenu = false" (click)="showCustomSiteIconsMenu = !showCustomSiteIconsMenu">
+            <div class="dropdown-menu-icon-container">
+              <span style="font-size: 7px;">Custom</span>
+            </div>
+            <span class="dropdown-menu-label">Custom</span>
+            <ul *ngIf="showCustomSiteIconsMenu" class="dropdown-menu-loc">
+              <li *ngFor="let siteIcon of customSiteIconsList" (click)="selectSiteIcon('custom', siteTypeEnum.POINT, siteIcon)"
+                matTooltip="{{siteIcon.name}}" matTooltipClass="mat-custom-tooltip">
+                <img src="{{siteIcon.imgUrl}}">
+              </li>
+            </ul>
+          </div>
+          <!-- HIDEEN FILE SELECTOR-->
+      <input style="display:none" type="file" id="selectedIcon" (change)="onCustomPointIconUpload($event)" ccept="image/x-png,image/svg,image/jpeg, image/jpg" />
+
+          <div class="dropdown-menu-container" style="margin: 0;" (click)="uploadCustomIcon()">
+            <div class="dropdown-menu-icon-container" style="padding: 5px;">
+              <img class="dropdown-menu-icon" src="assets/svgs/geopad/upload-black-icon.svg">
+            </div>
+          </div>
+
+        </div>
+        <div class="site-type-appearence-container">
+          <div class="color-container">
+            <input type="color" [formControl]="sitePointOrLineColor"/>
+            <span>Stroke</span>
+          </div>
+          <div class="color-container">
+            <select [formControl]="sitePointSymbolSize" style="height: 28px; margin: 0px;">
+              <!-- <option  value="4">4px</option> -->
+              <option value="2">2px</option>
+              <option default value="4">4px</option>
+              <option value="8">8px</option>
+              <option value="12">12px</option>
+            </select>
+            <span>Size</span>
+          </div>
+          <div class="color-container">
+            <input type="number" [formControl]='rotationAngle' style="height: 28px; margin: 0px;  max-width: 50px;"/>
+            <span>Rotation</span>
+          </div>
+          <div style="width: 30px; height: 30px;">
+            <div class="outer" >
+              <div id="siteIconRotationAngNeedle" (dblclick)="setDefaultPosition($event)" class="needle" ></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LINE -->
+      <div class="site-type-container" *ngIf="currentSite.siteType==siteTypeEnum.LINE || currentSite.siteType==siteTypeEnum.POLYGON">
+        <div class="site-type-components-container">
+          <p class="title">Symbology</p>
+          <!-- GENERAL LINE SITE ICONS  -->
+          <div class="dropdown-menu-container" tabindex="1"
+            (blur)="showGeneralSiteIconsMenu = false" (click)="showGeneralSiteIconsMenu = !showGeneralSiteIconsMenu">
+            <div class="dropdown-menu-icon-container" style="width: 60px; border-radius: 0;">
+              <img class="dropdown-menu-icon" style="width: 100%;" src="{{generalSiteSelectedIcon.imgUrl}}">
+            </div>
+            <span class="dropdown-menu-label" style="left: 0;">General</span>
+            <ul *ngIf="showGeneralSiteIconsMenu" class="dropdown-menu-loc">
+              <li *ngFor="let siteIcon of generalSiteIconsList" (click)="selectSiteIcon('general', siteTypeEnum.LINE, siteIcon)"
+                matTooltip="{{siteIcon.name}}" matTooltipClass="mat-custom-tooltip">
+                <img src="{{siteIcon.imgUrl}}">
+              </li>
+            </ul>
+          </div>
+
+          <!-- CUSTOM LINE SITE ICONS  -->
+          <div class="dropdown-menu-container" tabindex="1"
+            (blur)="showCustomSiteIconsMenu = false" (click)="showCustomSiteIconsMenu = !showCustomSiteIconsMenu">
+            <div class="dropdown-menu-icon-container">
+              <span style="font-size: 7px;">Custom</span>
+            </div>
+            <span class="dropdown-menu-label">Custom</span>
+            <ul *ngIf="showCustomSiteIconsMenu" class="dropdown-menu-loc">
+              <li *ngFor="let siteIcon of customSiteIconsList" (click)="selectSiteIcon('custom', siteTypeEnum.LINE, siteIcon)"
+                matTooltip="{{siteIcon.name}}" matTooltipClass="mat-custom-tooltip">
+                <img src="{{siteIcon.imgUrl}}">
+              </li>
+            </ul>
+          </div>
+
+          <div class="dropdown-menu-container" style="margin: 0;">
+            <div class="dropdown-menu-icon-container" style="padding: 5px;">
+              <img class="dropdown-menu-icon" src="assets/svgs/geopad/upload-black-icon.svg">
+            </div>
+          </div>
+        </div>
+        <div class="site-type-appearence-container">
+          <div class="color-container">
+            <input type="color" [formControl]="sitePointOrLineColor"/>
+            <span>Stroke</span>
+          </div>
+          <div class="dropdown-menu-container" tabindex="1"
+              (blur)="showSiteThicknessIconsMenu = false" (click)="showSiteThicknessIconsMenu = !showSiteThicknessIconsMenu">
+              <div class="dropdown-menu-icon-container" style="width: 60px; border-radius: unset;">
+                <img class="dropdown-menu-icon" src="{{lineSiteSelectedThicknessIcon.imgUrl}}">
+              </div>
+              <span class="dropdown-menu-label" style="left: 0;">Thickness</span>
+              <ul *ngIf="showSiteThicknessIconsMenu" class="dropdown-menu-loc" style="max-width:  60px !important;">
+                <li *ngFor="let siteIcon of lineSiteThicknessIconsList" (click)="selectSiteIcon('thickness', siteTypeEnum.LINE, siteIcon)"
+                  style="width: 50px">
+                  <img style="height: 100%; width: 100%;" src="{{siteIcon.imgUrl}}">
+                </li>
+              </ul>
+          </div>
+          <div class="color-container" *ngIf="currentSite.siteType==siteTypeEnum.POLYGON">
+            <input type="color" [formControl]="sitePolygonFillColor"/>
+            <span>Fill</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- POLYGON -->
+      <!-- <div class="site-type-container" *ngIf="currentSite.siteType==siteTypeEnum.POLYGON">
+        <div class="site-type-components-container">
+          Components
+        </div>
+        <div class="site-type-appearence-container">
+          <select>
+            <option default>8px</option>
+            <option>10px</option>
+            <option>11px</option>
+          </select>
+        </div>
+      </div> -->
+
+    </div>
+    <div class="notes-container">
+      <textarea #notesDescription [readonly]="operation=='view'" [formControl]="descriptionCtrl" placeholder="Additional Description..."></textarea>
+    </div>
+    
+    <div class="tags-container">
+        <div class="tag-input-container" *ngIf="operation!=='view'">
+          <input type="text"  #tagInput placeholder="Add tag here...">
+          <img matTooltip="Save tag" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/add-white-icon.svg" (click)="addNewTag()">
+        </div>
+        <div class="tag-list-container">
+          <p *ngIf="currentSite.tags.length==0">Location Tags..</p>
+          <span *ngFor="let tag of currentSite.tags; let i=index">
+            {{tag}} <i class="fa fa-times" *ngIf="operation!=='view'" (click)="removeTag(i)"></i>
+          </span>
+        </div>
+    </div>
+  
+
+  </div>
+
+  <div class="site-media-container">
+    <div class="file-picker-container">
+        <div class="site-name-in-view" *ngIf="operation=='view'">
+            {{siteNameCtrl.value}}
+        </div>
+        <div matTooltip="Images" matTooltipClass="mat-custom-tooltip" [ngClass]="{'file-picker':true,'selected': selectedTab==allFileTypes.IMAGES}" (click)="pickFiles(allFileTypes.IMAGES)">
+          <div [ngClass]="{'image':true}" >
+            <img src="assets/svgs/geopad/photo-icon.svg">
+          </div>
+        </div>
+        <div matTooltip="Videos" matTooltipClass="mat-custom-tooltip" [ngClass]="{'file-picker':true, 'selected': selectedTab==allFileTypes.VIDEOS}" (click)="pickFiles(allFileTypes.VIDEOS)">
+          <div [ngClass]="{'video':true}">
+            <img src="assets/svgs/geopad/video-icon.svg">
+          </div>
+        </div>
+        <div matTooltip="Audios" matTooltipClass="mat-custom-tooltip" [ngClass]="{'file-picker':true, 'selected': selectedTab==allFileTypes.AUDIOS}" (click)="pickFiles(allFileTypes.AUDIOS)">
+          <div [ngClass]="{'video':true}" >
+            <img src="assets/svgs/geopad/audio-icon.svg">
+          </div>
+        </div>
+        <div matTooltip="Notes" matTooltipClass="mat-custom-tooltip" [ngClass]="{'file-picker':true, 'selected': selectedTab==allFileTypes.NOTES}" (click)="pickFiles(allFileTypes.NOTES)">
+          <div [ngClass]="{'notes':true}">
+            <img src="assets/svgs/geopad/notes-icon.svg">
+          </div>
+        </div>
+        <div matTooltip="Documents" matTooltipClass="mat-custom-tooltip" [ngClass]="{'file-picker':true, 'selected': selectedTab==allFileTypes.DESCRIPTORS}" (click)="pickFiles(allFileTypes.DESCRIPTORS)">
+          <div [ngClass]="{'descriptors':true}">
+            <img src="assets/svgs/geopad/description-icon.svg">
+          </div>
+        </div>
+
+        <!-- <input *ngIf="operation=='add' || operation=='update'" class="location-name" #siteNameInput [formControl]="siteNameCtrl" type="text" placeholder="Site Name"> -->
+
+        <!-- <div [ngStyle]="{'visibility': selectedTab==allFileTypes.NOTES ? 'hidden' : 'visible'}"  -->
+        <div class="site-media-ops-container">
+          <div [ngClass]="{'file-picker':true}" id="capture-notes-close-btn"
+            (click)="operation=='view' ? closeNotesPickerFun('yes') : checkChangesAndClose()" matTooltip="Close" matTooltipClass="mat-custom-tooltip">
+            <div [ngClass]="{'close-notes':true}">
+              <img src="assets/svgs/geopad/close-black-icon.svg">
+            </div>
+          </div>
+          <div *ngIf="operation=='add' || operation=='update'" [ngStyle]="{'display': (selectedTab==allFileTypes.IMAGES || selectedTab==allFileTypes.AUDIOS || selectedTab==allFileTypes.DESCRIPTORS) ? 'block' : 'none'}"
+            [ngClass]="{'file-picker':true}" (click)="uploadFile()" matTooltip="Upload File" matTooltipClass="mat-custom-tooltip">
+            <div [ngClass]="{'upload-file':true}">
+              <img src="assets/svgs/geopad/upload-black-icon.svg">
+            </div>
+          </div>
+          <div *ngIf="operation=='add' || operation=='update'" [ngStyle]="{'display': (selectedTab==allFileTypes.NOTES) ? 'none' : 'block'}" 
+            [ngClass]="{'file-picker':true, 'selected': showFileUrlCollector}" (click)="addUrl()" matTooltip="Add URL" matTooltipClass="mat-custom-tooltip">
+            <div [ngClass]="{'add-url':true, 'selected': showFileUrlCollector}">
+              <img [src]="showFileUrlCollector ? 'assets/svgs/geopad/link-white-icon.svg' : 'assets/svgs/geopad/link-black-icon.svg'">
+            </div>
+          </div>
+        </div>
+
+      <div class="add-file-url-error-container" *ngIf="showFileUrlCollector">
+          <div class="add-file-url-container">
+              <input type="text" #fileUrlInput placeholder="Add URL Here...">
+              <!-- <i class="fa fa-download" aria-hidden="true" (click)="addUrlToNotes()"></i> -->
+              <img src="assets/svgs/geopad/download-white-icon.svg" matTooltip="Save URL" matTooltipClass="mat-custom-tooltip" (click)="addUrlToNotes()">
+          </div>
+          <div class="error-container" *ngIf="urlValidationError!=''">
+              <p innerHTML="{{urlValidationError}}"></p>
+          </div>
+      </div>
+      <input style="display: none;" #uploadFileSelector type="file" multiple accept="{{acceptFileTypes[selectedTab]}}" 
+        (change)="fileSelected($event)">
+    </div>
+
+
+
+
+    <div class="selected-files-container">
+      <div class="files-container">
+          <div class="extra-site-container" [ngStyle]="{'left': !showSitesTray ? '-90px' : '0'}"
+            *ngIf="sites.length>1">
+            <span (click)="showSitesTray = !showSitesTray" class="arrow" >
+              <span *ngIf="showSitesTray" class="material-icons">keyboard_arrow_left</span>
+              <span *ngIf="!showSitesTray" class="material-icons">keyboard_arrow_right</span>
+            </span>
+            <div style="height: 100%; overflow-y: auto;">
+              <div [ngClass]="{'site-container': true, 'selected': currentSite.id == site.id}" 
+                    (click)="showCurrentSiteLocation(site); siteNameCtrl.setValue(site.locationName); notesDescription.value=site.description;"
+                    *ngFor="let site of sites; let i = index;">
+                <!-- <span>{{site.locationName}}</span> -->
+                <div class="site-img-div">
+                  <img *ngIf="site.imageFilesList.length > 0" [src]="site.imageFilesList[0].format==allFileFormats.URL ? 
+                        site.imageFilesList[0].url : site.imageFilesList[0].base64Data | safe"
+                        [ngClass]="{'landscape': site.imageFilesList[0].dimension.width>=site.imageFilesList[0].dimension.height,
+                                    'portrait': site.imageFilesList[0].dimension.width < site.imageFilesList[0].dimension.height}" >
+                  <img *ngIf="site.imageFilesList.length == 0" src="assets/svgs/geopad/temp.svg">
+                </div>
+                <span class="site-name">{{site.locationName}}</span>
+                <img class="close-site" (click)="removeSite(site, i)" src="assets/svgs/geopad/close-icon.svg">
+              </div>
+            </div>
+          </div>
+          <div class="location-tagged-images-container" *ngIf="selectedTab==allFileTypes.IMAGES && showLocationTaggedImages">
+              <div class="temp" *ngFor="let tagImg of locationTaggedImages; let i=index ;">
+                <div class="img-title-container">
+                  <div class="file-container">
+                    <img [ngClass]="{'landscape': tagImg.dimension.width>=tagImg.dimension.height,
+                                  'portrait': tagImg.dimension.width < tagImg.dimension.height}" 
+                                  [src]="tagImg.format==allFileFormats.URL ? tagImg.url : tagImg.base64Data | safe">
+                  </div>
+                  <p class="file-name">{{tagImg.name}}</p>
+                </div>
+                <div class="location-tages-container">
+                  <img matTooltip="Geo tagged location" matTooltipClass="mat-custom-tooltip" (click)="createNewSiteWithTaggedImg(tagImg, i)" class="geo-tag" src="assets/svgs/geopad/geotagged-white-icon.svg">
+                  <img matTooltip="Current location" matTooltipClass="mat-custom-tooltip" (click)='addTaggedImgToCurrentSite(tagImg,i)' class="current-loc" src="assets/svgs/geopad/lat-long-white-icon.svg">
+                </div>
+              </div>
+          </div>
+          <div class="temp">
+              <!-- IMAGES CONTAINER START -->
+              <div *ngIf="selectedTab==allFileTypes.IMAGES" style="width: 100%; margin: 2px;">
+                <!-- <table style="color:white; width:100%;height:auto;margin:10px">
+                  <tr style="font-size: 17px;">
+                    <th style="width: 40%;font-weight: 500;">Name</th>
+                    <th style="font-weight: 500;">Date Modified</th>
+                    <th style="font-weight: 500;">Size</th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                  </tr>
+                  <tr *ngFor="let file of currentSite.imageFilesList; let i = index;" style="font-size: 14px;">
+                    <td style="width: 50%;">{{file.caption}}</td>
+                    <td>{{file.date | date:'MM/d/yyyy'}}</td>
+                    <td>{{file.size | formatFileSize}}</td>
+                    <td>
+                      <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                    </td>
+                  </tr>
+                </table> -->
+                <div class="files-list-view-container">
+                  <div class="files-list-view-header">
+                    <div class="file-container"></div>
+                    <div style="width: calc(100% - 305px);">Name</div>
+                    <div style="width: 130px;">Date Modified</div>
+                    <div style="width: 80px;">Size</div>
+                    <div style="width: 10px;">&nbsp;&nbsp;&nbsp;</div>
+                  </div>
+                  <div class="files-list-view-data" *ngFor="let file of currentSite.imageFilesList; let i = index;">
+                    <div class="file-container" (click)="viewFileInViewer(file, i, currentSite.imageFilesList.length)">
+                      <img style="vertical-align: middle; line-height: 45px;" [ngClass]="{'landscape': file.dimension.width>=file.dimension.height,
+                                        'portrait': file.dimension.width < file.dimension.height}" 
+                                        [src]="file.format==allFileFormats.URL ? file.url : file.base64Data | safe">
+                    </div>
+                    <div style="width: calc(100% - 305px); overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 45px;">{{file.caption}}</div>
+                    <div style="width: 130px; vertical-align: middle; line-height: 45px;">{{file.date | date:'MM/d/yyyy'}}</div>
+                    <div style="width: 80px; vertical-align: middle; line-height: 45px;">
+                      {{file.size | formatFileSize}}
+                    </div>
+                    <div style="width: 10px; vertical-align: middle; line-height: 45px;">
+                      <img src="assets/svgs/close_svg.svg" style="height: 20px;" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- <div [ngStyle]="{'display': selectedTab==allFileTypes.IMAGES ? 'block' :'none'}" class="file-caption-container" 
+                *ngFor="let file of currentSite.imageFilesList; let i = index;"> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="file.observationItemId==0" (click)="removeFile(i)"></i> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                  <div class="file-container" (click)="viewFileInViewer(file, i, currentSite.imageFilesList.length)">
+                    <img [ngClass]="{'landscape': file.dimension.width>=file.dimension.height,
+                                      'portrait': file.dimension.width < file.dimension.height}" 
+                                      [src]="file.format==allFileFormats.URL ? file.url : file.base64Data | safe">
+                  </div>
+                  <div class="caption-container">
+                    <input type="text" placeholder="Caption" [(ngModel)]="file.caption">
+                  </div>
+              </div> -->
+              <!-- IMAGES CONTAINER END -->
+
+              <!-- VIDEOS CONTAINER START -->
+              <div *ngIf="selectedTab==allFileTypes.VIDEOS" style="width:100%; margin: 2px;">
+                <div class="files-list-view-container">
+                  <div class="files-list-view-header">
+                    <div class="file-container"></div>
+                    <div style="width: calc(100% - 305px);">Name</div>
+                    <div style="width: 130px;">Date Modified</div>
+                    <div style="width: 80px;">Size</div>
+                    <div style="width: 10px;">&nbsp;&nbsp;&nbsp;</div>
+                  </div>
+                  <div class="files-list-view-data" *ngFor="let file of currentSite.videoFilesList; let i = index;">
+                    <div class="file-container">
+                      <video style="width: 100%; height: 100%;vertical-align: middle; line-height: 45px;" *ngIf="file.format==allFileFormats.URL">
+                        <source [src]="file.url" />
+                        Browser not supported
+                      </video>
+                      <iframe style="width: 100%; height: 100%;vertical-align: middle; line-height: 45px;" width="100%" height="auto" *ngIf="file.format==allFileFormats.YOUTUBE" [src]="getYoutubeEmbedUrl(file.url) | safe" 
+                        frameborder="0" allowfullscreen>
+                      </iframe>
+                    </div>
+                    <div style="width: calc(100% - 305px); overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 45px;">{{file.caption}}</div>
+                    <div style="width: 130px; vertical-align: middle; line-height: 45px;">{{file.date | date:'MM/d/yyyy'}}</div>
+                    <div style="width: 80px; vertical-align: middle; line-height: 45px;">
+                      {{file.size | formatFileSize}}
+                    </div>
+                    <div style="width: 10px; vertical-align: middle; line-height: 45px;">
+                      <img src="assets/svgs/close_svg.svg" style="height: 20px;" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div [ngStyle]="{'display': selectedTab==allFileTypes.VIDEOS ? 'block' :'none'}" class="file-caption-container" 
+                *ngFor="let file of currentSite.videoFilesList; let i = index;"> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="file.observationItemId==0" (click)="removeFile(i)"></i> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                  <div class="file-container">
+                    <video style="width: 100%; height: 100%;" *ngIf="file.format==allFileFormats.URL">
+                      <source [src]="file.url" />
+                      Browser not supported
+                    </video>
+                    <iframe style="width: 100%; height: 100%;" width="100%" height="auto" *ngIf="file.format==allFileFormats.YOUTUBE" [src]="getYoutubeEmbedUrl(file.url) | safe" 
+                      frameborder="0" allowfullscreen>
+                    </iframe>
+                  </div>
+                  <div class="layer" (click)="viewFileInViewer(file, i, currentSite.imageFilesList.length)"> </div>
+                  <div class="caption-container"> -->
+                    <!-- <input type="text" #imgCpation placeholder="Caption" value="{{file.caption}}" (keyup)="file.caption=imgCpation.value"> -->
+                    <!-- <input type="text" placeholder="Caption" [(ngModel)]="file.caption">
+                  </div>
+              </div> -->
+              <!-- VIDEOS CONTAINER END -->
+
+              <!-- AUDIOS CONTAINER START -->
+              <div *ngIf="selectedTab==allFileTypes.AUDIOS" style="width: 100%; margin: 2px;">
+                <div class="files-list-view-container">
+                  <div class="files-list-view-header">
+                    <div class="file-container"></div>
+                    <div style="width: calc(100% - 305px);">Name</div>
+                    <div style="width: 130px;">Date Modified</div>
+                    <div style="width: 80px;">Size</div>
+                    <div style="width: 10px;">&nbsp;&nbsp;&nbsp;</div>
+                  </div>
+                  <div class="files-list-view-data" *ngFor="let file of currentSite.audioFilesList; let i = index;">
+                    <div class="file-container" (click)="viewFileInViewer(file, i, currentSite.audioFilesList.length)"> -->
+                      <!-- <audio style="width: 100%;" controls preload="none">
+                        <source [src]="file.url" type="audio/mpeg">
+                        Your browser does not support the audio element.
+                      </audio> -->
+                      <div class="audio-bg">
+                        <img style="vertical-align: middle; line-height: 45px;" src="assets/svgs/geopad/audio-white-icon.svg">
+                      </div>
+                    </div>
+                    <div style="width: calc(100% - 305px); overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 45px;">{{file.caption}}</div>
+                    <div style="width: 130px; vertical-align: middle; line-height: 45px;">{{file.date | date:'MM/d/yyyy'}}</div>
+                    <div style="width: 80px; vertical-align: middle; line-height: 45px;">
+                      {{file.size | formatFileSize}}
+                    </div>
+                    <div style="width: 10px; vertical-align: middle; line-height: 45px;">
+                      <img src="assets/svgs/close_svg.svg" style="height: 20px;" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div [ngStyle]="{'display': selectedTab==allFileTypes.AUDIOS ? 'block' :'none'}" class="file-caption-container" 
+                *ngFor="let file of currentSite.audioFilesList; let i = index;"> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="file.observationItemId==0" (click)="removeFile(i)"></i> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                  <div class="file-container" (click)="viewFileInViewer(file, i, currentSite.audioFilesList.length)"> -->
+                    <!-- <audio style="width: 100%;" controls preload="none">
+                      <source [src]="file.url" type="audio/mpeg">
+                      Your browser does not support the audio element.
+                    </audio> -->
+                    <!-- <div class="audio-bg">
+                      <img src="assets/svgs/geopad/audio-white-icon.svg">
+                    </div>
+                  </div>
+                  <div class="caption-container"> -->
+                    <!-- <input type="text" #imgCpation placeholder="Caption" value="{{file.caption}}" (keyup)="file.caption=imgCpation.value"> -->
+                    <!-- <input type="text" placeholder="Caption" [(ngModel)]="file.caption">
+                  </div>
+              </div> -->
+              <!-- AUDIOS CONTAINER END -->
+
+              <!-- NOTES CONTAINER START -->
+              <!-- <div *ngIf="selectedTab==allFileTypes.NOTES" style="width:95%;"> -->
+                <!-- <table style="color:white; width:100%;height:auto;margin:10px">
+                  <tr style="font-size: 17px;">
+                    <th style="width: 40%;font-weight: 500;">Name</th>
+                    <th style="width: 35%;font-weight: 500;">Date Modified</th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                  </tr>
+                  <tr *ngFor="let file of currentSite.geopadNotes; let i = index;" style="font-size: 14px;">
+                    <td style="width: 40%;">{{file.caption}}</td>
+                    <td style="width: 35%">{{file.date | date:'MM/d/yyyy'}}</td>
+                    <td>
+                      <img style="width: 30%; height:30%;" matTooltip="Edit note" matTooltipClass="mat-custom-tooltip" (click)="editSiteNote(file)" src="assets/svgs/geopad/edit-icon.svg">
+                    </td>
+                    <td>
+                      <img style="width: 30%; height:30%;" matTooltip="Remove note" matTooltipClass="mat-custom-tooltip" (click)="removeSiteNote(i)" src="assets/svgs/geopad/delete-icon.svg">
+                    </td>
+                  </tr>
+                </table> -->
+                <!-- <div class="files-list-view-container">
+                  <div class="files-list-view-header">
+                    <div style="width: calc(100% - 220px);">Name</div>
+                    <div style="width: 130px;">Date Modified</div>
+                    <div style="width: 80px;">Size</div>
+                    <div style="width: 10px;">&nbsp;&nbsp;&nbsp;</div>
+                  </div>
+                  <div class="files-list-view-data" *ngFor="let file of currentSite.geopadNotes; let i = index;">
+                    <div style="width: calc(100% - 220px); overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap">{{file.caption}}</div>
+                    <div style="width: 130px;">{{file.date | date:'MM/d/yyyy'}}</div>
+                    <div style="width: 80px;">
+                      {{file.size | formatFileSize}}
+                    </div>
+                    <div style="width: 10px;">
+                      <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+              <div [ngStyle]="{'display': selectedTab==allFileTypes.NOTES ? 'block' :'none'}" class="site-notes-container" 
+                *ngFor="let file of currentSite.geopadNotes; let i = index;">
+
+                {{file.caption}}
+                <!-- <div class="site-notes-operations" *ngIf="file.observationItemId==0"> -->
+                <div class="site-notes-operations" *ngIf="operation=='add' || operation=='update'">
+                  <img class="edit-img" matTooltip="Edit note" matTooltipClass="mat-custom-tooltip" (click)="editSiteNote(file)" src="assets/svgs/geopad/edit-icon.svg">
+                  <img class="delete-img" matTooltip="Remove note" matTooltipClass="mat-custom-tooltip" (click)="removeSiteNote(i)" src="assets/svgs/geopad/delete-icon.svg">
+                </div>
+              </div>
+              <!-- NOTES CONTAINER END -->
+
+              <!-- DOCS CONTAINER START -->
+              <div *ngIf="selectedTab==allFileTypes.DESCRIPTORS" style="width: 100%; margin: 2px;">
+                <!-- <table style="color:white; width:100%;height:auto;margin:10px">
+                  <tr style="font-size: 17px;">
+                    <th style="width: 30%;max-width:30%;font-weight: 500;">Name</th>
+                    <th style="font-weight: 500;">Date Modified</th>
+                    <th style="font-weight: 500;">Size</th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                    <th>&nbsp;&nbsp;&nbsp;</th>
+                  </tr>
+                  <tr *ngFor="let file of currentSite.descriptorsFilesList" style="font-size: 14px;">
+                    <td style="width: 30%;max-width:30%;    overflow: hidden;text-overflow: ellipsis;">
+                      <span style="max-width: 100%;">{{file.caption}}</span>
+                      </td>
+                    <td>{{file.date | date:'MM/d/yyyy'}}</td>
+                    <td>{{file.size | formatFileSize}}</td>
+                    <td>
+                      <a *ngIf="commonService.isValid(file.url)" class="download-btn" (click)="downloadFile(file)">
+                        <span class="material-icons"> download </span>
+                      </a>
+                    </td>
+                    <td>
+                      <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                    </td>
+                  </tr>
+                </table> -->
+                <div class="files-list-view-container">
+                  <div class="files-list-view-header">
+                    <div style="width: calc(100% - 270px);">Name</div>
+                    <div style="width: 130px;">Date Modified</div>
+                    <div style="width: 90px;">Size</div>
+                    <div>&nbsp;&nbsp;&nbsp;</div>
+                    <div style="width: 5px;">&nbsp;&nbsp;&nbsp;</div>
+                  </div>
+                  <div class="files-list-view-data" *ngFor="let file of currentSite.descriptorsFilesList; let i = index;">
+                    <div style="width: calc(100% - 270px); overflow: hidden;
+                    text-overflow: ellipsis; white-space: nowrap; vertical-align: middle; line-height: 45px;">{{file.caption}}</div>
+                    <div style="width: 120px; vertical-align: middle; line-height: 45px;">{{file.date | date:'MM/d/yyyy'}}</div>
+                    <div style="width: 80px; vertical-align: middle; line-height: 45px;">
+                      {{file.size | formatFileSize}}
+                    </div>
+                    <div>
+                      <a *ngIf="commonService.isValid(file.url)" class="download-btn" (click)="downloadFile(file)">
+                        <span style=" vertical-align: middle; line-height: 45px; height: 20px;" class="material-icons"> download </span>
+                      </a>
+                    </div>
+                    <div style="width: 5px; vertical-align: middle; line-height: 45px;">
+                      <img src="assets/svgs/close_svg.svg" style="height: 20px;" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div [ngStyle]="{'display': selectedTab==allFileTypes.DESCRIPTORS ? 'block' :'none'}" class="file-caption-container" 
+                *ngFor="let file of currentSite.descriptorsFilesList; let i = index;"> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="file.observationItemId==0" (click)="removeFile(i)"></i> -->
+                  <!-- <i class="fa fa-times file-close" *ngIf="operation=='add' || operation=='update'" (click)="removeFile(i)"></i>
+                  <div class="file-container" (click)="viewFileInViewer(file, i, currentSite.descriptorsFilesList.length)">
+                    <div class="descriptor-bg">
+                      <img src="assets/svgs/geopad/{{file.fileExtention}}.svg" alt="{{file.fileExtention}}">
+                    </div>
+                  </div>
+                  <div class="caption-container"> -->
+                    <!-- <input type="text" #imgCpation placeholder="Caption" value="{{file.caption}}" (keyup)="file.caption=imgCpation.value"> -->
+                    <!-- <input type="text" placeholder="Caption" [(ngModel)]="file.caption">
+                    <a *ngIf="commonService.isValid(file.url)" class="download-btn" (click)="downloadFile(file)">
+                      <span class="material-icons"> download </span>
+                    </a>
+                  </div>
+              </div> -->
+              <!-- DOCS CONTAINER END -->
+          </div>
+
+          <!-- FILE VIEWER START -->
+          <div class="file-viewer-container" *ngIf="showFileViewer">
+              <div class="file-viewer">
+                  
+                  <div class="confirm-body">
+                      <i class="fa fa-times close" (click)="showFileViewer=false"></i>
+                      <i *ngIf="selectedFileToView.leftAvailable" matTooltip="Previous" matTooltipClass="mat-custom-tooltip" (click)="getPreviousFile()" class="fa fa-chevron-left left" aria-hidden="true"></i>
+                      <i *ngIf="selectedFileToView.rightAvailable" matTooltip="Next" matTooltipClass="mat-custom-tooltip" (click)="getNextFile()" class="fa fa-chevron-right right" aria-hidden="true"></i>
+                      <div [ngClass]="{'view-file-container':true}">
+                          <!-- IMAGES -->
+                          <img *ngIf="selectedFileToView.type==allFileTypes.IMAGES"
+                                [ngClass]="{'view-file-container':true,
+                                        'landscape': selectedFileToView.dimension.width>=selectedFileToView.dimension.height,
+                                        'portrait': selectedFileToView.dimension.width < selectedFileToView.dimension.height}"
+                                [src]="selectedFileToView.format==allFileFormats.URL ? selectedFileToView.url : selectedFileToView.base64Data | safe">
+                          
+                          <!-- VIDEOS -->
+                          <video style="width: 100%; height: 100%;" 
+                            *ngIf="selectedFileToView.type==allFileTypes.VIDEOS && selectedFileToView.format==allFileFormats.URL" autoplay controls>
+                            <source [src]="selectedFileToView.url" />
+                            Browser not supported
+                          </video>
+                          <iframe style="width: 100%; height: 100%;" width="100%" height="auto" 
+                            *ngIf="selectedFileToView.type==allFileTypes.VIDEOS && selectedFileToView.format==allFileFormats.YOUTUBE" 
+                            [src]="getYoutubeEmbedUrl(selectedFileToView.url) | safe" 
+                            controls="0" allow="accelerometer; autoplay; modestbranding; encrypted-media; gyroscope; picture-in-picture"
+                            frameborder="0" allowfullscreen>
+                          </iframe>
+
+                          <!-- AUDIO -->
+                          <audio style="margin-top: 90px;" *ngIf="selectedFileToView.type==allFileTypes.AUDIOS" controls preload="none">
+                            <source [src]="selectedFileToView.url" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                          </audio>
+
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!-- FILE VIEWER END -->
+      </div>
+      <div class="site-note-data-field-container" *ngIf="selectedTab==allFileTypes.NOTES">
+        <span class="current-op">Current Operation: <span style="font-weight: 500;">{{siteNoteOperation}}</span> </span>
+        <img *ngIf="siteNotes.value.length>0 && (operation=='add' || operation=='update')" matTooltip="Save note" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/save-icon.svg" (click)="saveSiteNote()">
+        <textarea #siteNotes [readonly]="operation=='view'" [formControl]="siteNotesCtrl" placeholder="Type Notes Here..."></textarea>
+      </div>
+      
+      
+    </div>
+    <div class="user-rights-and-save-container">
+      <div class="data-rights-and-vertical-info-btn-container">
+        <div class="data-rights-container">
+          <img matTooltip="Data Rights" matTooltipClass="mat-custom-tooltip" class="data-rights"
+            src="assets/svgs/geopad/new/data_rights_icon.svg">
+        </div>
+        <div [ngClass]="{'vertical-info-container': true, 'selected': showVerticalInfo}"
+          (click)="showVerticalInfo = !showVerticalInfo">
+          <!-- <img matTooltip="Vertical Info" matTooltipClass="mat-custom-tooltip"class="vertical-info"
+              src="assets/svgs/geopad/save-white-icon.svg"> -->
+          <span matTooltip="Vertical Info" matTooltipClass="mat-custom-tooltip" class="material-icons vertical-info"> swap_vert </span>
+        </div>
+      </div>
+      <div class="save-container">
+        <img *ngIf="operation=='add' || operation=='update'" matTooltip="Save site" matTooltipClass="mat-custom-tooltip" class="note-save"
+            src="assets/svgs/geopad/save-white-icon.svg" (click)="saveNotes()">
+        <div class="edit-in-view-mode" *ngIf="operation === 'view'" (click)="operation = 'update'">
+          <span matTooltip="Edit" matTooltipClass="mat-custom-tooltip" class="material-icons"> edit </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="vertical-info-window" *ngIf="showVerticalInfo">
+      <div class="vertical-info-header">
+        <p class="window-name">Vertical Info</p>
+        <img class="window-close" src="assets/svgs/geopad/close-black-icon.svg" (click)="showVerticalInfo=false">
+      </div>
+      <div class="vertical-info-body">
+        <table class="vertical-info-table">
+          <div class="add-header left-loc">
+            <span class="add" matTooltipPosition="right" matTooltip="Add New Column"
+              matTooltipClass="mat-custom-tooltip" (click)="addNewColumn('left')">+</span>
+            <span class="remove" matTooltipPosition="right" matTooltip="Remove Left Most Column"
+              *ngIf="currentSite.verticalData.headers.length > 1"
+              matTooltipClass="mat-custom-tooltip" (click)="removeColumn(0)">-</span>
+          </div>
+          <div class="add-header right-loc">
+            <span class="add" matTooltipPosition="left" matTooltip="Add New Column"
+              matTooltipClass="mat-custom-tooltip" (click)="addNewColumn('right')">+</span>
+            <span class="remove" matTooltipPosition="left" matTooltip="Remove Right Most Column"
+              *ngIf="currentSite.verticalData.headers.length > 1"
+              matTooltipClass="mat-custom-tooltip" (click)="removeColumn(this.currentSite.verticalData.headers.length - 1)">-</span>
+          </div>
+          <tr class="header-row">
+            <td class="header" *ngFor="let head of currentSite.verticalData.headers; let colIndex = index">
+              <input type="text" [(ngModel)]="head.name" placeholder="Enter name to the cell.">
+              <span class="delete-column material-icons" matTooltip="Delete column {{colIndex+1}}"
+                matTooltipClass="mat-custom-tooltip"
+                *ngIf="colIndex !== 0 && colIndex !== currentSite.verticalData.headers.length-1"
+                (click)="removeColumn(colIndex)">delete</span>
+            </td>
+          </tr>
+          <tr class="body-row" *ngFor="let data of currentSite.verticalData.body; let rowIndex = index">
+            <td class="body-data" *ngFor="let head of currentSite.verticalData.headers">
+              <input [disabled]="!head.name" type="text" [(ngModel)]="data[head.id]" placeholder="">
+            </td>
+            <span class="delete-row material-icons" matTooltip="Delete row {{rowIndex+1}}"
+                matTooltipClass="mat-custom-tooltip"
+                *ngIf="rowIndex !== currentSite.verticalData.body.length-1"
+                (click)="removeRow(rowIndex)">delete</span>
+          </tr>
+          <div class="add-header bottom-loc">
+            <span class="add" matTooltip="Add Row" matTooltipClass="mat-custom-tooltip"
+              (click)="addRow()">+</span>
+            <span class="remove" matTooltip="Remove Last Row" matTooltipClass="mat-custom-tooltip"
+              *ngIf="currentSite.verticalData.body.length > 0" (click)="removeRow(currentSite.verticalData.body.length - 1)">-</span>
+          </div>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  
+</div>
+
+
+<!-- <div #annotateLayerOption style="margin-left: 25px;">
+  <div [ngStyle]="{'display': showAnnotationCancelConfirmScreen ? 'none':'flex', 'border': '1px solid #9e9e9e',
+                    'border-radius': '5px'}">
+    <div style="padding: 0 5px; margin: 2px; cursor: pointer; border-right: 1px solid #9e9e9e;" (click)="saveAnnotation()">
+      <img style="width: 15px;" matTooltip="Save annotation" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/save-icon.svg">
+    </div>
+    <div style="padding: 0 5px; margin: 2px; cursor: pointer;" (click)="showAnnotationCancelConfirmScreen = true">
+      <img style="width: 15px;" matTooltip="Cancel" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/close-icon.svg">
+    </div>
+  </div>
+  <div style="display: flex; border: 1px solid #9e9e9e; border-radius: 5px; overflow: hidden;" *ngIf="showAnnotationCancelConfirmScreen">
+    <p style="margin: 0; font-size: 14px; font-weight: 500; background: #fff; padding: 0 5px; line-height: 24px;">Close?</p>
+    <div style="padding: 0 5px; cursor: pointer; background: orange;" (click)="cancelAnnotation()">
+      <img style="width: 15px;" matTooltip="Yes, Cancel" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/tick-white-icon.svg">
+    </div>
+    <div style="padding: 0 5px; cursor: pointer; background: #000;" (click)="showAnnotationCancelConfirmScreen = false">
+      <img style="width: 15px;" matTooltip="No, Continue" matTooltipClass="mat-custom-tooltip" src="assets/svgs/geopad/close-white-icon.svg">
+    </div>
+  </div>
+</div> -->
+
+<!-- CLOSE CONFIRMATION START -->
+<div class="confirm-close-container" *ngIf="showConfirmClose">
+    <div class="confirm-close">
+        <div class="header">
+          <!-- <img src="assets/svgs/geopad/close-icon.svg"> -->
+          <!-- <i class="fa fa-times" (click)="closeNotesPickerFun('no')"></i> -->
+          <i class="fa fa-times" (click)="showConfirmClose=false"></i>
+        </div>
+        <div class="confirm-body">
+          <!-- <p class="confirm-text">Are you sure you want to close without saving</p> -->
+          <p class="confirm-text">Save site before closing?</p>
+          <div class="btns-container">
+            <div class="yes-btn-container">
+                <button (click)="closeNotesPickerFun('yes')">Yes</button>
+            </div>
+            <div class="no-btn-container">
+              <button (click)="closeNotesPickerFun('no')">No</button>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- CLOSE CONFIRMATION END -->
+
+<div class="confirm-delete-container" *ngIf="showSessionShareSiteEditAlert">
+  <div class="confirm-delete" *ngIf="showSessionShareSiteEditAlert">
+      <div class="header">
+        <i class="fa fa-times" (click)="showSessionShareSiteEditAlert=false"></i>
+      </div>
+      <div class="confirm-body">
+        <p class="confirm-text">You do not have edit rights for this session.</p>
+        <div class="btns-container">
+          <div class="ok-btn-container">
+              <button (click)="showSessionShareSiteEditAlert=false">Okay</button>
+          </div>+
+        </div>
+      </div>
+  </div>
+</div>

@@ -1,0 +1,328 @@
+<div [ngClass]="{ active: setActive, 'circle-menu-card-container': true }">
+  <div class="circle-menu-container">
+    <div class="circle-menu">
+      <ul>
+        <li
+          *ngFor="let wing of wings"
+          matTooltip="{{ wing.tooltip }}"
+          matTooltipClass="mat-custom-tooltip"
+          (mouseover)="mouseOver($event, wing)"
+          (mouseout)="mouseOut($event, wing)"
+          (click)="selectedWing($event, wing)"
+        >
+          <span [ngClass]="{ selected: wing.selected }">
+            <img src="{{ wing.icon.name }}" />
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- <i class="material-icons close_menu" (click)="closeMenu($event)">close</i> -->
+</div>
+
+<div *ngIf="showSubOptions">
+  <div
+    style="top: 45px; left: -60px"
+    [ngClass]="{
+      'icon-card-container': true,
+      selected: selectedSubOption == 'video-image'
+    }"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Upload Photos/ Videos"
+    matTooltipClass="mat-custom-tooltip"
+    (click)="showUploadPhotosVideos()"
+  >
+    <div class="icon-container">
+      <div class="icon-bg-container">
+        <img
+          class="icon-img"
+          #videoImage
+          (mouseenter)="
+            videoImage.src = 'assets/svgs/geo-tray/vid-img-white-icon.svg'
+          "
+          (mouseleave)="
+            selectedSubOption == 'video-image'
+              ? (videoImage.src = 'assets/svgs/geo-tray/vid-img-white-icon.svg')
+              : (videoImage.src = 'assets/svgs/geo-tray/vid-img-icon.svg')
+          "
+          [src]="
+            selectedSubOption == 'video-image'
+              ? 'assets/svgs/geo-tray/vid-img-white-icon.svg'
+              : 'assets/svgs/geo-tray/vid-img-icon.svg'
+          "
+        />
+      </div>
+    </div>
+  </div>
+
+  <div
+    style="top: -15px; left: -35px"
+    [ngClass]="{
+      'icon-card-container': true,
+      selected: selectedSubOption == 'audio'
+    }"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Upload Audio"
+    matTooltipClass="mat-custom-tooltip"
+    (click)="showUploadAudio()"
+  >
+    <div class="icon-container">
+      <div class="icon-bg-container">
+        <img
+          class="icon-img"
+          #audioImage
+          (mouseenter)="
+            audioImage.src = 'assets/svgs/geo-tray/audio-mic-white-icon.svg'
+          "
+          (mouseleave)="
+            selectedSubOption == 'audio'
+              ? (audioImage.src =
+                  'assets/svgs/geo-tray/audio-mic-white-icon.svg')
+              : (audioImage.src = 'assets/svgs/geo-tray/audio-mic-icon.svg')
+          "
+          [src]="
+            selectedSubOption == 'audio'
+              ? 'assets/svgs/geo-tray/audio-mic-white-icon.svg'
+              : 'assets/svgs/geo-tray/audio-mic-icon.svg'
+          "
+        />
+      </div>
+    </div>
+  </div>
+
+  <!-- <div style="top: -55px; left: 15px;" [ngClass]="{'icon-card-container':true, 'selected':selectedSubOption=='geopad'}" 
+      [ngStyle]="{'width': width+'px', 'height':width+'px'}" matTooltip="Add Content" matTooltipClass="mat-custom-tooltip" (click)="showGeopad($event)">
+      <div class="icon-container">
+        <div class="icon-bg-container">
+          <img class="icon-img" #addContentImage style="padding: 5px;" (mouseenter)="addContentImage.src='assets/svgs/geo-tray/add-content-white-icon.svg'"
+            (mouseleave)="selectedSubOption=='audio' ? addContentImage.src='assets/svgs/geo-tray/add-content-white-icon.svg' :
+                          addContentImage.src='assets/svgs/geo-tray/add-content-icon.svg'"
+            [src]="selectedSubOption=='geopad' ? 'assets/svgs/geo-tray/add-content-white-icon.svg' : 'assets/svgs/geo-tray/add-content-icon.svg'"/>
+        </div>
+      </div>
+    </div> -->
+
+  <!-- <div style="top: -60px; left: 35px;" [ngClass]="{'icon-card-container':true, 'selected':selectedSubOption=='view-location'}" 
+      [ngStyle]="{'width': width+'px', 'height':width+'px'}" (click)="showViewOtherLocation()">
+      <div class="icon-container" >
+        <div class="icon-bg-container">
+          <img class="icon-img" [src]="selectedSubOption=='view-location' ? 'assets/svgs/geo-tray/view-white-icon.svg' : 'assets/svgs/geo-tray/view-icon.svg'"/>
+        </div>
+      </div>
+    </div> -->
+</div>
+
+<!-- PROPERTIES========================================================================= -->
+<div class="properties" *ngIf="showProperties">
+  <!-- ====Extended==== -->
+  <div
+    style="top: 45px; left: -60px"
+    class="icon-card-properties-container extended"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Extended"
+    (click)="showExtended($event)"
+    [ngClass]="{
+      extendedactive: extendedVisibility,
+      extendednotActive: !extendedVisibility
+    }"
+  ></div>
+  <!-- ====collocated==== -->
+  <div
+    style="top: -15px; left: -35px"
+    class="icon-card-properties-container collocated"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Collocated"
+    (click)="showCollocated($event)"
+    [ngClass]="{
+      collocatedactive: collocatedVisibility,
+      collocatednotActive: !collocatedVisibility
+    }"
+  ></div>
+  <!-- ====blended==== -->
+  <div
+    style="top: -55px; left: 15px"
+    class="icon-card-properties-container blended"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Blended"
+    (click)="showBlended($event)"
+    [ngClass]="{
+      blendedactive: blendedVisibility,
+      blendednotActive: !blendedVisibility
+    }"
+  ></div>
+  <!-- ====classified==== -->
+  <div
+    style="top: -61px; left: 80px"
+    class="icon-card-properties-container classified"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Classified"
+    (click)="showClassified($event)"
+    [ngClass]="{
+      classifiedactive: classifiedVisibility,
+      classifiednotActive: !classifiedVisibility
+    }"
+  ></div>
+  <!-- ====predefined==== -->
+  <div
+    style="top: -31px; left: 140px"
+    class="icon-card-properties-container predefined"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Predefined"
+    (click)="showPredefined($event)"
+    [ngClass]="{
+      predefinedactive: predefinedVisibility,
+      predefinednotActive: !predefinedVisibility
+    }"
+  ></div>
+</div>
+
+<!-- SLOPE FINDER -->
+<div class="slope" *ngIf="showslope">
+  <div
+    style="top: 66px; left: -53px; width: 50px; height: 50px"
+    class="icon-card-slope-finder slopefinder"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Slopefinder"
+    (click)="showslopefinder($event)"
+    [ngClass]="{
+      slopefinderactive: slopefinderVisibility,
+      slopefindernotActive: !slopefinderVisibility
+    }"
+  ></div>
+  <div
+    style="top: 107px; left: -36px; width: 15px; height: 15px"
+    class="slopedropdown"
+  >
+    <img
+      (click)="openslopedropdown()"
+      style="
+        transform: rotate(180deg);
+        top: 3px;
+        left: -3px;
+        width: 18px;
+        height: 10px;
+        position: absolute;
+      "
+      src="assets/svgs/geosol/geosole-framework/drop-up-icon.svg"
+    />
+    <div>
+      <select size="3" class="dropdown" *ngIf="showslopedropdown">
+        <option class="file-name" [value]="Global" selected>
+          Global Elevation
+        </option>
+        <option
+          *ngFor="let fileName of myService.fileNames"
+          class="file-name"
+          [value]="fileName"
+        >
+          {{ fileName }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- SLOPE FINDERAEDS -->
+<div class="slopeAEDS" *ngIf="showslopeAEDS">
+  <div
+    style="top: 0px; left: -36px; width: 50px; height: 50px"
+    class="icon-card-slope-finder slopefinder"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Slopefinder AEDS"
+    (click)="showAEDS($event)"
+    [ngClass]="{
+      slopefinderactiveAEDS: slopefinderVisibilityAEDS,
+      slopefindernotActiveAEDS: !slopefinderVisibilityAEDS
+    }"
+  ></div>
+  <div
+    style="top: 41px; left: -20px; width: 15px; height: 15px"
+    class="slopedropdownAEDS"
+  >
+    <img
+      (click)="openslopedropdownAEDS()"
+      style="
+        transform: rotate(180deg);
+        top: 3px;
+        left: -3px;
+        width: 18px;
+        height: 10px;
+        position: absolute;
+      "
+      src="assets/svgs/geosol/geosole-framework/drop-up-icon.svg"
+    />
+    <div>
+      <select size="3" class="dropdownAEDS" *ngIf="showslopedropdownAEDS">
+        <option class="file-name" [value]="Global" selected>
+          Global Elevation
+        </option>
+        <option
+          *ngFor="let fileName of myService.fileNames"
+          class="file-name"
+          [value]="fileName"
+        >
+          {{ fileName }}
+        </option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- BUFFER TOOL -->
+<div class="buffertool" *ngIf="showbuffer">
+  <div
+    style="top: 105px; left: -50px; width: 50px; height: 50px"
+    class="icon-card-buffer-tool buffertool"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Buffertool"
+    (click)="showbuffertool($event)"
+    [ngClass]="{
+      buffertoolactive: buffertoolVisibility,
+      buffertoolnotActive: !buffertoolVisibility
+    }"
+  ></div>
+  <div
+    style="top: 146px; left: -32px; width: 15px; height: 15px"
+    class="bufferdropdown"
+  >
+    <img
+      (click)="openbufferdropdown()"
+      style="
+        transform: rotate(180deg);
+        top: 3px;
+        left: -3px;
+        width: 18px;
+        height: 10px;
+        position: absolute;
+      "
+      src="assets/svgs/geosol/geosole-framework/drop-up-icon.svg"
+    />
+    <div>
+      <select
+        size="3"
+        class="dropdown"
+        *ngIf="showbufferdropdown"
+      >
+        <option class="sides" value="attribute">Left</option>
+        <option class="sides" value="first">Right</option>
+        <option class="sides" value="second">Both</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- VICINITY TOOL -->
+<div class="vicinitytool" *ngIf="showvicinity">
+  <div
+    style="top: 44px; left: -55px; width: 50px; height: 50px"
+    class="icon-card-vicinity-tool vicinitytool"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Vicinitytool"
+    (click)="showvicinitytool($event)"
+    [ngClass]="{
+      vicinitytoolactive: vicinitytoolVisibility,
+      vicinitytoolnotActive: !vicinitytoolVisibility
+    }"
+  ></div>
+</div>
+<app-slope-finder (Slopevalue)="handleSlopePctValue($event)"></app-slope-finder>

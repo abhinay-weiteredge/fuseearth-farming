@@ -1,0 +1,5 @@
+<div (scroll)="onScroll($event)" #scrollouter id={{_scrollOuter}}>
+  <div (scroll)="onScroll($event)" #scroll id="scroll">
+    <div #scrollerHeight [ngStyle]="{'height': scrollHeightAdjustDynamic}"></div>
+  </div>
+</div>

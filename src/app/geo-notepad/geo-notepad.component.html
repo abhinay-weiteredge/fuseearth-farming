@@ -1,0 +1,93 @@
+<div *ngIf="showNotePad && minimizedWindow" cdkDrag class="min-geo-note-pad-container">
+  <div class="min-geo-note-pad-header">
+    <p class="min-geo-note-pad-title">
+      Notepad
+    </p>
+    <button class="min-geo-note-pad-maximize" matTooltip="Maximize notepad" matTooltipClass="mat-custom-tooltip" (click)="maximizeNotePage()">
+      <i class="material-icons"> maximize </i>
+    </button>
+    <!-- <button class="min-geo-note-pad-close" (click)="closeNotePage()">
+        <i class="material-icons">close</i>
+    </button> -->
+  </div>
+</div>
+
+<div [ngStyle]="{ 'display': minimizedWindow ? 'none' : 'block' }" 
+  class="geo-note-pad-container" *ngIf="showNotePad" >
+  <div class="geo-note-pad-header">
+    <p class="geo-note-pad-title">
+      Notepad
+    </p>
+    <button class="geo-note-pad-minimize" matTooltip="Minimize notepad" matTooltipClass="mat-custom-tooltip" (click)="minimizeNotePage()">
+      <i class="material-icons"> minimize </i>
+    </button>
+    <button class="geo-note-pad-close" matTooltip="Close notepad" matTooltipClass="mat-custom-tooltip" (click)="closeNotePage()">
+        <i class="material-icons">close</i>
+    </button>
+  </div>
+  <div class="geo-note-pad-body">
+    <div class="geo-notes-container" slimScroll [options]="opts" [scrollEvents]="scrollEvents">
+    <!-- <div class="geo-notes-container"> -->
+      <div class="error-msg-container" *ngIf="errorMsg!=''">
+          <i class="material-icons error-close" (click)="errorMsg=''">close</i>
+          <p class="error-msg">{{errorMsg}}</p>
+      </div>
+      <p class="geo-no-notes" *ngIf="savedNotes.length==0">Saved notes will come here...</p>
+      <div *ngFor="let note of savedNotes" style="display: flex; margin: 5px;">
+          <div [ngClass]="{'geo-notes-div':true, 'geo-notes-location-div': isValid(note.locationData)}">
+                <div  class="geo-notes-msg">
+                    <div *ngIf="!isValid(note.locationData)">
+                      {{note.msg}}
+                    </div>
+                    <div *ngIf="isValid(note.locationData)">
+                      {{note.msg}}
+                    </div>
+                </div>
+                <div class="geo-note-time-and-mark-container">
+                    <span class="geo-note-time">{{note.time|date:'mediumTime'}}</span>
+                    <span class="geo-location-mark">{{note.locationData}}</span>
+                </div>
+                <!-- <i class="material-icons geo-notes-ops">more_vert</i> -->
+                <div class="geo-notes-ops">
+                    <i class="material-icons edit" matTooltip="Edit notes" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left" (click)="editNotes($event,note)">edit</i>
+                    <i class="material-icons delete" matTooltip="Delete notes" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left" (click)="deleteNotes($event,note)">delete</i>
+                </div>
+          </div>
+          <div class="geo-notes-location-icon" *ngIf="isValid(note.locationData)">
+            <span matTooltip="View location on map" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left">
+              <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                (click)="gotoLocation(note)"
+                width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" 
+                style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); transform: rotate(360deg);">
+                <path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z" 
+                  fill= "#017dc7" />
+                <rect x="0" y="0" width="24" height="24" fill="rgba(0, 0, 0, 0)" />
+              </svg>
+            </span>
+          </div>
+      </div>
+    </div>
+    <div class="geo-notes-writer-container">
+      <div class="geo-location-container">
+          
+          <p class="geo-notes-location">
+            <!-- {{locationData}} -->
+            <input type="text" [(ngModel)]="locationData" placeholder="Select location with the pin...">
+            <i class="material-icons geo-notes-location-close" *ngIf="isValid(locationData)" (click)="clearLocation()">cancel</i>
+          </p>
+          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" (click)="markPosition()"
+            width="24" height="24" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24" 
+            class="geo-notes-marker" [ngStyle]="{'height': goingToMarkPosition ? '40px':'30px'}"
+            style="-ms-transform: rotate(360deg); -webkit-transform: rotate(360deg); -moz-transform: rotate(360deg); transform: rotate(360deg); margin-left: 5px;">
+            <path d="M12 11.5A2.5 2.5 0 0 1 9.5 9A2.5 2.5 0 0 1 12 6.5A2.5 2.5 0 0 1 14.5 9a2.5 2.5 0 0 1-2.5 2.5M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7z" 
+              [attr.fill]= "goingToMarkPosition ? '#d0d0d0' : isValid(locationData) ? 'green' : '#017dc7'" />
+            <rect x="0" y="0" width="24" height="24" fill="rgba(0, 0, 0, 0)" />
+          </svg>
+      </div>
+      <div class="geo-notes-writer-container-div">
+        <textarea rows="4" cols="50" placeholder="Type notes here..." class="geo-notes-writer" #notes></textarea>
+        <button class="geo-notes-save-btn" (click)="saveNote(notes,'button')"><i class="material-icons">save</i></button>
+      </div>
+    </div>
+  </div>
+</div>

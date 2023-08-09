@@ -1,0 +1,116 @@
+<div [hidden]="!onbufferClicked">
+  <div class="geotray-suboptions-popup-container">
+    <!-- <div class="input-btn-container" ngbDropdown #dropDown="ngbDropdown"> -->
+    <div class="subpopup-btn-container">
+      <div class="container">
+        <div class="submenue-popupclsmin">
+          <img
+            src="../../assets/svgs/geo-tray/cancel-black.svg"
+            width="18px"
+            height="18px"
+            alt=""
+            style="
+              background-color: #bcbcbc;
+              cursor: pointer;
+              border-radius: 50%;
+              position: relative;
+              left: -72px;
+            "
+            (click)="onbufferClicked = false"
+          />
+        </div>
+
+        <div
+          class="d-lg-flex justify-content-center align-items-center"
+          style="z-index: -1"
+        >
+          <div
+            class="input-boxx"
+            style="
+              top: 1px;
+              height: 53%;
+              position: relative;
+              margin-right: 10px;
+            "
+          >
+            <select
+              class="dropdown"
+              style="
+                width: 163px;
+                height: 19px;
+                font-size: 14px;
+                text-align: center;
+                color: #636262;
+                border-color: #bcbcbc;
+              "
+            >
+              <option class="sides" value="attribute">Left</option>
+              <option class="sides" value="first">Right</option>
+              <option class="sides" value="second">Both</option>
+            </select>
+          </div>
+
+          <div class="input-box d-flex" style="height: 53%">
+            <input type="text" placeholder="Enter Buffer" [(ngModel)]="bufferValue"/>
+            <div
+              class="angimg"
+              style="
+                position: absolute;
+                right: 11px;
+                top: 8px;
+                width: 0px;
+                height: 17px;
+              "
+            >
+              <select
+              [(ngModel)]="selectedUnits"
+              (ngModelChange)="showbuffer()"
+                class="dropdown"
+                style="
+                  width: 70px;
+                  height: 19px;
+                  font-size: 14px;
+                  text-align: center;
+                  background-color: #bcbcbc;
+                  top: -3px;
+                  right: 70px;
+                "
+                
+              >
+                <option value="miles">miles</option>
+                <option value="inches">inches</option>
+                <option value="feet">feet</option>
+                <option value="yards">yards</option>
+                <option value="centimeters">centimeters</option>
+                <option value="meters">meters</option>
+                <option value="kilometers">kilometers</option>
+              </select>
+            </div>
+            <div
+              class="enterimg"
+              style="
+                position: absolute;
+                right: 70px;
+                top: 8px;
+                width: 30px;
+                height: 17px;
+              "
+            >
+              <img
+                src="../../../assets/svgs/Farming/enter.svg"
+                alt=""
+                style="
+                  position: absolute;
+                  right: 18px;
+                  top: 2px;
+                  width: 15px;
+                  height: 14px;
+                "
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

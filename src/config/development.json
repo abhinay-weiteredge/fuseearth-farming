@@ -1,0 +1,18 @@
+{
+    "geoserver" : {
+        "url" : "http://172.18.0.4:8081/geoserver/rest/imports",
+        "workspaceName" : "geomocus_test",
+        "workspaceLocation" : "C:/Program Files (x86)/GeoServer 2.14.1/data_dir/workspaces/xelpro_ind_test_angular",
+        "fileLocation" : "D:/shapeFiles/"
+    },
+    "postgis" : {
+        "url" : "http://172.18.0.4:8081/geoserver/rest/imports",
+        "workspace" : "geomocus_test",
+        "Datastore" : "geomocus-test-shapes-angular"
+    },
+    "layers" : {
+        "url" : "http://172.18.0.4:8081/geoserver/rest/layers"
+    },
+    "authorization" : "Basic YWRtaW46Z2Vvc2VydmVy",
+    "baseURL" : "http://172.18.0.4:8081/geoserver/"
+}

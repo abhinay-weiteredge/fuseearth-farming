@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW X8 -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#2B2E34;stroke-width:6.99962}
+    .str2 {stroke:#2B2E34;stroke-width:4.99961}
+    .str1 {stroke:#2B2E34;stroke-width:1.38858}
+    .fil0 {fill:none}
+    .fil1 {fill:#2B2E34}
+    .fil2 {fill:#2B2E34}
+    .fil3 {fill:white}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <path class="fil0 str0" d="M394 88l0 0c0,1 0,2 0,3l-7 163c-19,81 -233,92 -261,-1l-8 -161c0,-2 0,-3 0,-4l0 0c0,-41 62,-74 138,-74 76,0 138,33 138,74 0,0 0,0 0,0l0 0z"/>
+  <path class="fil1" d="M256 417l73 -107c-55,15 -89,16 -146,1l73 106z"/>
+  <g id="_2077788785904">
+   <ellipse class="fil0 str1" cx="256" cy="418" rx="168" ry="64"/>
+   <g>
+    <ellipse class="fil2" cx="256" cy="483" rx="20" ry="15"/>
+    <ellipse class="fil3" cx="256" cy="483" rx="9" ry="7"/>
+   </g>
+   <g>
+    <ellipse class="fil2" cx="138" cy="373" rx="20" ry="15"/>
+    <ellipse class="fil3" cx="138" cy="373" rx="9" ry="7"/>
+   </g>
+   <g>
+    <ellipse class="fil2" cx="375" cy="373" rx="20" ry="15"/>
+    <ellipse class="fil3" cx="375" cy="373" rx="9" ry="7"/>
+   </g>
+   <line class="fil0" x1="375" y1="373" x2="353" y2= "373" />
+  </g>
+  <g id="_2077788783120">
+   <circle class="fil3 str2" cx="256" cy="114" r="28"/>
+   <path class="fil0 str2" d="M189 222c22,-54 7,-66 67,-65 60,-1 45,11 67,65"/>
+   <line class="fil0 str2" x1="227" y1="196" x2="216" y2= "227" />
+   <line class="fil0 str2" x1="285" y1="196" x2="296" y2= "227" />
+  </g>
+ </g>
+</svg>

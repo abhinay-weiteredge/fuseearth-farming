@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW 2019 (64-Bit Evaluation Version) -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="512px" height="512px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 512 512"
+ xmlns:xlink="http://www.w3.org/1999/xlink">
+ <defs>
+  <font id="FontID0" horiz-adv-x="644" font-variant="normal" style="fill-rule:nonzero" font-weight="400">
+	<font-face 
+		font-family="Segoe UI">
+		<font-face-src>
+			<font-face-name name="Segoe UI"/>
+		</font-face-src>
+	</font-face>
+   <missing-glyph><path d="M0 0z"/></missing-glyph>
+   <glyph unicode="&gt;" horiz-adv-x="683" d="M552.667 273l-419.833 -211 0 72.8333 314.5 152.333 0 2.83346 -314.5 173.833 0 73.3331 419.833 -235.333 0 -28.8332z"/>
+  </font>
+  <style type="text/css">
+   <![CDATA[
+    @font-face { font-family:"Segoe UI";font-variant:normal;font-weight:normal;src:url("#FontID0") format(svg)}
+    .fil0 {fill:none}
+    .fil1 {fill:#373435}
+    .fnt0 {font-weight:normal;font-size:694.19px;font-family:'Segoe UI'}
+   ]]>
+  </style>
+ </defs>
+ <g id="Layer_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <rect class="fil0" width="512" height="512"/>
+  <g transform="matrix(2.64845E-14 1 -1.45518 2.64845E-14 325.896 -237.934)">
+   <text x="256" y="256"  class="fil1 fnt0">&gt;</text>
+  </g>
+ </g>
+</svg>

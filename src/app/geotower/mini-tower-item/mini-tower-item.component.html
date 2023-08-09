@@ -1,0 +1,85 @@
+<!-- <div class="outer-coin" *ngIf="!layer.maximized">
+    <div class="inner-coin" (dblclick)="toogleLayerFromCoin(layer)">
+        <span style="top:0%; left: 35%; right: 35%; position:absolute; font-size: 30px;" matTooltip="{{layer.name}}" matTooltipClass="mat-custom-tooltip"><b>{{layer.name | slice:0:1}}</b></span>
+    </div>
+    <div class="img-div">
+        <img matTooltip="Maximize" src="/assets/svgs/geotower/icon_maximize.svg" style="height: 10px; width: 10px; margin-top: 5px;" (click)="maximizeLayer(layer)">
+    </div>
+</div> -->
+<div  [ngStyle]="{'width': '165px', 'height': 'layer.height'}" style="position: relative;">
+    <!-- <div class="layer-minimize-div" >
+        <img matTooltip="Minimize" src="/assets/svgs/geotower/icon_maximize.svg" (click)="minimizeLayer(layer)">
+    </div> -->
+    <app-tower-item style="height: 121px;" 
+                [ngStyle]="{'z-index': layerOrder*3}"
+                (isAnyLayerOptionsActive)="layerItemOptActive($event)" 
+                (saveTowerLayer)="saveTowerLayerFun($event)"
+                (layersCount)="layersList.length"
+                
+                [towerWidth]="towerWidth"
+                [towerOptionsWidth]="towerOptionsWidth"
+                [layerOptionsHeight]="layerOptionsHeight"
+                [isGroup]="false" 
+                [isGuest]="isGuest" 
+                [sessionId]="sessionId"
+                [towerId]="towerId"
+                [layer]="layer"
+                [layerOrder]="layerOrder"
+                [layerIndex]="layerIndex"
+                [layersList]="layersList"
+                [isDeleteDisable]="isDeleteDisable"
+                [globalObject]="globalObject"
+                [geoRefOrPreviewClosed]="geoRefOrPreviewClosed"
+                [isGeotowerActive]="isGeotowerActive"
+                [geoRefLayerDataToShow]="geoRefLayerDataToShow"
+                (showPreview)="showPreviewFun($event)"
+                (DragvalueChanged)="barclicked($event)"
+                #towerItems>
+              </app-tower-item>
+</div>
+
+
+<!-- <ul class="circle">
+    <li>
+      <div class="text" style="color: black;">1</div>
+    </li>
+    <li>
+      <div class="text" style="color: black;">2</div>
+    </li>
+    <li>
+      <div class="text" style="color: black;">3</div>
+    </li>
+    <li>
+      <div class="text" style="color: black;">4</div>
+    </li>
+    <li>
+      <div class="text" style="color: black;">5</div>
+    </li>
+    <li>
+      <div class="text" 
+      title="Connection" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;">C</div>
+    </li>
+    <li>
+      <div class="text" title="Specification" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;">S</div>
+    </li>
+    <li>
+      <div class="text" title="Function" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;" >F</div>
+    </li>
+    <li>
+      <div class="text" title="Depicition" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;">D</div>
+    </li>
+    <li>
+      <div class="text" title="Interaction" id="{{layer.name}}" (click) = "showItemPropertyWindow($event, layer, CONNECTION_HEADER)" style="cursor: pointer;">I</div>
+    </li>
+   
+
+  
+    <ul>
+<div class="inner-coin" (dblclick)="toogleLayerFromCoin(layer)">
+        <span style="top: 13%;
+        left: 32%;
+        right: 32%;
+        position: absolute;
+        font-size: 34px;" matTooltip="{{layer.name}}" matTooltipClass="mat-custom-tooltip" ><b>{{layer.name | slice:0:1}}</b></span>
+    </div>
+   -->

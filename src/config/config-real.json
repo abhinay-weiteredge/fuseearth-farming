@@ -1,0 +1,42 @@
+{
+    "geoserver" : {
+        "url" : "https://104.197.36.15:443/geoserver/rest/imports",
+        "workspaceName" : "geomocus-test",
+        "workspaceLocation" : "/opt/geoserver/data_dir/workspaces/geomocus-test",
+        "fileLocation" : "D:/shapeFiles/"
+    },
+    "postgis" : {
+        "url" : "https://104.197.36.15:443/geoserver/rest/imports",
+        "workspace" : "geomocus-test",
+        "Datastore" : "geomocus-test"
+    },
+    "layers" : {
+        "url" : "https://104.197.36.15:443/geoserver/rest/workspaces/"
+    },
+    "layerGroup" : {
+        "url" : "https://104.197.36.15:443/geoserver/rest/workspaces/geomocus-test/layergroups"
+    },
+    "authorization" : "Basic YWRtaW46Z2Vvc2VydmVy",
+    "baseURL" : "https://104.197.36.15:443/geoserver/",
+    "geomocusServer" : {
+      "url" : "https://104.197.36.15:7273/api/workspaces/",
+      "save" : "https://104.197.36.15:7273/api/workspace/save",
+      "layersave" : "https://104.197.36.15:7273/api/layer/save",
+      "layerList" : "https://104.197.36.15:7273/api/layers/"
+    },
+    "createWorkspace" : "https://104.197.36.15:443/geoserver/rest/workspaces/",
+    "localhost" : "https://geomocus-cdef5.firebaseapp.com/",
+    "appurl" : "https://geomocus-cdef5.firebaseapp.com/",
+    "bookmarkurl" : "https://geomocus-cdef5.firebaseapp.com//workspace/",
+    "connectionParameters": {
+        "entry": [
+          {"@key":"host","$":"localhost"},
+          {"@key":"port","$":"5432"},
+          {"@key":"database","$":"gis"},
+          {"@key":"user","$":"geomocus"},
+          {"@key":"passwd","$":"geomocus"},
+          {"@key":"dbtype","$":"postgis"}
+        ]
+    },
+    "google-api" : "AIzaSyCqf1u0ydxU4jeqq3M7tEGgWBg5z6RgPOM"
+  }

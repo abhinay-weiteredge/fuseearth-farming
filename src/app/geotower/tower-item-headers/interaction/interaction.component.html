@@ -1,0 +1,26 @@
+<div #container class="popup interaction-info-container" ngDraggable>
+  <!-- <i  #closer class="close-icon interaction-info-close"></i> -->
+  <button #closer class="interaction-info-close">
+    <img src="/assets/img/close-icon.svg">
+  </button>
+  <h3 class="interaction-info-title">Interaction</h3>
+  <div class="interaction-info-body-container">
+    <!-- <table class="table table-striped interaction-info-table"> -->
+    <table class="table interaction-info-table">
+      <thead>
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Property Title</th>
+        <th scope="col">Property Value</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let interaction of intProperties; index as i">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{interaction.title}} </td>
+        <td>{{interaction.value}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

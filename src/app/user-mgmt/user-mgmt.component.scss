@@ -1,0 +1,544 @@
+@import "../theme.scss";
+
+.user-mgmt-page{
+  color: #FFF;
+ 
+  height: 66%;
+  
+  width: 69.5%;
+  position: absolute;
+    .loadin-status-container{
+        text-align: center;
+        p{
+            margin: 10px 0px;
+        }
+    }
+    .user-table-container{
+        margin: 0;
+        overflow: auto;
+        .user-table{
+            width: 100%;
+            font-size: 14px;
+            border: .5px solid #d0d0d0;
+            .user-table-head{
+                background: $primary-dark-color;
+            }
+            .user-data-container{
+                color: $black-color;
+                
+            }
+            .user-data-container:nth-child(odd){
+                background: #fff;
+            }
+            .user-data-container:nth-child(even){
+                background: #e1e1e1;
+            }
+
+            .name{
+                text-align: center;
+                padding: 3px 0px;
+                border-left: .5px solid #d0d0d0;
+                border-right: .5px solid #d0d0d0;
+                word-break: break-all;
+            }
+            .head{
+                font-weight: 500;
+                white-space: nowrap;
+                padding: 5px;
+            }
+            .ops{
+                min-width: 80px;
+                .edit, .delete{
+                    border: unset;
+                    background: #d0d0d0;
+                    width: 30px;
+                    height: 30px;
+                    line-height: 30px;
+                    margin: 0px 2px;
+                    cursor: pointer;
+                    i{
+                        font-size: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.user-update-screen-bg-layer{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    .user-update-screen-container{
+        height: 80%;
+        width: 80%;
+        margin-left: 10%;
+        margin-top: 20px;
+        box-shadow: 0px 0px 6px 0px #fff;
+        background: #e1e1e1;
+        font-size: 14px;
+        border-radius: 15px;
+        overflow: hidden;
+        .user-update-header-container{
+            display: flex;
+            position: relative;
+            height: 40px;
+            background: $primary-dark-color;
+            color: $white-color;
+            .title{
+            margin: 0;
+            display: flex;
+            width: 100%;
+            padding: 2px 10px;
+            img{
+                margin: 0;
+            }
+            p{
+                margin: 0;
+                line-height: 36px;
+            }
+            }
+            .close-btn{
+            position:absolute;
+            top: 7px;
+            right: 8px;
+            border: unset;
+            border-radius: 7px;
+            cursor: pointer;
+            z-index: 1;
+            }
+        }
+        .user-update-body-container{
+            display: flex;
+            height: calc(100% - 80px);
+            overflow: hidden;
+            padding: 5px 10px;
+        }
+        .user-update-footer-container{
+            display: flex;
+            height: 80px;
+        }
+    }
+    @media (max-width: 650px) {
+        .user-update-screen-container{
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+    .loading-status-container{
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        z-index: 1;
+        .loading-msg{
+            color: $white-color;
+            line-height: 30px;
+            margin-top: 100px;
+            text-align: center;
+        }
+    }
+}
+
+.fields-row-container{
+    width: 100%;
+    display: flex;
+    padding: 0;
+    margin: 16px 0px;
+    .fields-container{
+        margin: 0;
+        width: 100%;
+        padding: 0 5px;
+        position: relative;
+        min-height: 30px;
+        max-height: 30px;
+        input[type=text], input[type=password]{
+            margin: 0;
+            padding: 0px 5px;
+            line-height: 30px;
+            border: unset;
+            border-radius: 5px;
+            width: 100%;
+        }
+        select{
+            border: transparent;
+            border-radius: 5px;
+        }
+        .op-button{
+            background: $primary-dark-color;
+            color: $white-color;
+            border: 2px solid $white-color;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .error{
+            display: block;
+            color: $error-msg-color; // red;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    }
+    .err-msg{
+        color: $error-msg-color; // red;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        margin: 0;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        // text-align: left;
+    }
+}
+.input-box{
+    position: relative;
+    
+    padding-bottom: 10px;
+    width: 100%;
+
+    ::placeholder {
+        color: white;
+        opacity: 1; /* Firefox */
+      }
+  }
+  
+  .input-box i {
+    position: absolute;
+    right: 10px;
+    top:10px;
+    color:#ced4da;
+  
+  }
+  .userdeletecon{
+    width:25%; height:23%;background-color: black; text-align: center; color: white;
+  }
+  .userdeletecon:hover{
+    background-color: red;
+  }
+
+  // ADD USER===========
+
+  .add-user-modal-container{
+    position: absolute;
+    max-height: 80%;
+    min-height: 80%;
+    top:10px;
+    left:10%;
+    background: transparent;
+    z-index: 560; // 1060;
+    
+    .add-user-modal-area{
+      height: 80vh; // 75vh;
+      
+      width: 70vw;
+     
+      .add-user-page-container{
+        border-radius: 20px; // 80px;
+        // display: flex;
+        // text-align: center;
+        background:rgba(226, 226, 226, 1);
+        box-shadow: 5px 10px 18px #888888;
+        overflow: hidden;
+        width: 70%;
+        height: 70%;
+        // padding: 10px;
+        // position: relative;
+        .add-user-header-container{
+          display: flex;
+          position: relative;
+          height: 40px;
+          background: $primary-dark-color;
+          color: $white-color;
+          .title{
+            margin: 0;
+            display: flex;
+            width: 100%;
+            padding: 2px 10px;
+            justify-items: center;
+            align-items: center;
+            img{
+              margin: 0;
+            }
+            p{
+              margin: 0;
+              line-height: 36px;
+            }
+          }
+          .close-btn{
+            position:absolute;
+            top: 7px;
+            right: 8px;
+            border: unset;
+            border-radius: 7px;
+            cursor: pointer;
+            z-index: 1;
+          }
+        }
+        .add-user-body-container{
+          height: calc(100% - 40px);
+          overflow: hidden;
+          padding: 5px 10px;
+        }
+        form{
+            padding: 20px;
+            input{
+                width: 45%;
+                height: 35px;
+                border: none;
+                border-radius: 2px;
+            }
+            select{
+              border: none;
+              border-radius: 2px;
+              width:17%;
+              height: 35px;
+            }
+        }
+      }
+    }
+    @media (max-width: 650px) {
+      .add-user-modal-area{
+        height: 98vh; // 100vh;
+        width: 100vw;
+        margin: 0;
+        .add-user-page-container{
+          border-radius: 0px;
+        }
+      }
+    }
+      
+  }
+  .DataRights_option{
+    position: relative;
+    border: none;
+      border-radius: 2px;
+    .group_img{
+      position:absolute;
+      left:-10px;
+      width: 30px;
+      height: 35px;
+    }
+  }
+  
+
+  .data-management{
+    width:100%;
+    height:200px;
+    border: none;
+      border-radius: 2px;
+    
+    .data-management-header{
+      background-color:$primary-dark-color;
+      padding: 4px;
+    }
+    .data-management-table{
+      color: black;
+      overflow: auto;
+      width: 100%;
+      height: 200px;
+      table{
+        width: 100%;
+      }
+      tr:nth-child(even) {
+        background-color: #d1d1d1;
+      }
+      tr:nth-child(odd) {
+        background-color: rgb(168, 168, 168);
+        
+      }
+       td{
+        
+        img{
+          width: 15px;
+          height: 15px;
+        }
+       }
+    }
+  }
+  .add-user-body-down{
+    margin-top: 70px;
+    #activeStatus{
+      width: 45%;
+      height: 35px;
+      border: none;
+      border-radius: 2px;
+    }
+    button{
+      cursor: pointer;
+      background-color:$primary-dark-color;
+      color: white;
+      width: 45%;
+      height: 35px;
+      border: none;
+      border-radius: 2px;
+    }
+  }
+
+
+  .edit-user-modal-container{
+    position: absolute;
+    max-height: 80%;
+    min-height: 80%;
+    top:10px;
+    left:10%;
+    background: transparent;
+    z-index: 560; // 1060;
+    
+    .edit-user-modal-area{
+      height: 80vh; // 75vh;
+      
+      width: 70vw;
+     
+      .edit-user-page-container{
+        border-radius: 20px; // 80px;
+        // display: flex;
+        // text-align: center;
+        background:rgba(226, 226, 226, 1);
+        box-shadow: 5px 10px 18px #888888;
+        overflow: hidden;
+        width: 70%;
+        height: 70%;
+        // padding: 10px;
+        // position: relative;
+        .edit-user-header-container{
+          display: flex;
+          position: relative;
+          height: 40px;
+          background: $primary-dark-color;
+          color: $white-color;
+          .title{
+            margin: 0;
+            display: flex;
+            width: 100%;
+            padding: 2px 10px;
+            justify-items: center;
+            align-items: center;
+            img{
+              margin: 0;
+            }
+            p{
+              margin: 0;
+              line-height: 36px;
+            }
+          }
+          .close-btn{
+            position:absolute;
+            top: 7px;
+            right: 8px;
+            border: unset;
+            border-radius: 7px;
+            cursor: pointer;
+            z-index: 1;
+          }
+        }
+        .edit-user-body-container{
+          height: calc(100% - 40px);
+          overflow: hidden;
+          padding: 5px 10px;
+        }
+        form{
+            padding: 20px;
+            input{
+                width: 45%;
+                height: 35px;
+                border: none;
+                border-radius: 2px;
+            }
+            select{
+              border: none;
+              border-radius: 2px;
+              width:17%;
+              height: 35px;
+            }
+        }
+      }
+    }
+    @media (max-width: 650px) {
+      .edit-user-modal-area{
+        height: 98vh; // 100vh;
+        width: 100vw;
+        margin: 0;
+        .edit-user-page-container{
+          border-radius: 0px;
+        }
+      }
+    }
+      
+  }
+  // .DataRights_option{
+  //   position: relative;
+  //   border: none;
+  //     border-radius: 2px;
+  //   .group_img{
+  //     position:absolute;
+  //     left:-10px;
+  //     width: 30px;
+  //     height: 35px;
+  //   }
+  // }
+  
+
+  // .data-management{
+  //   width:100%;
+  //   height:200px;
+  //   border: none;
+  //     border-radius: 2px;
+    
+  //   .data-management-header{
+  //     background-color:$primary-dark-color;
+  //     padding: 4px;
+  //   }
+  //   .data-management-table{
+  //     color: black;
+  //     overflow: auto;
+  //     width: 100%;
+  //     height: 200px;
+  //     table{
+  //       width: 100%;
+  //     }
+  //     tr:nth-child(even) {
+  //       background-color: #d1d1d1;
+  //     }
+  //     tr:nth-child(odd) {
+  //       background-color: rgb(168, 168, 168);
+        
+  //     }
+  //      td{
+        
+  //       img{
+  //         width: 15px;
+  //         height: 15px;
+  //       }
+  //      }
+  //   }
+  // }
+  .edit-user-body-down{
+    margin-top: 30px;
+    #approveStatus{
+      width: 45%;
+      height: 35px;
+      border: none;
+      border-radius: 2px;
+    }
+    button{
+      cursor: pointer;
+      background-color:$primary-dark-color;
+      color: white;
+      width: 45%;
+      height: 35px;
+      border: none;
+      border-radius: 2px;
+    }
+    
+    .form-control{
+      width: 100%;
+      height: 75px;
+      }
+     
+  }
+
+  

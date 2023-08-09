@@ -1,0 +1,56 @@
+<div #layeraction class="layer-action" style="height: 35px /*40px*/; width: 100%; position: initial;"
+  (click)="updateTimeStamp();" (mouseenter)="mouseEnter()" (mouseleave)="mouseLeave()">
+  <div class="layer-action-option">
+    <!-- <span [ngClass]="{'hide':previewIsActive}" (click)="showLayer($event)" class="visible-btn" matTooltip="Preview">
+      <img src="/assets/img/layer-icon1_2.svg">
+    </span>
+    <span matTooltip="Zoom To Layer" (click)="zoomToLayer($event)" title="Zoom To Layer"><img src="/assets/img/layer-icon6.svg"></span> -->
+    <!-- <span (click)="showDBFData()" matTooltip="Table" matTooltipClass="mat-custom-tooltip" matTooltipPosition="right">
+      <img src="/assets/svgs/geotower/table.svg">
+    </span>
+    <span matTooltip="Label" matTooltipClass="mat-custom-tooltip" matTooltipPosition="right">
+      <img src="/assets/svgs/geotower/label.svg">
+    </span>
+    <span *ngIf="!isServer" matTooltip="Save to Database" matTooltipClass="mat-custom-tooltip" (click)="saveLayer($event)" matTooltipPosition="right">
+      <img src="/assets/svgs/geotower/save_to_db.svg">
+    </span>
+    <span *ngIf="!isDeleteDisable" class="delete-btn" matTooltip="Delete" matTooltipClass="mat-custom-tooltip" matTooltipPosition="right" (click)="deleteLayer($event)">
+      <img src="/assets/svgs/geotower/delete_layer.svg">
+    </span>
+    <span matTooltip="Group Layer" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left">
+      <img src="/assets/svgs/geotower/group_layer.svg">
+    </span> -->
+    <!-- <span (click)="panToLayer()"  matTooltip="Pan to Layer" matTooltipClass="mat-custom-tooltip" matTooltipPosition="left">
+      <img src="/assets/svgs/geotower/pan_to_layer.svg">
+    </span> -->
+    
+  </div>
+
+  <!-- <div class="new-layer-action-option">
+    <div class="new-layer-action-option-row-1">
+        <span [ngClass]="{'hide':previewIsActive}" (click)="showLayer($event)" class="visible-btn" matTooltip="Preview">
+          <img src="/assets/img/layer-icon1_2.svg">
+        </span>
+        <span matTooltip="Zoom To Layer" (click)="zoomToLayer($event)" title="Zoom To Layer"><img src="/assets/img/layer-icon6.svg"></span>
+        <span *ngIf="!isServer" matTooltip="Save To Database" (click)="saveLayer($event)" title="save Layer"><img src="/assets/img/layer-icon7.svg"></span>
+        <span class="delete-btn" matTooltip="Delete" (click)="deleteLayer($event)"><img src="/assets/img/delete-button.svg"></span>
+    </div>
+    <div class="new-layer-action-option-row-2">
+        <span matTooltip="Label"><img src="/assets/img/layer-icon3.svg"></span>
+        <span matTooltip="Open Group" #opengroup (click)="openGroupEvent($event)" title="Open Group">
+          <img src="/assets/img/layer-icon5.svg">
+        </span>
+        <span (click)="showDBFData($event)" matTooltip="Legend"><img src="/assets/img/layer-icon4a.svg"></span>
+    </div>
+  </div> -->
+  
+</div> 
+<app-dbftable style="display:none"></app-dbftable>
+<ng-template #geotowerItemOptPreviewContent>Preview</ng-template>
+<ng-template #geotowerItemOptLegendContent>Legend</ng-template>
+<ng-template #geotowerItemOptLableContent>Label</ng-template>
+<ng-template #geotowerItemOptDeleteContent>Delete</ng-template>
+<ng-template #geotowerItemOptOpenGroupContent>Open Group</ng-template>
+<ng-template #geotowerItemOptsaveLayerContent>Save To Database</ng-template>
+<ng-template #geotowerItemOptZoomtoLayerContent>Zoom To Layer</ng-template>
+<ng-template #geotowerItemOptSliderContent>Layer Transparency</ng-template>
