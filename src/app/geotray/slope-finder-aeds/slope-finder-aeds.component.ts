@@ -126,7 +126,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
       this.slopefindertool();
     }
 
-    const fileUrl = 'https://firebasestorage.googleapis.com/v0/b/geomocus-qa.appspot.com/o/static_data%2Fvermont_ch_6590.frf?alt=media&token=de4089ce-b2c3-4a95-a84b-751cfd3a2e7c';
+    const fileUrl = 'https://firebasestorage.googleapis.com/v0/b/geomocus-qa.appspot.com/o/static_data%2Fvermontch_utm18n.frf?alt=media&token=887f80d3-808f-4cb8-ba3d-6c3d8fff4fc3';
     this.SlopeAEDSService.getTextFileData(fileUrl).subscribe(
       data => {
         if (!data) {
@@ -192,8 +192,13 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
     this.headerData.EPSGcode = `${this.headerData.authority.trim()}:${this.headerData.hrefsys.trim()}`;
     console.log(this.headerData.EPSGcode, "checkepsgcodeofasciii");
     // Save parsed elevation data
+   
+    this.headerData.hunits = headerData.hunits;
+    this.headerData.vunits = headerData.vunits;
+    console.log(this.headerData.hunits,this.headerData.vunits,"checkhvunits")
     this.elevationData = elevationData;
-    console.log(this.headerData, this.elevationData[2][2], this.elevationData, "checkingheaderdataofhrf")
+    console.log(this.elevationData,"checkelevatiopndataaa")
+    // console.log(this.headerData,this.elevationData[5][2], this.elevationData[15][21],this.elevationData[51][21], this.elevationData, "checkingheaderdataofhrf")
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -399,7 +404,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
   async slopefindertool() {
     // Load Excel data into cache
     // console.log(this.commonService.sloperFinderAEDSpreview(), 'farmingobj')
-    await this.readExcelData();
+    //await this.readExcelData();
     // Create a new vector layer for the line and vertices
     const vectorLayer = new VectorLayer({
       source: new VectorSource(),
@@ -442,7 +447,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
     // Create an array to store the coordinates of the drawn line
     draw.on('drawend', async (event) => {
       // Get the coordinates of the drawn line
-      coordinates = event.feature.getGeometry().getCoordinates();
+      coordinates =  event.feature.getGeometry().getCoordinates();
       // var capturedcords = coordinates.
       console.log(
         coordinates[0],
@@ -459,10 +464,26 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
       //////////////////////////////****Access the ASCII data****////////////////////////
       //****PHASE 1 *////////////////////////////////////////////////////////////////////
       //const m2f_factor = 0.3048
+      // if(this.headerData.hunits === 'meters' && this.headerData.vunits === 'feet'){
+      //   var m2f_factor = 0.30480060960122;
+      // }
+      // if(this.headerData.hunits === 'feet' && this.headerData.vunits === 'meters'){
+      //   var m2f_factor = 1/0.30480060960122;
+      // }
+      // if(this.headerData.hunits && this.headerData.vunits === 'meters' || this.headerData.hunits && this.headerData.vunits === 'feet'  ){
+      //   var m2f_factor = 1;
+      // }
+    //   if ((this.headerData.hunits && this.headerData.vunits === 'meters') || (this.headerData.hunits && this.headerData.vunits === 'feet')) {
+    //     var m2f_factor = 1;
+    // }
+      // if(this.headerData.hunits && this.headerData.vunit != 'meters' || 'feet' ){
+      //   "errormessage to User"
+      // }
+      
       const Res_ASCII = parseFloat(this.headerData.cellsize); //Cellsize of ASCII
-      const m2f_factor = 1;
-      const LLC_ASCIIx = this.headerData.llcx; //Lowerleft corner X coordinate of ASCII
-      const LLC_ASCIIy = this.headerData.llcy; //Lowerleft corner Y coordinate of ASCII
+      const m2f_factor = 0.30480060960122;
+      const LLC_ASCIIx = parseFloat(this.headerData.llcx); //Lowerleft corner X coordinate of ASCII
+      const LLC_ASCIIy = parseFloat(this.headerData.llcy); //Lowerleft corner Y coordinate of ASCII
       const cellsizeft = 328.0839;
       const RCOUNT_ASCII = parseInt(this.headerData.rows); //Nomber Of ROWS in ASCII
       const CCOUNT_ASCII = parseInt(this.headerData.cols); //Number of COLUMNS in ASCII
@@ -485,8 +506,8 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
       const transformed_Coordinates =
         this.basemapService.getTransformedCoordinates(
           [LLC_ASCIIx, LLC_ASCIIy],
-          this.headerData.elevation,
-          this.headerData.elevation
+         this.headerData.EPSGcode,
+         this.headerData.EPSGcode
         );
       const LLC_CS4x = transformed_Coordinates[0];
       const LLC_CS4y = transformed_Coordinates[1];
@@ -503,8 +524,8 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
       const transformed_Coordinates_TRC =
         this.basemapService.getTransformedCoordinates(
           [TRC_ASCIIx, TRC_ASCIIy],
-          this.headerData.elevation,
-          this.headerData.elevation
+         this.headerData.EPSGcode,
+         this.headerData.EPSGcode
         );
       var TRC_CS4x = transformed_Coordinates_TRC[0];
       var TRC_CS4y = transformed_Coordinates_TRC[1];
@@ -542,7 +563,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
       let candIy_CS1 = coordinates[0][1].toFixed(6);
 
 
-      for (let iterationCount = 0; iterationCount < 15; iterationCount++) {
+      for (let iterationCount = 0; iterationCount < 5; iterationCount++) {
         for (let j = 0.5; j <= 1.60; j += 0.5) {
           //     // Your code here
           //     TOLERANCEE = parseFloat(i.toFixed(2));
@@ -552,7 +573,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             this.basemapService.getTransformedCoordinates(
               [candIx_CS1, candIy_CS1],
               this.basemapService.getCurrentBasemap().getView().getProjection(),
-              this.headerData.elevation
+             this.headerData.EPSGcode
             );
           const candIx_CS4 = transformed_candIx_CS1[0];
           const candIy_CS4 = transformed_candIx_CS1[1];
@@ -568,7 +589,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             this.basemapService.getTransformedCoordinates(
               [candFx_CS1, candFy_CS1],
               this.basemapService.getCurrentBasemap().getView().getProjection(),
-              this.headerData.elevation
+             this.headerData.EPSGcode
             );
           const candFx_CS4 = transformed_candFx_CS1[0];
           const candFy_CS4 = transformed_candFx_CS1[1];
@@ -601,13 +622,13 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
           // const caprow1 = RCOUNT_ASCII - row1 + 1;
           // const col1 = Math.floor((candIx_CS1 - LLC_ASCIIx) / Res_ASCII);
           // const capcol1 = col1 + 1;
-          // const CELEVI = this.excelData[caprow1][capcol1];
+          // const CELEVI = this.elevationData[caprow1][capcol1];
           // const CELEVIft = CELEVI / m2f_factor;
           // const row2 = Math.floor((candFy_CS1 - LLC_ASCIIy) / Res_ASCII);
           // const caprow2 = RCOUNT_ASCII - row2 + 1;
           // const col2 = Math.floor((candFx_CS1 - LLC_ASCIIx) / Res_ASCII);
           // const capcol2 = col2 + 1;
-          // const CELEVF = this.excelData[caprow2][capcol2];
+          // const CELEVF = this.elevationData[caprow2][capcol2];
           // const CELEVFft = CELEVF / m2f_factor;
           // console.log(
           //   CELEVI,
@@ -710,7 +731,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
                 GeobonZOC,
                 // NearR,
                 // NearC,
-                // this.excelData[NearR][NearC],
+                // this.elevationData[NearR][NearC],
                 'checkneardirectionscoords'
               );
             }
@@ -719,19 +740,23 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             );
           }
           let DEMCS4_ZOCI_col = Math.floor(
-            (candIx_CS4 - LLC_CS4x) / (Res_CS4 * m2f_factor)
+            (candIx_CS4 - LLC_CS4x) / (Res_CS4)
           );
           let DEMCS4_ZOCI_row = Math.floor(
-            (candIy_CS4 - LLC_CS4y) / (Res_CS4 * m2f_factor)
+            (candIy_CS4 - LLC_CS4y) / (Res_CS4)
           );
+          DEMCS4_ZOCI_row = RCOUNT_ASCII-DEMCS4_ZOCI_row;
+
           let DEMCS4_ZOCF_col = Math.floor(
-            (candFx_CS4 - LLC_CS4x) / (Res_CS4 * m2f_factor)
+            (candFx_CS4 - LLC_CS4x) / (Res_CS4)
           );
           let DEMCS4_ZOCF_row = Math.floor(
-            (candFy_CS4 - LLC_CS4y) / (Res_CS4 * m2f_factor)
+            (candFy_CS4 - LLC_CS4y) / (Res_CS4)
           );
-          const CELEVIN = this.excelData[DEMCS4_ZOCI_col][DEMCS4_ZOCI_row];
-          const CELEVFI = this.excelData[DEMCS4_ZOCF_col][DEMCS4_ZOCF_row];
+          DEMCS4_ZOCF_row = RCOUNT_ASCII-DEMCS4_ZOCF_row;
+
+          const CELEVIN = this.elevationData[DEMCS4_ZOCI_row-1][DEMCS4_ZOCI_col-1];
+          const CELEVFI = this.elevationData[DEMCS4_ZOCF_row-1][DEMCS4_ZOCF_col-1];
           console.log(
             DEMCS4_ZOCI_col,
             DEMCS4_ZOCI_row,
@@ -763,13 +788,13 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             DEMCS4_ZOCF_row > DEMCS4_ZOCI_row ? DEMCS4_ZOCF_row : DEMCS4_ZOCI_row;
           let FINDEMCOL =
             DEMCS4_ZOCF_col > DEMCS4_ZOCI_col ? DEMCS4_ZOCF_col : DEMCS4_ZOCI_col;
-          const INI_ELEV = this.excelData[INIDEMCOL][INIDEMROW];
-          const FIN_ELEV = this.excelData[FINDEMCOL][FINDEMROW];
+          const INI_ELEV = this.elevationData[INIDEMROW-1][INIDEMCOL-1];
+          const FIN_ELEV = this.elevationData[FINDEMROW-1][FINDEMCOL-1];
           for (let i = INIDEMROW; i <= FINDEMROW; i++) {
             for (let j = INIDEMCOL; j <= FINDEMCOL; j++) {
               // Compute current x and y values
-              const currCS4x = LLC_CS4x + j * (Res_CS4 * m2f_factor);
-              const currCS4y = LLC_CS4y + i * (Res_CS4 * m2f_factor);
+              const currCS4x = LLC_CS4x + j * (Res_CS4 );
+              const currCS4y = LLC_CS4y + i * (Res_CS4 );
               currCS4.push([currCS4x, currCS4y]);
               // Compute GeobonZOC indexes for current x and y values
               const GeobonZOC_Col_CurrX = Math.floor((currCS4x - candIx_CS4) / GeobonRes);
@@ -784,8 +809,8 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
                 if (GeobonZOC_Row_CurrY === geobonZOC_Row && GeobonZOC_Col_CurrX === geobonZOC_Col) {
                   console.log("checkifconditionnnnn")
                   DEM_ZOC_CS4.push([j, i]);
-                  DEM_ZOC_CS4_ELEV.push(this.excelData[j][i]);
-                  ELEV_DIFF.push(Math.abs(this.excelData[j][i] - INI_ELEV));
+                  DEM_ZOC_CS4_ELEV.push(this.elevationData[i-1][j-1]);
+                  ELEV_DIFF.push(Math.abs(this.elevationData[i-1][j-1] - INI_ELEV)*m2f_factor);
                   INI_DEM_DIST.push(Math.sqrt(
                     Math.pow(i - INIDEMROW, 2) +
                     Math.pow(j - INIDEMCOL, 2)
@@ -796,6 +821,7 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
               }
             }
           }
+          console.log(ELEV_DIFF,"checkelevationdifference")
 
           //PHASE 4 
           //Perform slope finding analysis within DEM_ZOC_CS4
@@ -816,10 +842,14 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
           resultsString +=
             `GeobonZOC Array List\n` +
             `GeobonZOC: ${GeobonZOCString}\n` +
+            `GeobonRes: ${GeobonRes}\n` +
             `\n` +
             `User's Initial Row and Column\n` +
             `INIDEMROW: ${INIDEMROW}\n` +
             `INIDEMCOL: ${INIDEMCOL}\n` +
+            `FINDEMROW: ${FINDEMROW}\n` +
+            `FINDEMCOL: ${FINDEMCOL}\n` +
+            `LLC_CS4x: ${Threshold}\n` +
             `DEM_ZOC_CS4 array list\n` +
             `DEM_ZOC_CS4: ${DEM_ZOC_CS4String}\n` +
             `Distance between Initial Row Column and DEM_ZOC_CS4 array list  \n` +
@@ -836,8 +866,6 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             `\n` +
             `Res_CS4: ${Res_CS4}\n` +
             `FIN_ELEV: ${FIN_ELEVString}\n` +
-            `FINDEMROW: ${FINDEMROW}\n` +
-            `FINDEMCOL: ${FINDEMCOL}\n` +
             `candIx_CS4: ${candIx_CS4}\n` +
             `candIy_CS4: ${candIy_CS4}\n` +
             `candFx_CS4: ${candFx_CS4}\n` +
@@ -866,12 +894,12 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
             const j = correspondingPoint[0];
             const i = correspondingPoint[1];
             console.log(`The corresponding point in DEM_ZOC_CS4 array is [${j}, ${i}].`, demZOC_i);
-            const TLRNC_currCS4x = LLC_CS4x + j * (Res_CS4 * m2f_factor);
-            const TLRNC_currCS4y = LLC_CS4y + i * (Res_CS4 * m2f_factor);
+            const TLRNC_currCS4x = LLC_CS4x + j * (Res_CS4 );
+            const TLRNC_currCS4y = LLC_CS4y + i * (Res_CS4 );
             const TLRNC_transformed_currCS1 =
               this.basemapService.getTransformedCoordinates(
                 [TLRNC_currCS4x, TLRNC_currCS4y],
-                this.headerData.elevation,
+               this.headerData.EPSGcode,
                 this.basemapService
                   .getCurrentBasemap()
                   .getView()
