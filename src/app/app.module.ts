@@ -92,6 +92,7 @@ import { SlopeFinderComponent } from './geotray/slope-finder/slope-finder.compon
 import { BufferToolComponent } from './geotray/buffer-tool/buffer-tool.component';
 import { LongPressDirective } from './geotower/tower-item/long-press.directive';
 import { SlopeFinderAEDSComponent } from './geotray/slope-finder-aeds/slope-finder-aeds.component';
+import { ResultModalComponent } from './result-modal/result-modal.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -183,6 +184,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     BufferToolComponent,
     LongPressDirective,
     SlopeFinderAEDSComponent,
+    ResultModalComponent,
     
   ],
   entryComponents: [],
