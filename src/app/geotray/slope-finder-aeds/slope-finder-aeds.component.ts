@@ -98,12 +98,12 @@ export class SlopeFinderAEDSComponent implements OnChanges, OnInit {
   authority: string;
   upSlopePCTtolerance = 0.01;
   dnSlopePCTtolerance = 0.25; 
-  searchableSwath = [0.5, 1.0, 1.5];
-  maxLoops = 10;
+  searchableSwath = [0.5, 1.0, 1.5, 2.0, 2.5];
+  maxLoops = 20;
   SUI: { [key: string]: any} = {};
-  stopTheRun: number;
   upSlopeInd: number;
-  LineSegment: any;
+  SearchDir_CS4: any;
+  SearchDir_CS1: any;
   unitStd_multiplier4V = 0.30480060960122;
   upSlope: number;
   GeobonZOC_Length: any;
@@ -142,7 +142,7 @@ ngOnInit(): void {
 			// Fetching from URL and caching
 			this.fileData = data;
 			this.SlopeAEDSService.cacheFileData(data);
-			console.log(data, "checkfrfdata")
+			//console.log(data, "checkfrfdata")
 			// Parse header and elevation data
 			this.parseData(data);
 		}
@@ -199,33 +199,44 @@ private parseData(data: string): void {
 	//below are derived variables, not direct inputs from FRF 
 	
 	//unitStd_multiplier4V = multiplication factor for Vertical to standardize units across
-// 	if(this.DEM.hunits === 'meters' && this.DEM.vunits === 'feet'){
-// 		this.unitStd_multiplier4V = 0.30480060960122;
-// 		}
-// 	if(this.DEM.hunits === 'feet' && this.DEM.vunits === 'meters'){
-// 		this.unitStd_multiplier4V = 1/0.30480060960122;
-// 	}
-// 	if(this.DEM.hunits === this.DEM.vunits ){
-// 		this.unitStd_multiplier4V = 1;
-// 	}
-  console.log("MSG: Print unitStd_multiplier4V value ",this.unitStd_multiplier4V)
+ 	if((DEM.hunits.trim() === 'meters')  && (DEM.vunits.trim() === 'feet')){
+ 		this.unitStd_multiplier4V = 0.30480060960122;
+		//console.log("MSG: In parseData, CONDITION met, this.unitStd_multiplier4V", this.unitStd_multiplier4V)
+	}
+	if((DEM.hunits.trim() === 'meters')  && (DEM.vunits.trim() === '')){
+		this.unitStd_multiplier4V = 0.30480060960122;
+	   //console.log("MSG: In parseData, CONDITION met, this.unitStd_multiplier4V", this.unitStd_multiplier4V)
+    }
+	if(this.DEM.hunits.trim() === 'feet' && this.DEM.vunits.trim() === 'meters'){
+ 		this.unitStd_multiplier4V = 1/0.30480060960122;
+ 	}
+ 	if(this.DEM.hunits.trim() === this.DEM.vunits.trim()){
+ 		this.unitStd_multiplier4V = 1;
+ 	}
+  	
+	console.log("MSG: HUNITS, VUNITS, Conversion Factor ", this.DEM.hunits, this.DEM.vunits, this.unitStd_multiplier4V)
+
 	this.DEM.TRC_ASCIIx = (parseFloat(this.DEM.LLC_ASCIIx) + (parseFloat(this.DEM.CCOUNT_ASCII) + 1) * parseFloat(this.DEM.Resolution)).toString();
 	this.DEM.TRC_ASCIIy = (parseFloat(this.DEM.LLC_ASCIIy) + (parseFloat(this.DEM.RCOUNT_ASCII) + 1) * parseFloat(this.DEM.Resolution)).toString();
 	
-
 	//Transform LLC_ASCII from User Provided System (CS3) into CS4 and store result as LLC_CS4. Currently CS3 is suspended.
 	//  this.DEM.LLC_CS4 = this.basemapService.getTransformedCoordinates([this.DEM.LLC_ASCIIx, this.DEM.LLC_ASCIIy],this.DEM.CS4, this.DEM.CS4); 
 	this.DEM.LLC_CS4x = this.DEM.LLC_ASCIIx;
 	this.DEM.LLC_CS4y = this.DEM.LLC_ASCIIy;
- 	 
+ 	
 	//Transform TRC_ASCII into CS4 and store result as TRC_CS4
 	//  this.DEM.TRC_CS4 = this.basemapService.getTransformedCoordinates([this.DEM.TRC_ASCIIx, this.DEM.TRC_ASCIIy],this.DEM.CS4,this.DEM.CS4);
 	this.DEM.TRC_CS4x = this.DEM.TRC_ASCIIx;
 	this.DEM.TRC_CS4y = this.DEM.TRC_ASCIIy;
 
-	this.DEM.Res_CS4 = ((parseFloat(this.DEM.TRC_CS4y) - parseFloat(this.DEM.LLC_CS4y)) /parseFloat(this.DEM.RCOUNT_ASCII + 1));
 	//this can be a gross approximation, need to fix this in the future based on what coordinate system CS4 would be.
+	this.DEM.Res_CS4 = ((parseFloat(this.DEM.TRC_CS4y) - parseFloat(this.DEM.LLC_CS4y)) /parseFloat(this.DEM.RCOUNT_ASCII + 1));
+	
 
+	this.printArray2Console("Geometry of LLC Initially! ",[this.DEM.LLC_CS4x, this.DEM.LLC_CS4y]);
+	this.printArray2Console("Geometry of TRC Initially! ",[this.DEM.TRC_CS4x, this.DEM.TRC_CS4y]);
+	this.printArray2Console("Resolution of DEM!", [this.DEM.Res_CS4]);
+	
 	//VINEET: Please put checks on every variable and after every variable is read in accurately, set a "go-AEDS" to 1. else make it 0.
 }
 
@@ -354,14 +365,10 @@ calculateRatioFromSlopePercentage(slopePercentage) {
 	for (let i = 1; i <= 100; i++) {
 		// Calculate the slope ratio for the current number
 		const slopeRatioo = +(slopePercentage * i).toFixed(2);
-		console.log(slopeRatioo, 'checkinggg*i');
 		const ratio = Math.floor(slopeRatioo) + ':' + i;
-		console.log(ratio, 'checkingggfloor');
-
+		
 		// Calculate the difference between the slope ratio and the result
 		const diff = Math.abs(slopeRatioo - Math.floor(slopeRatioo)).toFixed(2);
-
-		console.log(diff, 'checkingggdif');
 
 		// Add the ratio and difference to the candidates array
 		ratioCandidates.push({ ratio, diff });
@@ -413,48 +420,53 @@ captureSlopeDir() {
 
 	// Create an array to store the coordinates of the drawn line
 	draw.on('drawend', async (event) => {
-		this.SUI.ILV_CS1 = event.feature.getGeometry().getCoordinates();
-		console.log("MSG: User Line (ILV) geometry captured from screen!")
+		this.SearchDir_CS1 = event.feature.getGeometry().getCoordinates();
+		this.printArray2Console("Geometry captured from screen in CS1!", this.SearchDir_CS1);
+		this.loopcounter = 0;
 		this.SUIvaluesinCS4();
 		//this is the start of the slope finding algorithm.
 		if (this.upSlopeInd ===1) {
-			this.resultsString += `User chose an upslope direction, not running the tool for upslope delineation\n`;
+			console.log("MSG: User chose an upslope direction, not running the tool for upslope delineation");
 		} else {
 			this.slopefindertool();
 		}
 	});
 }
 
+printArray2Console(indic, Ary) {
+	let lAry = Ary;
+	console.log("DEBUG-MSG", indic, " ", lAry);
+	//lAry.forEach((value) => {
+	//	console.log("PRINT-ARRAY", indic, " ", value);
+	// });
+}
+
 SUIvaluesinCS4() {
 	//computer all Initial User Line vertices and parameters in CS4
-	console.log("MSG: Entered SUIvaluesinCS4, computing ILV parameters needed for the run")
-		 
+			
 	if (this.loopcounter === 0) {
-		console.log("MSG: Entered into SUIvaluesinCS4 function loopcounter")
-		this.SUI.ILV_I_CS4 = this.basemapService.getTransformedCoordinates([this.SUI.ILV_CS1[0][0], this.SUI.ILV_CS1[0][1]],this.DEM.CS1, this.DEM.CS4); 
-		this.SUI.ILVIx_CS4 = this.SUI.ILV_I_CS4[0];
-		this.SUI.ILVIy_CS4 = this.SUI.ILV_I_CS4[1];
-		console.log("MSG: Transformed SUIvaluesinCS4 values are",this.SUI.ILVIx_CS4,this.SUI.ILVIy_CS4)
+		//console.log("MSG: Entered into SUIvaluesinCS4 function loopcounter", this.loopcounter);
+		//Transform User Line vertices into CS4
+		const IP_CS4 = this.basemapService.getTransformedCoordinates([this.SearchDir_CS1[0][0], this.SearchDir_CS1[0][1]], this.DEM.CS1, this.DEM.CS4); 
+		const FP_CS4 = this.basemapService.getTransformedCoordinates([this.SearchDir_CS1[1][0], this.SearchDir_CS1[1][1]], this.DEM.CS1, this.DEM.CS4); 
+	    this.SearchDir_CS4 =  [ [IP_CS4[0],IP_CS4[1]],[FP_CS4[0],FP_CS4[1]] ];
+		//this.printArray2Console("Geometry transformed to CS4 STEP2", this.SearchDir_CS4);
+	}
 	
-		//Transform Final User Line vertices into CS4
-		this.SUI.ILV_F_CS4 = this.basemapService.getTransformedCoordinates([this.SUI.ILV_CS1[1][0], this.SUI.ILV_CS1[1][1]],this.DEM.CS1, this.DEM.CS4); 
-		this.SUI.ILVFx_CS4 = this.SUI.ILV_F_CS4[0];
-		this.SUI.ILVFy_CS4 = this.SUI.ILV_F_CS4[1];
-	} 
-
-	this.SUI.ILV_CS4 = [[this.SUI.ILVIx_CS4,this.SUI.ILVIy_CS4],[this.SUI.ILVFx_CS4,this.SUI.ILVFy_CS4]];
-	this.SUI.DEM_I_col = Math.floor((this.SUI.ILVIx_CS4 - this.DEM.LLC_CS4x) / (this.DEM.Res_CS4));
-	this.SUI.DEM_I_row = this.DEM.RCOUNT_ASCII - Math.floor((this.SUI.ILVIy_CS4 - this.DEM.LLC_CS4y) / (this.DEM.Res_CS4));
-	this.SUI.DEM_F_col = Math.floor((this.SUI.ILVFx_CS4 - this.DEM.LLC_CS4x) / (this.DEM.Res_CS4));
-	this.SUI.DEM_F_row = this.DEM.RCOUNT_ASCII - Math.floor((this.SUI.ILVFy_CS4 - this.DEM.LLC_CS4y) / (this.DEM.Res_CS4));
-	this.SUI.ILV_DEM = [[this.SUI.DEM_I_col],[this.SUI.DEM_I_row],[this.SUI.DEM_F_col],[this.SUI.DEM_F_row]];
+	this.SUI.DEM_I_col = Math.floor((this.SearchDir_CS4[0][0] - this.DEM.LLC_CS4x) / (this.DEM.Res_CS4));
+	this.SUI.DEM_I_row = this.DEM.RCOUNT_ASCII - Math.floor((this.SearchDir_CS4[0][1] - this.DEM.LLC_CS4y) / (this.DEM.Res_CS4));
+	this.SUI.DEM_F_col = Math.floor((this.SearchDir_CS4[1][0] - this.DEM.LLC_CS4x) / (this.DEM.Res_CS4));
+	this.SUI.DEM_F_row = this.DEM.RCOUNT_ASCII - Math.floor((this.SearchDir_CS4[1][1] - this.DEM.LLC_CS4y) / (this.DEM.Res_CS4));
+	this.SUI.ILV_DEM = [[this.SUI.DEM_I_col,this.SUI.DEM_I_row],[this.SUI.DEM_F_col,this.SUI.DEM_F_row]];
 	this.SUI.IElev = this.elevationData[this.SUI.DEM_I_row - 1][this.SUI.DEM_I_col - 1];
 	this.SUI.FElev = this.elevationData[this.SUI.DEM_F_row - 1][this.SUI.DEM_F_col - 1];
 	this.upSlopeInd = this.checkInclineDir(this.SUI.DEM_I_col,this.SUI.DEM_I_row,this.SUI.DEM_F_col,this.SUI.DEM_F_row,this.SUI.IElev,this.SUI.FElev,this.upSlopePCTtolerance)
 	
+	//this.printArray2Console("Geometry of LLC in SUIValues! ",[this.DEM.LLC_CS4x, this.DEM.LLC_CS4y]);
+
 	this.resultsString +=
-		`User Line Vertices Lat, Long: ${this.SUI.ILV_CS1}\n`+
-		`User Line Vertices Eastings, Northings: ${this.SUI.ILV_CS4}\n`+
+		`User Line Vertices Lat, Long: ${this.SearchDir_CS1}\n`+
+		`User Line Vertices Eastings, Northings: ${this.SearchDir_CS4}\n`+
 		`User Line Vertices DEM Rows, Cols: ${this.SUI.ILV_DEM}\n`+
 		`User Line Vertices elevation values, initial:  ${this.SUI.IElev}+ final: ${this.SUI.FElev}\n`+
 		`User Line Vertices Rows, Cols: ${this.SUI.ILV_DEM}\n`+
@@ -471,96 +483,99 @@ checkInclineDir(Icol,Irow,Fcol,Frow,Ielev,Felev,tol) {
 	this.SUI.ILV_Slope = ((Felev-Ielev)* this.unitStd_multiplier4V)/this.SUI.ILV_Distance;
 	console.log("MSG: Leaving checkInclineDir, finished checking slope incline direction")
 	if (this.SUI.ILV_Slope > tol) return 1;
-	if (this.SUI.ILV_Slope >= tol) return 0;
+	if (this.SUI.ILV_Slope <= tol) return 0;
 }
 
 slopefindertool() {
 	console.log("MSG: Entered slopefindertool, starting delineating the downward slope path")
-	
- 	this.pointFound = -1;//-1 for suitable point for desired slope not found yet; 0 or more (slope array index) for suitable point for desired slope found, quit!
-	this.loopcounter = 0;//count for while loops
-	this.stopTheRun = 0;//0 if search is still on, 1 if search is closed
-	this.upSlopeInd = 0; //0 for downslope, 1 for upslope
-	this.closeEnough = 0; //1 if AEDS finish point distance is close enough (in the same 'DEM-cell' as the user final point). 0 if there is more AEDS work to do. 
-	this.LineSegment = [];
-	this.LineSegment = this.SUI.ILV_CS4;
-	console.log("MSG: In slopefindertool, finished resetting all checks and variables!")
-	
-	while (this.stopTheRun === 0) {
-		this.geobonParams(this.LineSegment);			
+	let stopTheRun = 0;//0 if search is still on, 1 if search is closed
+	this.resetSearchChecks();
+	this.printArray2Console("Geometry of Line Segment before WHILE",[this.SearchDir_CS4]);
+	while (stopTheRun < 1) {
+		this.loopcounter++;
+		this.geobonParams(this.SearchDir_CS4);			
 		let t = 0;
 		while (this.pointFound <= -1) {
 			if (t < this.searchableSwath.length) {
-				console.log("MSG: In slopefindertool, starting to build GeobonZOC, DEMZOC and other parameters")
+				//console.log("MSG: In slopefindertool, starting to build GeobonZOC, DEMZOC and other parameters")
 				this.buildGeobonZOC(this.Geobon.CANDFr_LTOP, this.Geobon.CANDFc_LTOP, this.searchableSwath[t]);
 			} else {
-				this.stopTheRun = 1;
-				console.log("MSG: In slopefindertool, desired downward slope not found along this direction, please select a different value for slope or chose another direction")
+				stopTheRun = 1;
+				console.log("MSG: In slopefindertool, desired downward slope not found along this direction, please select a different value for slope or chose another direction @ thresolhd,", this.searchableSwath[t]);
 				break;
 			}
-			
 			if (this.GeobonZOC_Length > 0) {
 				this.buildDEMZOC(this.SUI.DEM_I_row,this.SUI.DEM_I_col,this.SUI.DEM_F_row,this.SUI.DEM_F_col,this.GeobonZOC_Length);
 			} else {
-				this.stopTheRun = 1;
-				console.log("MSG: In slopefindertool,GeobonZOC_Length is Null or 0, DEMZOC and other parameters won't be built. Quitting!")
+				stopTheRun = 1;
+				console.log("MSG: In slopefindertool,GeobonZOC_Length is Null or 0, DEMZOC and other parameters won't be built. Quitting!@ thresolhd,", this.searchableSwath[t]);
 				break;
 			}
-			console.log("MSG:this.Geobon.DEM_ZOC_Indexes ",this.Geobon.DEM_ZOC_Indexes,this.Geobon.DEM_ZOC_Indexes.length)
+			console.log("MSG: IN slopefindertool, just passed the GZL check", this.GeobonZOC_Length);
 			if (this.Geobon.DEM_ZOC_Indexes.length > 0) {
 				this.Geobon.FINAL_SLOPE = this.Geobon.DEM_ZOC_ElevDiffs.map((element, index) => element / this.Geobon.DEM_ZOC_CandDistances[index]);
-				console.log("MSG:this.Geobon.FINAL_SLOPE",this.Geobon.FINAL_SLOPE)
-        this.pointFound = this.findPoint();
+		        this.pointFound = this.findPoint();
+				if (this.pointFound >= 0) {
+					stopTheRun = 1;
+					console.log("MSG: In Slopefinder, this.pointFound @ thresolhd,", this.searchableSwath[t], this.pointFound);
+					break;
+				} else {
+					console.log("MSG: In slopefindertool, downward slope point not found @ ", this.searchableSwath[t],"! increasing the swath for further search");
+					t++;
+				}
 			} else {
-				this.stopTheRun = 1;
+				stopTheRun = 1;
 				console.log("MSG: In slopefindertool, DEMZOC_Length is Null or 0, downward slope cannot be delineated.  Quitting!")
 				break;
 			}
-      console.log("MSG: In slopefindertool, downward slope point not found @ ", this.searchableSwath[t],"! increasing the swath for further search");
-      t++;
 		}
-    if(this.pointFound >= 0) {
-      console.log("MSG: In slopefindertool, found the ", this.loopcounter, "downward slope point! and the index in DemZOC is ", this.pointFound);
-      this.LineSegment[0][0] = this.SUI.ILV_CS1[0][0];
-      this.LineSegment[0][1] = this.SUI.ILV_CS1[0][1];
-      this.closeEnough = this.distanceCheck();
-	  console.log("MSG: Closeenough value",this.SUI.ILVIx_CS4, this.SUI.ILVIy_CS4)
-      const IntermStepCS1 = this.basemapService.getTransformedCoordinates([this.SUI.ILVIx_CS4, this.SUI.ILVIy_CS4], this.DEM.CS4, this.DEM.CS1);
-	  console.log("MSG: Closeenough value after Closeenough ",IntermStepCS1)
-	  this.LineSegment[1][0] = IntermStepCS1[0];
-      this.LineSegment[1][1] = IntermStepCS1[1];
-	  console.log("MSG: Linesegment values",this.LineSegment)
-      this.drawTheRed(this.LineSegment);
-    } 
+		//this.printArray2Console("Checking GeobonZoc Geometry", this.Geobon.GeobonZOC);
+		//this.printArray2Console("Checking DEMZOC Geometry", this.Geobon.DEM_ZOC_Indexes);
+		//this.printArray2Console("Checking Search Direction Geometry WHILE", this.SearchDir_CS4);
+		if(this.pointFound === -1) {
+			console.log("MSG: In slopefindertool, downward slope point not found, reached maximum swath, not searching further!");
+			stopTheRun = 1;
+			break;
+		} else {
+			console.log("MSG: In slopefindertool, found the downward slope point! and the index in DemZOC is ", this.pointFound, "@ loopcounter", this.loopcounter);
+			//this.printArray2Console("Geometry of DEMZOC STEP3",this.Geobon.DEM_ZOC_Indexes);
+			this.closeEnough = this.drawnNdistCheck(this.pointFound);
+		}
+
 		if (this.closeEnough === 1) {
-			this.stopTheRun = 1;
+			stopTheRun = 1;
 			console.log("MSG: Leaving slopefindertool, finished finding the next", this.loopcounter, "th downward slope point finding");
-      		break;
+			break;
 		} else {
 			this.SUIvaluesinCS4();
 			//this is the repeat of the slope finding algorithm.
 			if (this.upSlopeInd ===1) {
 				console.log("Hit upslope, quitting the search. Please choose a new direction to search");
-				this.stopTheRun = 1;
+				stopTheRun = 1;
 				break;
 			} else {
-				this.pointFound = -1;
-				this.loopcounter = 0;
-				this.stopTheRun = 0;
-				this.upSlopeInd = 0;
-				this.closeEnough = 0;
-				this.LineSegment = [];
-				this.LineSegment = this.SUI.ILV_CS4;
-				this.loopcounter++;
+				stopTheRun = 0;
+				this.resetSearchChecks();
+
 				console.log("MSG: In slopefindertool, looping again (", this.loopcounter, "), finished resetting all checks and variables again!")
 			}
-		}		
+		}
+				
 		if (this.loopcounter > this.maxLoops) {
 			console.log("Hit maxmimum loops, quitting the search. Please choose a new direction to search");
-			this.stopTheRun = 1;
+			stopTheRun = 1;
 			break;
 		}
 	}
+	
+}
+
+
+resetSearchChecks() {
+	this.pointFound = -1;//-1 for suitable point for desired slope not found yet; 0 or more (slope array index) for suitable point for desired slope found, quit!
+	this.loopcounter = 0;//count for while loops
+	this.upSlopeInd = 0; //0 for downslope, 1 for upslope
+	this.closeEnough = 0; //1 if AEDS finish point distance is close enough (in the same 'DEM-cell' as the user final point). 0 if there is more AEDS work to do. 
 }
 	 
 geobonParams(LSV) {
@@ -576,7 +591,7 @@ geobonParams(LSV) {
 }
 	
 buildGeobonZOC(CANDFr_LTOP, CANDFc_LTOP, thresh) {
-	console.log("MSG: Entered buildGeobonZOC, developing the GeobonZOC parameters")
+	//console.log("MSG: Entered buildGeobonZOC, developing the GeobonZOC parameters")
 	const path = this.matrixpath.path;
 	this.Geobon.GeobonZOC = [];
 	for (const [pathRow, pathCol] of path) {
@@ -590,7 +605,7 @@ buildGeobonZOC(CANDFr_LTOP, CANDFc_LTOP, thresh) {
 		}
 	}
 	this.GeobonZOC_Length = this.Geobon.GeobonZOC.length;
-	console.log("MSG: Leaving buildGeobonZOC, finished developing the GeobonZOC parameters")
+	//console.log("MSG: Leaving buildGeobonZOC, finished developing the GeobonZOC parameters")
 }
 
 buildDEMZOC(Irow,Icol,Frow,Fcol,GZL) {
@@ -602,12 +617,14 @@ buildDEMZOC(Irow,Icol,Frow,Fcol,GZL) {
 	this.Geobon.DEM_ZOC_ElevDiffs = [];
 	this.Geobon.DEM_ZOC_CandDistances = [];
 
-	const tIrow = Irow < Frow ? Irow : Frow;  
-	const tIcol = Icol < Fcol ? Icol : Fcol;
-	const tFrow = Frow > Irow ? Frow : Irow;
-	const tFcol = Fcol > Icol ? Fcol : Icol;
+	let tIrow = Irow < Frow ? Irow : Frow;  
+	let tIcol = Icol < Fcol ? Icol : Fcol;
+	let tFrow = Frow > Irow ? Frow : Irow;
+	let tFcol = Fcol > Icol ? Fcol : Icol;
 	
-	console.log("MSG: In buildDEMZOC, running loop to building DEMZOC between rows ", tIrow, " to ", tFrow, " and columns ", tIcol, " to ", tFcol)
+	console.log("MSG: In buildDEMZOC, running loop to building DEMZOC between rows ", tIrow, " to ", tFrow, " and columns ", tIcol, " to ", tFcol);
+	console.log("DEM Res CS4", this.DEM.Res_CS4);
+
 	for (let i = tIrow; i <= tFrow; i++) {
 		for (let j = tIcol; j <= tFcol; j++) {
 			// console.log("MSG: In buildDEMZOC, running loop i =", i, "j=", j);
@@ -616,82 +633,97 @@ buildDEMZOC(Irow,Icol,Frow,Fcol,GZL) {
 			const currCS4y = parseFloat(this.DEM.LLC_CS4y) + i * parseFloat(this.DEM.Res_CS4);
 			
 			// Compute GeobonZOC indexes for current x and y values
-			const GeobonZOC_CurrCol = Math.floor((currCS4x - this.SUI.ILVIx_CS4) / this.Geobon.GeobonRes);
-			const GeobonZOC_CurrRow = Math.floor((currCS4y - this.SUI.ILVIy_CS4) / this.Geobon.GeobonRes);
+			const GeobonZOC_CurrCol = Math.floor((currCS4x - this.SearchDir_CS4[0][0]) / this.Geobon.GeobonRes);
+			const GeobonZOC_CurrRow = Math.floor((currCS4y - this.SearchDir_CS4[0][1]) / this.Geobon.GeobonRes);
 	
 			// Loop through GeobonZOC 2D array
 			// console.log("MSG: In buildDEMZOC, running loop i =", i, "j=", j, "starting the check against ", GZL, "indexes in GeobonZOC");
 			for (let k = 0; k < GZL; k++) {
-				console.log("MSG: In buildDEMZOC, running loop i =", i, "j=", j, "and checking against the ", k, "th index in GeobonZOC");
+				//console.log("MSG: In buildDEMZOC, running loop i =", i, "j=", j, "and checking against the ", k, "th index in GeobonZOC");
 				const geobonZOC_Row = this.Geobon.GeobonZOC[k][0];
 				const geobonZOC_Col = this.Geobon.GeobonZOC[k][1];
-				// console.log("MSG: In buildDEMZOC, checking i, j, k",i,j,k);
+				//console.log("MSG: In buildDEMZOC, checking i, j, k",i,j,k);
 				// Check if current coordinates match any pair in GeobonZOC
 				if (GeobonZOC_CurrRow == geobonZOC_Row && GeobonZOC_CurrCol == geobonZOC_Col) {
-					console.log("MSG: In buildDEMZOC, found matching row and column of DEM " , i, j, "against the GeobonZOC index", k);
+					//console.log("MSG: In buildDEMZOC, found matching row and column of DEM " , i, j, "against the GeobonZOC index", k);
 					this.Geobon.DEM_ZOC_Indexes.push([i, j]);
-					// Add (i, j) pair to DEM_ZOC_CS4
-					// this.Geobon.DEM_ZOC_ElevDiffs.push(Math.abs(this.elevationData[i - 1][j - 1] - (this.SUI.IElev)) * this.unitStd_multiplier4V);
-					// this.Geobon.DEM_ZOC_CandDistances.push(Math.sqrt(Math.pow(i - Irow, 2) + Math.pow(j - Icol, 2)) * this.DEM.Res_CS4);
+					this.Geobon.DEM_ZOC_Eelevations.push(this.elevationData[i - 1][j - 1]);
+					this.Geobon.DEM_ZOC_ElevDiffs.push(Math.abs(this.elevationData[i - 1][j - 1] - (this.SUI.IElev)) * this.unitStd_multiplier4V);
+					this.Geobon.DEM_ZOC_CandDistances.push(Math.sqrt(Math.pow(i - Irow, 2) + Math.pow(j - Icol, 2)) * parseFloat(this.DEM.Res_CS4));
 				} 
 			}
 		}
 	}
-	console.log ("MSG: Exit out of the DemZOC function after building it")
-//   console.log ("MSG: In buildDEMZoc, test priting this.Geobon.DEM_ZOC_Indexes", this.Geobon.DEM_ZOC_Indexes,this.Geobon.DEM_ZOC_Indexes.length);
-	for(let m = 0; m < this.Geobon.DEM_ZOC_Indexes.length; m++) {
-	  	let i = this.Geobon.DEM_ZOC_Indexes[m][0];
-	  	let j = this.Geobon.DEM_ZOC_Indexes[m][1];
-    	console.log ("MSG: In buildDEMZoc, test priting this.Geobon.DEM_ZOC_Indexes for loop m ",m);
-		this.Geobon.DEM_ZOC_Eelevations.push(this.elevationData[i - 1][j - 1]);
-		this.Geobon.DEM_ZOC_ElevDiffs.push(Math.abs(this.elevationData[i - 1][j - 1] - (this.SUI.IElev)) * this.unitStd_multiplier4V);
-		this.Geobon.DEM_ZOC_CandDistances.push(Math.sqrt(Math.pow(i - Irow, 2) + Math.pow(j - Icol, 2)) * parseFloat(this.DEM.Res_CS4));
-	}
-	console.log("MSG: Check Elevatin differences and Cand =Distances",this.Geobon.DEM_ZOC_ElevDiffs,this.Geobon.DEM_ZOC_CandDistances)
+	
 }
 	
 findPoint() {
-	let min_difference = Infinity;
-  let demZOC_i = -1;
-	for (let index = 0; index < this.Geobon.FINAL_SLOPE.length; index++) {
-		const FIN_USER_SLPT_DIFF = Math.abs(this.Geobon.FINAL_SLOPE[index] - this.slopePercentage);
-		min_difference = Math.min(min_difference, FIN_USER_SLPT_DIFF);
-		const PCT_Error = min_difference / this.slopePercentage;
-		if (PCT_Error <= this.dnSlopePCTtolerance) {
-      demZOC_i = index;
-			return demZOC_i;
-		} else{
-			return demZOC_i;
+ 	for (let index = 0; index < this.Geobon.FINAL_SLOPE.length; index++) {
+		if (Number.isNaN(this.Geobon.FINAL_SLOPE[index])) {
+			
+		} else {
+			const PCT_Error = (Math.abs(this.Geobon.FINAL_SLOPE[index] - this.slopePercentage)) / this.slopePercentage;;
+			//console.log("MSG: In findPoint, Slope", this.Geobon.FINAL_SLOPE[index], "user Slope", this.slopePercentage, "PCT Error", PCT_Error);
+			if (PCT_Error <= this.dnSlopePCTtolerance) {
+				console.log("MSG: In findPoint, Index", index);
+    			return index;
+			} 
 		}
 	}
+	//console.log("MSG: In findPoint, Index", -1);
+	return -1;
 }
 	
-distanceCheck() {	
-	console.log("MSG: Entered distanceCheck, computing distance checks and conversions for the current slope line segment")
-	const IntermStep = this.Geobon.DEM_ZOC_Indexes[this.pointFound];
-	
-	this.SUI.ILVIx_CS4 = parseFloat(this.DEM.LLC_CS4x) + IntermStep[1] * (this.DEM.Res_CS4);
-	this.SUI.ILVIy_CS4 = parseFloat(this.DEM.LLC_CS4y) + IntermStep[0] * (this.DEM.Res_CS4);
-	this.SUI.ILV_I_CS4 = [this.SUI.ILVIx_CS4, this.SUI.ILVIy_CS4];
-	this.SUI.ILV_CS4 = [[this.SUI.ILVIx_CS4,this.SUI.ILVIy_CS4],[this.SUI.ILVFx_CS4,this.SUI.ILVFy_CS4]]; 
-	console.log("MSG:distanceCheck function values IntermStep",IntermStep)
-	console.log("MSG:distanceCheck function values this.SUI.ILVIx_CS4",this.SUI.ILVIx_CS4,this.SUI.ILVIy_CS4)
-	console.log("MSG:distanceCheck function values this.SUI.ILV_I_CS4",this.SUI.ILV_I_CS4)
-	console.log("MSG:distanceCheck function values this.SUI.ILV_CS4",this.SUI.ILV_CS4)
+drawnNdistCheck(IntIndex) {
+	console.log("MSG: Entered drawnNdistCheck, computing distance checks and conversions for the current slope line segment");
 
-	const distanceFININI =  Math.sqrt(Math.pow(this.SUI.ILVFx_CS4 - this.SUI.ILVIx_CS4, 2) + Math.pow(this.SUI.ILVFy_CS4 - this.SUI.ILVIy_CS4, 2));
-	
+	const IntermStep = this.Geobon.DEM_ZOC_Indexes[IntIndex];
+	const IniX = this.SearchDir_CS4[0][0];
+	const IniY = this.SearchDir_CS4[0][1];
+    //this.printArray2Console("Geometry of Initial Search Direction ",this.SearchDir_CS4);
+	const IniRL_CS4 = [IniX, IniY];
+	const IniRL = this.basemapService.getTransformedCoordinates([IniX, IniY], this.DEM.CS4, this.DEM.CS1);
+
+	const FinX = this.SearchDir_CS4[1][0];
+	const FinY = this.SearchDir_CS4[1][1];
+
+	//this.printArray2Console("Geometry of Final Points of Search Direction ",[FinX, FinY]);
+
+	//this.printArray2Console("Geometry of LLC ",[this.DEM.LLC_CS4x, this.DEM.LLC_CS4y]);
+
+	const IntermX = parseFloat(this.DEM.LLC_CS4x) + IntermStep[1] * (this.DEM.Res_CS4);
+	const IntermY = parseFloat(this.DEM.LLC_CS4y) + (this.DEM.RCOUNT_ASCII-IntermStep[0]) * (this.DEM.Res_CS4);
+	const distanceFININI =  Math.sqrt(Math.pow((this.SearchDir_CS4[1][1] - IntermY), 2) + Math.pow((this.SearchDir_CS4[1][0] - IntermX), 2));
+	const FinRL = this.basemapService.getTransformedCoordinates([IntermX, IntermY], this.DEM.CS4, this.DEM.CS1);
+	const FinRL_CS4 = [IntermX, IntermY];
+	const Redline = [ IniRL , FinRL ] ; 
+	const Redline_CS4 = [IniRL_CS4, FinRL_CS4]; 
+
+	this.SearchDir_CS4 = [ [IntermX, IntermY], [FinX, FinY] ];
+
+	this.printArray2Console("Geometry of New Search Direction ",this.SearchDir_CS4);
+	this.printArray2Console("Geometry of New Redline CS4", Redline_CS4);
+	this.printArray2Console("Geometry of New Redline CS1", Redline);
+
+	//const IntermStepCS1 = this.basemapService.getTransformedCoordinates([this.SearchDir_CS4[0][0], this.SearchDir_CS4[0][1]], this.DEM.CS4, this.DEM.CS1);
+
+	this.drawTheRed(Redline);
+
 	if (distanceFININI < this.DEM.Resolution) {
-		console.log("MSG: leaving distanceCheck, found close enough point")
+		console.log("MSG: leaving drawnNdistCheck, found close enough point")
 		return 1; 
 	} else {
-		console.log("MSG: leaving distanceCheck, didn't find close enough point")
+		console.log("MSG: leaving drawnNdistCheck, didn't find close enough point")
 		return 0;
 	}
+
+
+
+
 }
 
 drawTheRed(LV) {
-	console.log("MSG: Entered into drawTheRed function",LV)
+	//this.printArray2Console("Geometry of REDLINE STEP 5",LV);
 	const lineFeatures = [];
 	const capturedPoint = new Point([LV[0][0], LV[0][1]]);
 	// LV.forEach((coord) => {
@@ -713,57 +745,5 @@ drawTheRed(LV) {
 	console.log("MSG: Finished drawing line on screen");
 }
 }  
-//  openModal() {
- 
-// 		{this.resultsString +=
-// 		`Threshold: ${this.searchableSwath[t]}\n`;
-// 		`GeobonZOC Array List\n` +
-// 		`GeobonZOC: ${this.Results.GeobonZOCString}\n` +
-// 		`GeobonRes: ${this.Geobon.GeobonRes}\n` +
-// 		`\n` +
-// 		`User's Initial Row and Column\n` +
-// 		`INIDEMROW: ${this.Geobon.DEM_I_row}\n` +
-// 		`INIDEMCOL: ${this.Geobon.DEM_I_col}\n` +
-// 		`FINDEMROW: ${this.Geobon.DEM_F_row}\n` +
-// 		`FINDEMCOL: ${this.Geobon.DEM_F_col}\n` +
-// 		`DEM_ZOC_CS4 array list\n` +
-// 		`DEM_ZOC_CS4: ${this.Results.DEM_ZOC_CS4String}\n` +
-// 		`Distance between Initial Row Column and DEM_ZOC_CS4 array list  \n` +
-// 		`INI_DEM_DIST: ${this.Geobon.DEM_ZOC_CandDistances}\n` +
-// 		`\n` +
-// 		`Initial Row Column Elevation Point\n` +
-// 		`INI_ELEV: ${this.Results.INI_ELEVString}\n` +
-// 		`FIN_ELEV: ${this.Results.FIN_ELEVString}\n` +
-// 		`DEM_ZOC_CS4 Elevation points\n` +
-// 		`DEM_ZOC_CS4_ELEV: ${this.Geobon.DEM_ZOC_Eelevations}\n` +
-// 		`Difference between Initial Row Column and DEM_ZOC_CS4 Elevations \n` +
-// 		`ELEV_DIFF: ${this.Geobon.DEM_ZOC_ElevDiffs}\n` +
-// 		`\n` +
-// 		`FINAL_SLOPE: ${this.Results.FINAL_SLOPEString}\n` +
-// 		`\n` +
-// 		`Res_CS4: ${this.DEM.Res_CS4}\n` +
-// 		`candIx_CS4: ${this.SUI.ILVIx_CS4}\n` +
-// 		`candIy_CS4: ${this.SUI.ILVIy_CS4}\n` +
-// 		`candFx_CS4: ${this.SUI.ILVFx_CS4}\n` +
-// 		`candFy_CS4: ${this.SUI.ILVFy_CS4}\n` +
-// 		`LLC_CS4x: ${this.DEM.LLC_CS4x}\n` +
-// 		`LLC_CS4y: ${this.DEM.LLC_CS4y}\n` +
-// 		`IntermStepCS1x: ${this.Results.IntermStepCS1x}\n`+  
-// 		`IntermStepCS1y: ${this.Results.IntermStepCS1y}\n`;
-	
-// 	// Write the resultsString to a text file
-// 	const blob = new Blob([this.resultsString], { type: 'text/plain;charset=utf-8' });
-// 	saveAs(blob, 'results.txt');
-// 	console.log('Results saved to results.txt');
-// 	 // Open the modal and display the compiled values
-// 	 if (this.valuesCompiled) {
-// 		// Open the modal and pass the values to it
-// 		// You can use Angular's MatDialog or any other modal library
-// 	 } else {
-// 		// Handle the case when values are not compiled
-// 		// Show a message or handle it as per your requirement
-// 	 }
-//   }
-  
-// }
+
 
