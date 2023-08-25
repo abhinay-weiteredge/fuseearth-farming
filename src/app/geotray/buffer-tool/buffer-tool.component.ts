@@ -59,10 +59,11 @@ import { get as getProjection } from 'ol/proj.js';
   templateUrl: './buffer-tool.component.html',
   styleUrls: ['./buffer-tool.component.scss'],
 })
-export class BufferToolComponent implements OnInit {
+export class BufferToolComponent implements OnChanges {
   @Input() onbufferClicked;
   private basemap: OlMap;
   private renderer: Renderer2;
+  private drawInteraction: Draw | null = null;
   raster: TileLayer;
   vector: VectorLayer;
   source: VectorSource;
@@ -71,7 +72,7 @@ export class BufferToolComponent implements OnInit {
   receivedslope: any;
   bufferValue: any;
   selectedUnits: turf.Units = 'miles';
-
+  coordinates: any;
   constructor(
     private commonService: CommonService,
     private basemapService: BasemapService,
@@ -80,34 +81,17 @@ export class BufferToolComponent implements OnInit {
     this.renderer = this.renderer2.createRenderer(null, null);
     this.basemap = this.basemapService.getCurrentBasemap();
   }
-  ngOnInit() {
-    if (this.onbufferClicked) {
-      this.showbuffer();
-    }
-    this.bufferValue;
-    console.log(this.bufferValue, 'checkbuffervalue');
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    if (
-      changes.onbufferClicked &&
-      changes.onbufferClicked.currentValue === true
-    ) {
-      this.showbuffer();
-      console.log(this.onbufferClicked, 'checkonbuffferclickedinbuffertool');
+    if (this.onbufferClicked) {
+      console.log("MSG: onslope and onbufferClicked ", this.onbufferClicked)
+      this.showbuffer(); // Remove the draw interaction
+    }
+    if (!this.onbufferClicked) {
+      console.log("MSG: onslope and onbufferClickedd ", !this.onbufferClicked)
+      this.removeDrawInteraction(); // Remove the draw interaction
     }
   }
-
-  // update the variable when the dropdown selection changes
-  onUnitsChange() {
-    this.selectedUnits = this.selectedUnits;
-    console.log(this.selectedUnits, 'checkselectedunits');
-  }
-
   showbuffer() {
-    // if (!this.onbufferClicked) {
-    //         return;
-    // }
     const vectorLayer = new VectorLayer({
       source: new VectorSource(),
       style: new Style({
@@ -127,50 +111,24 @@ export class BufferToolComponent implements OnInit {
         }),
       }),
     });
-
     if (!this.commonService.isValid(this.basemap)) {
       this.basemap = this.basemapService.getCurrentBasemap();
     }
     this.basemap.addLayer(vectorLayer);
-
-    const draw = new Draw({
+    this.drawInteraction = new Draw({
       source: vectorLayer.getSource(),
       type: 'LineString',
     });
-    this.basemap.addInteraction(draw);
-    draw.on('drawend', async (event) => {
-      var coordinates = event.feature.getGeometry().getCoordinates();
-      console.log(coordinates,"checkinitialcoords")
+    this.basemap.addInteraction(this.drawInteraction);
+    this.drawInteraction.on('drawend', async (event) => {
+      this.coordinates = event.feature.getGeometry().getCoordinates();
       var transformedCordArray = [];
-  
-      // for (let i = 0; i < coordinates.length; i++) {
-      //   for (let j = 0; j < 1; j++) {
-      //     var transformed_Coordinates =
-      //       this.basemapService.getTransformedCoordinates(
-      //         [coordinates[i][j], coordinates[i][j + 1]],
-      //         this.basemapService.getCurrentBasemap().getView().getProjection(),
-      //         getProjection('EPSG:4326')
-      //       );
-  
-      //     transformedCordArray.push(transformed_Coordinates);
-
-      //   }
-      //  console.log(transformedCordArray,"sgwhdwgs")
-      // }
-      console.log(
-        coordinates,
-        transformedCordArray,
-        'checlcoordinatesofbuffer'
-      );
-
       const bufferDistance = this.bufferValue;
       const bufferedLine = turf.buffer(
-        turf.lineString(coordinates),
+        turf.lineString(this.coordinates),
         bufferDistance,
         { units: this.selectedUnits }
-          
       );
-
       const feature = new Feature({
         geometry: new Polygon(bufferedLine.geometry.coordinates),
         style: new Style({
@@ -183,7 +141,6 @@ export class BufferToolComponent implements OnInit {
           }),
         }),
       });
-      console.log(feature,"checkfeature")
       const circleSource = new VectorSource({
         features: [feature],
       });
@@ -192,5 +149,12 @@ export class BufferToolComponent implements OnInit {
       });
       this.basemap.addLayer(circleLayer);
     });
+  }
+  removeDrawInteraction() {
+    if (this.drawInteraction && this.basemap) {
+      this.basemap.removeInteraction(this.drawInteraction);
+      this.drawInteraction = null;
+      console.log("MSG: onslope and onBUFFER REMOVEINT HIT");
+    }
   }
 }

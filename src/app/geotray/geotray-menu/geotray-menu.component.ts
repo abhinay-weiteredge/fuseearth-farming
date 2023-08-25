@@ -34,18 +34,6 @@ import { Geometry } from 'ol/geom';
 import Polygon from 'ol/geom/Polygon';
 import * as turf from '@turf/turf';
 
-
-
-
-
-
-
-
-
-
-
-//import { SlopeFinderComponent } from '../slope-finder/slope-finder.component';
-//import { BufferToolComponent } from '../buffer-tool/buffer-tool.component';
 @Component({
   selector: 'app-geotray-menu',
   templateUrl: './geotray-menu.component.html',
@@ -118,6 +106,7 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
   showvicinity = false;
   showslope = false;
   showslopeAEDS = false;
+  showAnnotateTool = false;
   selectedSubOption: string;
   selectedProperty: string;
   afterLoginOperations: any[] = [];
@@ -213,6 +202,9 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
         this.showSubOptions = false;
         this.showProperties = false;
         this.showbuffer = false;
+        this.onbufferClicked.emit(this.showbuffer);
+        this.onAEDSClicked.emit(false)
+        this.onslopeClicked.emit(false)
         this.showvicinity = false;
         this.showslope = false;
         this.showslopeAEDS = false;
@@ -286,6 +278,9 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
         this.showslope = false;
         this.showslopeAEDS = false;
         this.showbuffer = false;
+        this.onbufferClicked.emit(this.showbuffer);
+        this.onAEDSClicked.emit(false);
+        this.onslopeClicked.emit(false);
         this.showvicinity = false;
       } else {
         this.showGeopad(e);
@@ -298,30 +293,44 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
       this.showvicinity = false;
       this.showslope = false;
       this.showslopeAEDS = false;
+      this.onbufferClicked.emit(this.showbuffer);
+      this.onAEDSClicked.emit(false);
+      this.onslopeClicked.emit(false);
     } else if (wing.title === 'ATB') {
-      if (e.ctrlKey) {
-        this.showAnnotation(e);
-        this.resetWingSelection();
-      } else {
+     // if (e.ctrlKey) {
+      //   if (this.showAnnotateTool == true) {
+      //               this.showAnnotation(e);
+      //       this.resetWingSelection();
+      //       this.showGeometryProperties = false;
+      //     }
+      //     else {
+      //       alert("Susbcribe for higher package to use this feature")
+      //       this.disable = true;
+      //       return;
+      //     }
+      // } else {
+        this.showAnnotateTool = !this.showAnnotateTool;
         this.showslope = !this.showslope;
         this.showslopeAEDS = !this.showslopeAEDS;
         this.buffertoolVisibility = false;
-        this.onbufferClicked.emit(false);
         this.showProperties = false;
         this.showbuffer = false;
         this.showvicinity = false;
-      }
-    } else if (wing.title === 'VTB') {
+        this.onbufferClicked.emit(this.showbuffer);
+      // }
+    }  else if (wing.title === 'VTB') {
       this.showbuffer = !this.showbuffer;
       this.showvicinity = !this.showvicinity;
       this.slopefinderVisibility = false;
       this.slopefinderVisibilityAEDS = false;
-      this.onslopeClicked.emit(false);
-      this.onAEDSClicked.emit(false);
       this.showslope = false;
       this.showslopeAEDS = false;
       this.showProperties = false;
-    } else if (wing.title === 'STB') {
+      this.showAnnotateTool = false;
+      this.onslopeClicked.emit(false);
+      this.onAEDSClicked.emit(false);
+    }
+     else if (wing.title === 'STB') {
       const data = { e, data: 'geosession' };
       if (!this.isGuest) {
         this.openSaveShareScreen(data);
@@ -371,6 +380,22 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
     temp.srcEvent = e;
     this.onWingSelected.emit(temp);
     // }
+  }
+  dropClicked(wing){
+    
+    console.log("clicked the drop",wing)
+    if(wing.title === 'VTB'){
+      this.showbuffer = !this.showbuffer;
+      this.showvicinity = !this.showvicinity;
+      this.slopefinderVisibility = false;
+      this.slopefinderVisibilityAEDS = false;
+      this.onslopeClicked.emit(false);
+      this.onAEDSClicked.emit(false);
+      this.showslope = false;
+      this.showslopeAEDS = false;
+      this.showProperties = false;
+      this.showAnnotateTool = false;
+    }  
   }
   showUploadPhotosVideos() {
     // this.showGeopadWindow.emit('video-image');
@@ -458,12 +483,17 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
     this.selectedProperty = 'slopefinderADES';
     this.slopefinderVisibilityAEDS = !this.slopefinderVisibilityAEDS;
     this.onAEDSClicked.emit(this.slopefinderVisibilityAEDS);
+    if(this.slopefinderVisibilityAEDS){
+      this.basemapService.setMouseIcon(this.slopefindercursor);
+    }
+    if(!this.slopefinderVisibilityAEDS){
+      this.basemapService.setMouseIcon("auto");
+    }
     this.slopefinderVisibility = false;
     this.showslopedropdown = false;
     this.showbufferdropdown = false;
     this.onslopeClicked.emit(this.slopefinderVisibility);
     this.myService.trigger();
-    this.basemapService.setMouseIcon(this.slopefindercursor);
     console.log(
       'checkproperty',
       this.selectedProperty,
@@ -474,12 +504,17 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
     this.selectedProperty = 'slopefinder';
     this.slopefinderVisibility = !this.slopefinderVisibility;
     this.onslopeClicked.emit(this.slopefinderVisibility);
+    if(this.slopefinderVisibility){
+      this.basemapService.setMouseIcon(this.slopefindercursor);
+    }
+    if(!this.slopefinderVisibility){
+      this.basemapService.setMouseIcon("auto");
+    }
     this.slopefinderVisibilityAEDS = false;
     this.onAEDSClicked.emit(this.slopefinderVisibilityAEDS);
     this.showslopedropdownAEDS = false;
     this.showbufferdropdown = false;
     this.myService.trigger();
-    this.basemapService.setMouseIcon(this.slopefindercursor);
   }
 
   showslopedropdown: boolean = false;
@@ -494,13 +529,31 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
     this.showslopedropdownAEDS = !this.showslopedropdownAEDS;
     this.showslopedropdown = false;
   }
+
+  // showVicinityTool() {
+  //   this.selectedProperty = 'Vicinity';
+  //   this.slopefinderVisibility = !this.slopefinderVisibility;
+  //   this.onslopeClicked.emit(this.slopefinderVisibility);
+  //   this.slopefinderVisibilityAEDS = false;
+  //   this.onAEDSClicked.emit(this.slopefinderVisibilityAEDS);
+  //   this.showslopedropdownAEDS = false;
+  //   this.showbufferdropdown = false;
+  //   this.myService.trigger();
+  //   this.basemapService.setMouseIcon(this.slopefindercursor);
+  // }
+
   showbuffertool() {
     this.selectedProperty = 'buffertool';
     this.buffertoolVisibility = !this.buffertoolVisibility;
     this.showslopedropdown = false;
     this.showslopedropdownAEDS = false;
     this.onbufferClicked.emit(this.buffertoolVisibility);
-    this.basemapService.setMouseIcon(this.buffertoolcursor);
+    if(this.buffertoolVisibility){
+      this.basemapService.setMouseIcon(this.buffertoolcursor);
+    }
+    if(!this.buffertoolVisibility){
+      this.basemapService.setMouseIcon("auto");
+    }
     console.log('checkhit', this.onbufferClicked);
   }
 
@@ -510,7 +563,7 @@ export class GeotrayMenuComponent implements OnInit, AfterViewInit, OnChanges {
     this.showbufferdropdown = !this.showbufferdropdown;
   }
 
-  showvicinitytool(wing) {
+  showvicinitytool() {
     this.vicinitytoolVisibility = !this.vicinitytoolVisibility;
     // wing.title === 'vicinity'
     //     clickEvent: 'getFeatureInfoByCircleRadius',

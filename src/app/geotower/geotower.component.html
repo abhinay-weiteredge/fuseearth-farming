@@ -64,8 +64,8 @@
         </div> -->
         <div cdkDropList (cdkDropListDropped)="drop($event)">
         
-          <div  cdkDrag [cdkDragDisabled]="!dragfeature" *ngFor="let layer of layersList; let i = index;"  [ngStyle]="{'z-index': (layersList.length-i)*2, 'direction': 'ltr', 'margin-left': '20px' }"  id="dragenable">
-           <div class="d-flex">
+          <div  cdkDrag [cdkDragDisabled]="!dragfeature" *ngFor="let layer of layersList; let i = index;"  [ngStyle]="{'z-index': (layersList.length-i)*2, 'direction': 'ltr', 'margin-left': '20px' }"  id="dragenable" (click)="ClickingGeoTower(i)">
+            <div class="d-flex">
             <app-mini-tower-item
             
                 [ngStyle]="{'height':getHeight()}" 

@@ -268,6 +268,21 @@
   </div>
 </div>
 
+<!-- ANNOTATE TOOL -->
+<div class="AnnotateTool" *ngIf="showAnnotateTool">
+  <div
+  style="top: 127px; left: -35px; width: 50px; height: 50px"
+  class="icon-card-annotate-Tool annotateTool"
+    [ngStyle]="{ width: width + 'px', height: width + 'px' }"
+    matTooltip="Annotate Tool"
+    (click)="showAnnotation($event)"
+    [ngClass]="{
+      annotateToolactive: annotateToolVisibility,
+      annotateToolnotActive: !annotateToolVisibility
+    }"
+  ></div>
+</div>
+
 <!-- BUFFER TOOL -->
 <div class="buffertool" *ngIf="showbuffer">
   <div

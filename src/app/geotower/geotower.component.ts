@@ -1231,4 +1231,7 @@ dragg=TowerItemComponent.isdrag;
 
   }
 
+  ClickingGeoTower(index){
+    console.log(index,"GeotowerIndex")
+  }
 }

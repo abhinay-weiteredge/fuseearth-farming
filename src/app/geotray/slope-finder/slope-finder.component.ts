@@ -50,7 +50,7 @@ import { MatrixReverseService } from './matrix-reverse.service';
   templateUrl: './slope-finder.component.html',
   styleUrls: ['./slope-finder.component.scss'],
 })
-export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
+export class SlopeFinderComponent implements OnChanges {
   slopePercentage: number;
   @Input() angle: number;
   @Input() slopeRatio: string;
@@ -84,6 +84,7 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
 
   static bsmapservice: any;
   static excelData: any;
+  drawInteraction: OlMap;
   //pctslope: number;
   constructor(
     private http: HttpClient,
@@ -104,26 +105,15 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
     });
   }
   baseService: BasemapService;
-
-  closeslopepopup() {
-    this.onslopeClicked = false;
-    SlopeFinderComponent.spopupstatus = false;
-  }
-
-  ngOnInit(): void {
-    this.slopefindertool(
-      // this.LLC_X,
-      // this.LLC_Y,
-      // this.cellSize,
-      // this.cellsizeft,
-      // this.rowcount,
-      // this.colcount
-    );
-  }
-
-  ngAfterViewInit(): void {}
-
   ngOnChanges(changes: SimpleChanges) {
+    if(this.onslopeClicked){
+      console.log("MSG: onslope and onAEDSClicked ",this.onslopeClicked)
+      this.slopefindertool();
+    }
+    if(!this.onslopeClicked){
+      console.log("MSG: onslope and onAEDSClickedd ",!this.onslopeClicked)
+      this.removeDrawInteraction(); // Remove the draw interaction
+    }
     if (changes.slopePercentage && !changes.slopePercentage.firstChange) {
       this.calculateAngleAndRatioFromSlope();
     }
@@ -133,20 +123,7 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
     if (changes.slopeRatio && !changes.slopeRatio.firstChange) {
       this.calculateSlopeAndAngleFromRatio();
     }
-    if (changes.slopeRatio && !changes.slopeRatio.firstChange) {
-      this.slopefindertool(
-        // this.LLC_X,
-        // this.LLC_Y,
-        // this.cellSize,
-        // this.cellsizeft,
-        // this.rowcount,
-        // this.colcount
-      );
     }
-    // if (changes.slopePercentage) {
-    //   this.slopefindertool();
-    // }
-  }
 
   calculateAngleAndRatioFromSlope() {
     const slopeDecimal = this.slopePercentage;
@@ -361,18 +338,18 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
     this.basemap.addLayer(vectorLayer);
 
     // Create the interaction to draw the line
-    var draw = new Draw({
+    this.drawInteraction = new Draw({
       source: vectorLayer.getSource(),
       type: 'Point',
     });
 
     // Add the draw interaction to the map
-    this.basemap.addInteraction(draw);
+    this.basemap.addInteraction(this.drawInteraction);
 
     let coordinates = [];
 
     // Create an array to store the coordinates of the drawn line
-    draw.on('drawend', async (event) => {
+    this.drawInteraction.on('drawend', async (event) => {
       // Get the coordinates of the drawn line
       coordinates = event.feature.getGeometry().getCoordinates();
       // var capturedcords = coordinates.
@@ -564,8 +541,8 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
     // Add event listener for Escape key press to remove the drawn line
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
-        this.basemap.removeInteraction(draw);
-        draw = null;
+        this.basemap.removeInteraction(this.drawInteraction);
+        this.drawInteraction = null;
 
         this.basemap.getLayers().forEach((layer) => {
           if (
@@ -612,5 +589,11 @@ export class SlopeFinderComponent implements OnChanges, OnInit, AfterViewInit {
     }
 
     return path;
+  }
+  removeDrawInteraction() {
+    if (this.drawInteraction && this.basemap) {
+      this.basemap.removeInteraction(this.drawInteraction);
+      this.drawInteraction = null;
+    }
   }
 }

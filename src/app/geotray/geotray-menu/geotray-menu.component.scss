@@ -628,6 +628,63 @@ $skew: 90 - $deg;
   }
 
 }
+
+// ANNOTATION TOOL
+.AnnotateTool {
+  .icon-card-annotate-Tool {
+    position: relative;
+    z-index: 505;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 1px 1px 7px 0px;
+    cursor: pointer;
+    position: absolute;
+  }
+
+  .annotateTool {
+    background: url("../../../assets/right-colored-svg/ATB.svg");
+    background-color: white;
+    padding: 20px;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid black;
+  }
+
+  .annotateTool:hover {
+    background: url("../../../assets/right-white-svg/ATB.svg");
+    background-color: black;
+    padding: 20px;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid white;
+
+  }
+
+  .annotateToolactive {
+    background: url("../../../assets/right-white-svg/ATB.svg");
+    background-color: black;
+    padding: 20px;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid white;
+
+  }
+
+  .annotateToolnotActive {
+    background: url("../../../assets/right-colored-svg/ATB.svg");
+    background-color: white;
+    padding: 20px;
+    background-size: 60%;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid black;
+  }
+
+
+}
 // BUFFERTOOL
 .buffertool {
   .icon-card-buffer-tool {
